@@ -23,12 +23,12 @@ jobs:
       - name: update
         run: |
           #lua
-          cd ..
-          git clone https://github.com/NPI-D7/BCSTM-Player.git
-          cd DevHelper
-          mkdir -p app/
+          #cd ..
+          #git clone https://github.com/NPI-D7/BCSTM-Player.git
+          #cd DevHelper
+          #mkdir -p app/
           #mkdir -p extlibs/lua/
-          cp -r ../BCSTM-Player/app/* app/
+          #cp -r ../BCSTM-Player/app/* app/
           #cp -r ../lua/*.h* extlibs/lua/
           #cp -r ../lua/*.md extlibs/lua/
           #RenderD7
