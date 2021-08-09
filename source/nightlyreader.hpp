@@ -20,15 +20,15 @@ struct APPH =
 class DBLoader
 {
      public:
-     DBLoader();
-     ~DBLoader();
+     DBLoader(){}
+     ~DBLoader(){}
      private:
 };
 
 class apploader
 {
      public:
-     apploader();
-     ~apploader();
+     apploader(){}
+     ~apploader(){}
      private:
 };
