@@ -6,6 +6,6 @@ class Config
      Config(){}
      Congig(){}
      private:
-     mINI::INIFile file;
-     mINI::INIStructure struct;
+     INI::INIFile file;
+     INI::INIStructure struct;
 };
