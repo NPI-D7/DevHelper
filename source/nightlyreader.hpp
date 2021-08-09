@@ -16,3 +16,19 @@ struct APPH =
 {
      std::string Name;
 };
+
+class DBLoader
+{
+     public:
+     DBLoader();
+     ~DBLoader();
+     private:
+};
+
+class apploader
+{
+     public:
+     apploader();
+     ~apploader();
+     private:
+};
