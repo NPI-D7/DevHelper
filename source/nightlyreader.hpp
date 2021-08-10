@@ -19,6 +19,8 @@ struct APPH
      std::string commit_tag;
      std::string desc;
      std::string ver;
+     std::string dl_3dsx;
+     std::string dl_cia;
 };
 
 class DBLoader
