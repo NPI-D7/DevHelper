@@ -4,8 +4,8 @@ class Config
 {
      public:
      Config(){}
-     Congig(){}
+     ~Congig(){}
      private:
-     INI::INIFile file;
-     INI::INIStructure struct;
+     INI::INIFile cfile;
+     INI::INIStructure cstruct;
 };
