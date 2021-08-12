@@ -33,8 +33,8 @@ class DBLoader
      void DownloadEntry(int index);
      std::string GetRepoName(){ return this->db.reponame; }
      std::string GetRepoHost(){ return this->db.repo_host; }
-     private:
      DB db;
+     private:
 };
 
 class apploader
