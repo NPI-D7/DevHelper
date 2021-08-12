@@ -1,4 +1,6 @@
 #include "ini.hpp"
+#include <string>
+#include <vector>
 
 struct DB_Entry
 {
@@ -29,6 +31,7 @@ class DBLoader
      DBLoader(){}
      ~DBLoader(){}
      private:
+     DB db;
 };
 
 class apploader
