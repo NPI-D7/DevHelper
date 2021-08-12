@@ -9,7 +9,7 @@ struct DB_Entry
 }
 struct DB
 {
-     std::string reppname;
+     std::string reponame;
      std::string repo_host;
      std::vector<DB_Entry> e_list;
 };
@@ -30,6 +30,9 @@ class DBLoader
      public:
      DBLoader(){}
      ~DBLoader(){}
+     void DownloadEntry(int index);
+     std::string GetRepoName(){ return this->db.reponame; }
+     std::string GetRepoHost(){ return this->db.repo_host; }
      private:
      DB db;
 };
