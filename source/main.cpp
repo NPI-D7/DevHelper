@@ -1,7 +1,7 @@
 #include "renderd7.hpp"
 #include "nightlyreader.hpp"
 
-std::string standard = "https://github.com/NPI-D7/nightlys/raw/master/nightlys-Databasr.ini";
+std::string standard = "https://github.com/NPI-D7/nightlys/raw/master/nightlys-Database.ini";
 DBLoader dbl;
 int main()
 {
