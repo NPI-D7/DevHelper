@@ -30,6 +30,7 @@ class DBLoader
      public:
      DBLoader(){}
      ~DBLoader(){}
+     void LoadDB(std::string link);
      void DownloadEntry(int index);
      std::string GetRepoName(){ return this->db.reponame; }
      std::string GetRepoHost(){ return this->db.repo_host; }
