@@ -9,7 +9,9 @@ void DBLoader::DownloadEntry(int index)
 void DBLoader::DoenloadDB(std::string link)
 {
      downloadToFile(link, "sdmc:/DevHelper/dbs/" + GetFileName(link));
-     
+     INI::INIFile file;
+     INI::INIStructure ini;
+     file.read(ini);
      for (auto const& it : ini)
      {
 	     auto const& section = it.first;
