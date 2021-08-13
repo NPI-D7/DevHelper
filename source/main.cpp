@@ -1,9 +1,13 @@
 #include "renderd7.hpp"
+#include "nightlyreader.hpp"
 
+std::string standard = "https://github.com/NPI-D7/nightlys/raw/master/nightlys-Databasr.ini";
+DBLoader dbl;
 int main()
 {
     RenderD7::Init::Main();
-    
+    dbl.LoadDB(standard);
+
     while(RenderD7::MainLoop())
     {
         if (d7_hDown & KEY_START) RenderD7::ExitApp();
