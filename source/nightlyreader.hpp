@@ -6,7 +6,7 @@ struct DB_Entry
 {
      std::string name;
      std::string dl_link;
-}
+};
 struct DB
 {
      std::string reponame;
