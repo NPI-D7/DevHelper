@@ -1,5 +1,7 @@
 #include "nightlyreader.hpp"
 #include "renderd7.hpp"
+#include "download.hpp"
+#include <iostream>
 
 void DBLoader::DownloadEntry(int index)
 {
