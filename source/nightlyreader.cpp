@@ -12,6 +12,8 @@ void DBLoader::DoenloadDB(std::string link)
      INI::INIFile file;
      INI::INIStructure ini;
      file.read(ini);
+     this->db.RepoName = ini["info"]["name"];
+     this->db.RepoHost = ini["info"]["host"];
      DB_Entry dbe;
      for (auto const& it : ini)
      {
@@ -21,7 +23,7 @@ void DBLoader::DoenloadDB(std::string link)
              this->secs.push_back(section);
 	     for (int i = 1; i < (int)this->secs.size(); i++)
 	     {
-		     dbe = { ini[this->secs[i]]["name"], ini[this->secs[i]]["data"]};
+		     dbe = {ini[this->secs[i]]["name"], ini[this->secs[i]]["data"]};
                      this->db.e_list.push_back(dbe);
 	     }
      }
