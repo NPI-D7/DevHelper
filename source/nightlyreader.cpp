@@ -12,7 +12,7 @@ void DBLoader::DownloadEntry(int index)
 void DBLoader::LoadDB(std::string link)
 {
      downloadToFile(link, "sdmc:/DevHelper/dbs/" + GetFileName<std::string>(link));
-     INI::INIFile file;
+     INI::INIFile file(GetFileName<std::string>(link));
      INI::INIStructure ini;
      file.read(ini);
      this->db.reponame = ini["info"]["repository"];
