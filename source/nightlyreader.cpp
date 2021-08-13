@@ -1,4 +1,5 @@
 #include "nightlyreader.hpp"
+#include "renderd7.hpp"
 
 void DBLoader::DownloadEntry(int index)
 {
