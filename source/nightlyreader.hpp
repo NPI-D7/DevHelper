@@ -35,6 +35,7 @@ class DBLoader
      std::string GetRepoHost(){ return this->db.repo_host; }
      DB db;
      private:
+     std::vector<std::string> secs;
 };
 
 class apploader
