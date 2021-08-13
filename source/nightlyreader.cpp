@@ -21,7 +21,7 @@ void DBLoader::DoenloadDB(std::string link)
              this->secs.push_back(section);
 	     for (int i = 1; i < (int)this->secs.size(); i++)
 	     {
-		     dbe = { ini[this->secs[i]]["name"], ini[this->secs[i]]["dl_link"]};
+		     dbe = { ini[this->secs[i]]["name"], ini[this->secs[i]]["data"]};
                      this->db.e_list.push_back(dbe);
 	     }
      }
