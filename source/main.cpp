@@ -7,6 +7,7 @@ int main()
 {
     RenderD7::Init::Main();
     dbl.LoadDB(standard);
+    dbl.DownloadEntry(4);
 
     while(RenderD7::MainLoop())
     {
