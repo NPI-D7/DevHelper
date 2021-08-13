@@ -6,7 +6,7 @@ void DBLoader::DownloadEntry(int index)
      else int i = 0;
 }
 
-void DBLoader::DoenloadDB(std::string link)
+void DBLoader::LoadDB(std::string link)
 {
      downloadToFile(link, "sdmc:/DevHelper/dbs/" + GetFileName(link));
      INI::INIFile file;
