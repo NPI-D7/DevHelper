@@ -1,3 +1,4 @@
+#pragma once
 #include "ini.hpp"
 #include <string>
 #include <vector>
