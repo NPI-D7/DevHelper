@@ -20,8 +20,9 @@ void DBSel::Draw(void) const
     RenderD7::OnScreen(Top);
     RenderD7::DrawRect(0, 0, 400, 240, RenderD7::Color::Hex("#EEEEEE"));
     DrawFMBG();
-
-    RenderD7::DrawTLBtns(lst, RenderD7::Color::Hex("#CCCCCC"), dirsel);
+    int sel = dirsel;
+    if (this->SPos + Idx == dirsel) sel = dirsel;
+    RenderD7::DrawTLBtns(lst, RenderD7::Color::Hex("#CCCCCC"), sel);
     for (int Idx = 0; Idx < 6 && Idx < (int)this->dbld.db.e_list.size(); Idx++) {
 		
 		RenderD7::DrawTextCentered(0, this->lst[Idx].y + 7, 0.5f, RenderD7::Color::Hex("#111111"), dbld.db.e_list[SPos + Idx].name, 240);
