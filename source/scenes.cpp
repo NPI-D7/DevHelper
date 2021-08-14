@@ -20,6 +20,7 @@ void DBSel::Draw(void) const
     RenderD7::OnScreen(Top);
     RenderD7::DrawRect(0, 0, 400, 240, RenderD7::Color::Hex("#EEEEEE"));
     DrawFMBG();
+
     std::string dirs;
     for (int i = this->dirsel < 9 ? 0 : this->dirsel - 9; (int)dbld.db.e_list.size() && i < ((this->dirsel < 9) ? 10 : this->dirsel + 1); i++)
     {
