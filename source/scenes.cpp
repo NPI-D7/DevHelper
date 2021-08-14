@@ -1,5 +1,7 @@
 #include "scenes.hpp"
 
+std::string standard = "https://github.com/NPI-D7/nightlys/raw/master/nightlys-Database.ini";
+
 void DrawFMBG()
 {
     RenderD7::DrawRect(0, 49, 400, 18, RenderD7::Color::Hex("#CCCCCC"));
@@ -11,7 +13,7 @@ void DrawFMBG()
 
 DBSel::DBSel()
 {
-
+    dbld.LoadDB(standard);
 }
 void DBSel::Draw(void) const
 {
