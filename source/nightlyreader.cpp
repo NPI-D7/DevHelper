@@ -15,14 +15,20 @@ void DBLoader::DownloadEntry(int index)
 
 void DBLoader::LoadDB(std::string link)
 {
+     D_P();
      mkdir("sdmc:/DevHelper/", 0777);
      mkdir("sdmc:/DevHelper/dbs/", 0777);
+     D_P();
      downloadToFile(link, "sdmc:/DevHelper/dbs/" + GetFileName<std::string>(link));
+     D_P();
      INI::INIFile file("sdmc:/DevHelper/dbs/" + GetFileName<std::string>(link));
      INI::INIStructure ini;
+     D_P();
      file.read(ini);
+     D_P();
      this->db.reponame = ini["info"]["repository"];
      this->db.repo_host = ini["info"]["user"];
+     D_P();
      DB_Entry dbe;
      for (auto const& it : ini)
      {
@@ -30,9 +36,11 @@ void DBLoader::LoadDB(std::string link)
 	     std::cout << "[" << section << "]" << std::endl;
              this->secs.push_back(section);
      }
+     D_P();
      for (int i = 1; i < (int)this->secs.size(); i++)
      {
           dbe = {ini[this->secs[i]]["name"], ini[this->secs[i]]["data"]};
           this->db.e_list.push_back(dbe);
      }
+     D_P();
 }
