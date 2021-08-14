@@ -39,10 +39,6 @@ void DBSel::Draw(void) const
     RenderD7::DrawText(10, 30, 0.6f, RenderD7::Color::Hex("#111111"), dirs.c_str());
     RenderD7::OnScreen(Bottom);
     RenderD7::DrawRect(0, 0, 320, 240, RenderD7::Color::Hex("#EEEEEE"));
-    if(playing)
-    {
-        RenderD7::DrawText(5, 218, 0.7f, RenderD7::Color::Hex("#111111"), "Playing: " + currentlypl);
-    }
 }
 
 void DBSel::Logic(u32 hDown, u32 hHeld, u32 hUp, touchPosition touch)
