@@ -20,7 +20,29 @@ void DBSel::Draw(void) const
     RenderD7::OnScreen(Top);
     RenderD7::DrawRect(0, 0, 400, 240, RenderD7::Color::Hex("#EEEEEE"));
     DrawFMBG();
+    std::string dirs;
+    for (int i = this->dirsel < 9 ? 0 : this->dirsel - 9; (int)dbld.db.e_list.size() && i < ((this->dirsel < 9) ? 10 : this->dirsel + 1); i++)
+    {
+        if (i == dirsel)
+        {
+            dirs += "> " + dbld.db.e_list[i].name + "\n";
+        }
+        else
+        {
+            dirs += dbld.db.e_list[i].name + "\n";
+        } 
+    }
+    for (uint i = 0; i < ((dbld.db.e_list.size() < 10) ? 10 - dbld.db.e_list.size() : 0); i++) {
+		dirs += "\n\n";
+	}
 
+    RenderD7::DrawText(10, 30, 0.6f, RenderD7::Color::Hex("#111111"), dirs.c_str());
+    RenderD7::OnScreen(Bottom);
+    RenderD7::DrawRect(0, 0, 320, 240, RenderD7::Color::Hex("#EEEEEE"));
+    if(playing)
+    {
+        RenderD7::DrawText(5, 218, 0.7f, RenderD7::Color::Hex("#111111"), "Playing: " + currentlypl);
+    }
 }
 
 void DBSel::Logic(u32 hDown, u32 hHeld, u32 hUp, touchPosition touch)
