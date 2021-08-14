@@ -10,7 +10,7 @@ class DBSel : public RenderD7::Scene
      private:
      DBLoader dbld;
      int dirsel = 0;
-     std::vector<RenderD7::TLBtn> = {
+     std::vector<RenderD7::TLBtn> lst = {
           {0, 30, 400, 30},
           {0, 60, 400, 30},
           {0, 90, 400, 30},
