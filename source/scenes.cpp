@@ -18,8 +18,9 @@ DBSel::DBSel()
 void DBSel::Draw(void) const
 {
     RenderD7::OnScreen(Top);
-    
+    RenderD7::DrawRect(0, 0, 400, 240, RenderD7::Color::Hex("#EEEEEE"));
     DrawFMBG();
+
 }
 
 void DBSel::Logic(u32 hDown, u32 hHeld, u32 hUp, touchPosition touch)
