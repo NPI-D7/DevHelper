@@ -20,11 +20,23 @@ void DBSel::Draw(void) const
     RenderD7::OnScreen(Top);
     RenderD7::DrawRect(0, 0, 400, 240, RenderD7::Color::Hex("#EEEEEE"));
     DrawFMBG();
-    RenderD7::DrawTLBtns(lst, RenderD7::Color::Hex("#CCCCCC"), SPos);
-    for (int Idx = 0; Idx < 6 && Idx < (int)this->dbld.db.e_list.size(); Idx++) {
-		
-		RenderD7::DrawTextCentered(0, this->lst[Idx].y + 7, 0.5f, RenderD7::Color::Hex("#111111"), dbld.db.e_list[SPos + Idx].name, 240);
-    };
+    std::string dirs;
+    for (int i = this->dirsel < 9 ? 0 : this->dirsel - 9; (int)dbld.db.e_list.size() && i < ((this->dirsel < 9) ? 10 : this->dirsel + 1); i++)
+    {
+        if (i == dirsel)
+        {
+            dirs += "> " + dbld.db.e_list[i].name + "\n";
+        }
+        else
+        {
+            dirs += dbld.db.e_list[i].name + "\n";
+        } 
+    }
+    for (uint i = 0; i < ((dbld.db.e_list.size() < 10) ? 10 - dbld.db.e_list.size() : 0); i++) {
+		dirs += "\n\n";
+	}
+
+    RenderD7::DrawText(10, 30, 0.6f, RenderD7::Color::Hex("#111111"), dirs.c_str());
     RenderD7::OnScreen(Bottom);
     RenderD7::DrawRect(0, 0, 320, 240, RenderD7::Color::Hex("#EEEEEE"));
 }
@@ -36,6 +48,4 @@ void DBSel::Logic(u32 hDown, u32 hHeld, u32 hUp, touchPosition touch)
     if (hDown & KEY_DOWN && dirsel < (int)dbld.db.e_list.size() - 1) dirsel++;
     if (hDown & KEY_LEFT && dirsel - 6 > 0) dirsel -= 6;
     if (hDown & KEY_RIGHT && dirsel + 6 < (int)dbld.db.e_list.size() - 1) dirsel += 6;
-    if (dirsel < this->SPos) this->SPos = dirsel;
-    else if (dirsel > this->SPos + 6 - 1) this->SPos = dirsel - 6 + 1;
 }
