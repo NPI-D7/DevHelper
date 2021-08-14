@@ -25,15 +25,20 @@ void DBSel::Draw(void) const
     DrawFMBG();
     D_P();
     std::string dirs;
+    D_P();
     for (int i = this->dirsel < 9 ? 0 : this->dirsel - 9; (int)dbld.db.e_list.size() && i < ((this->dirsel < 9) ? 10 : this->dirsel + 1); i++)
     {
+        D_P();
         if (i == dirsel)
         {
+            D_P();
             dirs += "> " + dbld.db.e_list[i].name + "\n";
+            D_P();
         }
         else
         {
             dirs += dbld.db.e_list[i].name + "\n";
+            D_P();
         } 
     }
     D_P();
