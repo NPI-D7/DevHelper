@@ -27,7 +27,6 @@ void DBLoader::LoadDB(std::string link)
      for (auto const& it : ini)
      {
 	     auto const& section = it.first;
-	     auto const& collection = it.second;
 	     std::cout << "[" << section << "]" << std::endl;
              this->secs.push_back(section);
      }
