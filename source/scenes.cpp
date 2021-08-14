@@ -24,7 +24,7 @@ void DBSel::Draw(void) const
     RenderD7::DrawTLBtns(lst, RenderD7::Color::Hex("#CCCCCC"), dirsel);
     for (int Idx = 0; Idx < 6 && Idx < (int)this->dbld.db.e_list.size(); Idx++) {
 		
-		RenderD7::DrawTextCentered(0, this->lst[Idx].y + 7, 0.5f, RenderD7::Color::Hex("#111111"), dbld.db.e_list[Idx].name, 240);
+		RenderD7::DrawTextCentered(0, this->lst[Idx].y + 7, 0.5f, RenderD7::Color::Hex("#111111"), dbld.db.e_list[SPos + Idx].name, 240);
     };
     RenderD7::OnScreen(Bottom);
     RenderD7::DrawRect(0, 0, 320, 240, RenderD7::Color::Hex("#EEEEEE"));
@@ -37,6 +37,6 @@ void DBSel::Logic(u32 hDown, u32 hHeld, u32 hUp, touchPosition touch)
     if (hDown & KEY_DOWN && dirsel < (int)dbld.db.e_list.size() - 1) dirsel++;
     if (hDown & KEY_LEFT && dirsel - 6 > 0) dirsel -= 6;
     if (hDown & KEY_RIGHT && dirsel + 6 < (int)dbld.db.e_list.size() - 1) dirsel += 6;
-    if (this->dirsel < this->dirsel) this->dirsel = this->dirsel;
-    else if (this->dirsel > this->dirsel + 6 - 1) this->SPos = this->dirsel - 6 + 1;
+    if (dirsel < this->SPos) this->SPos = dirsel;
+    else if (dirsel > this->SPos + 6 - 1) this->SPos = dirsel - 6 + 1;
 }
