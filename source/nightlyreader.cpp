@@ -30,10 +30,10 @@ void DBLoader::LoadDB(std::string link)
 	     auto const& collection = it.second;
 	     std::cout << "[" << section << "]" << std::endl;
              this->secs.push_back(section);
-	     for (int i = 1; i < (int)this->secs.size(); i++)
-	     {
-		     dbe = {ini[this->secs[i]]["name"], ini[this->secs[i]]["data"]};
-                     this->db.e_list.push_back(dbe);
-	     }
+     }
+     for (int i = 1; i < (int)this->secs.size(); i++)
+     {
+          dbe = {ini[this->secs[i]]["name"], ini[this->secs[i]]["data"]};
+          this->db.e_list.push_back(dbe);
      }
 }
