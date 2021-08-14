@@ -6,4 +6,6 @@ class DBSel : public RenderD7::Scene
      DBSel(){}
      void Draw(void) const override;
      void Logic(u32 hDown, u32 hHeld, u32 hUp, touchPosition touch) override;
+     private:
+     int dirsel = 0;
 };
