@@ -21,7 +21,7 @@ void DBSel::Draw(void) const
 void DBSel::Logic(u32 hDown, u32 hHeld, u32 hUp, touchPosition touch)
 {
     if (hDown & KEY_UP && dirsel > 0) dirsel--;
-    if (hDown & KEY_DOWN && dirsel < (int)dbld.e_list.size() - 1) dirsel++;
+    if (hDown & KEY_DOWN && dirsel < (int)dbld.db.e_list.size() - 1) dirsel++;
     if (hDown & KEY_LEFT && dirsel - 6 > 0) dirsel -= 6;
-    if (hDown & KEY_RIGHT && dirsel + 6 < (int)dbld.e_list.size() - 1) dirsel += 6;
+    if (hDown & KEY_RIGHT && dirsel + 6 < (int)dbld.db.e_list.size() - 1) dirsel += 6;
 }
