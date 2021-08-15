@@ -9,5 +9,5 @@ class DBSel : public RenderD7::Scene
      void Logic(u32 hDown, u32 hHeld, u32 hUp, touchPosition touch) override;
      private:
      DBLoader dbld;
-     int dirsel = 0;
+     int dirsel = 1;
 };
