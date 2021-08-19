@@ -24,30 +24,7 @@ void DBSel::Draw(void) const
     D_P();
     DrawFMBG();
     D_P();
-    std::string dirs;
-    D_P();
-    /*for (int i = this->dirsel < 9 ? 0 : this->dirsel - 9; (int)dbld.db.e_list.size() && i < ((this->dirsel < 9) ? 10 : this->dirsel + 1); i++)
-    {
-        D_P();
-        if (i == dirsel)
-        {
-            D_P();
-            dirs += "> " + dbld.db.e_list[i].name + "\n";
-            D_P();
-        }
-        else
-        {
-            dirs += dbld.db.e_list[i].name + "\n";
-            D_P();
-        } 
-    }
-    D_P();
-    for (uint i = 0; i < ((dbld.db.e_list.size() < 10) ? 10 - dbld.db.e_list.size() : 0); i++) {
-		dirs += "\n\n";
-	}*/
-    D_P();
-    RenderD7::DrawText(10, 30, 0.6f, RenderD7::Color::Hex("#111111"), dirs.c_str());
-    D_P();
+    
     RenderD7::OnScreen(Bottom);
     D_P();
     RenderD7::DrawRect(0, 0, 320, 240, RenderD7::Color::Hex("#EEEEEE"));
