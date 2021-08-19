@@ -59,7 +59,7 @@ void DBLoader::LoadEntry(std::string filename)
      }
      for (int i = 0; i < (int)this->secs.size(); i++)
      {
-          dbe = {ini[this->appsecs[i]]["name"], ini[this->appsecs[i]]["data"]};
+          dbe = {ini[this->appsecs[i]]["name"], ini[this->appsecs[i]]["author"], ini[this->appsecs[i]]["commit_tag"], ini[this->appsecs[i]]["desc"], ini[this->appsecs[i]]["version"], ini[this->appsecs[i]]["3dsx"], ini[this->appsecs[i]]["cia"]};
           this->versions.push_back(dbe);
      }
 }
