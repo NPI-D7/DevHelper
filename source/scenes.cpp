@@ -26,7 +26,7 @@ void DBSel::Draw(void) const
     D_P();
     std::string dirs;
     D_P();
-    for (int i = this->dirsel < 9 ? 0 : this->dirsel - 9; (int)dbld.db.e_list.size() && i < ((this->dirsel < 9) ? 10 : this->dirsel + 1); i++)
+    /*for (int i = this->dirsel < 9 ? 0 : this->dirsel - 9; (int)dbld.db.e_list.size() && i < ((this->dirsel < 9) ? 10 : this->dirsel + 1); i++)
     {
         D_P();
         if (i == dirsel)
@@ -44,7 +44,7 @@ void DBSel::Draw(void) const
     D_P();
     for (uint i = 0; i < ((dbld.db.e_list.size() < 10) ? 10 - dbld.db.e_list.size() : 0); i++) {
 		dirs += "\n\n";
-	}
+	}*/
     D_P();
     RenderD7::DrawText(10, 30, 0.6f, RenderD7::Color::Hex("#111111"), dirs.c_str());
     D_P();
