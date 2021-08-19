@@ -38,9 +38,9 @@ void DBLoader::LoadDB(std::string link)
              this->secs.push_back(section);
      }
      D_P();
-     for (int i = 1; i < (int)this->appsecs.size(); i++)
+     for (int i = 1; i < (int)this->secs.size(); i++)
      {
-          dbe = {ini[this->appsecs[i]]["name"], ini[this->appsecs[i]]["data"]};
+          dbe = {ini[this->secs[i]]["name"], ini[this->secs[i]]["data"]};
           this->db.e_list.push_back(dbe);
      }
      
