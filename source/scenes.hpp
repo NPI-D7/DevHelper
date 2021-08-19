@@ -1,7 +1,7 @@
 #include "renderd7.hpp"
 #include "nightlyreader.hpp"
 
-inline DBLoader dbld;
+static DBLoader dbld;
 class DBSel : public RenderD7::Scene
 {
      public:
