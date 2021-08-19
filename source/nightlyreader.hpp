@@ -35,17 +35,13 @@ class DBLoader
      ~DBLoader(){}
      void LoadDB(std::string link);
      void DownloadEntry(int index);
+     void LoadEntry(std::string filename);
      std::string GetRepoName(){ return this->db.reponame; }
      std::string GetRepoHost(){ return this->db.repo_host; }
      DB db;
+     std::vector<APPH> versions;
      private:
      std::vector<std::string> secs;
+     std::vector<std::string> appsecs;
 };
 
-class apploader
-{
-     public:
-     apploader(){}
-     ~apploader(){}
-     private:
-};
