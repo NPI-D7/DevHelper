@@ -1,6 +1,7 @@
 #include "renderd7.hpp"
 #include "nightlyreader.hpp"
 
+inline DBLoader dbld;
 class DBSel : public RenderD7::Scene
 {
      public:
@@ -8,7 +9,7 @@ class DBSel : public RenderD7::Scene
      void Draw(void) const override;
      void Logic(u32 hDown, u32 hHeld, u32 hUp, touchPosition touch) override;
      private:
-     DBLoader dbld;
+     //DBLoader dbld;
      int dirsel = 0;
      int SPos = 0;
      std::vector<RenderD7::TLBtn> lst = {
@@ -29,7 +30,7 @@ class appver : public RenderD7::Scene
      void Draw(void) const override;
      void Logic(u32 hDown, u32 hHeld, u32 hUp, touchPosition touch) override;
      private:
-     DBLoader dbld;
+     //DBLoader dbld;
      int dirsel = 0;
      int SPos = 0;
      std::vector<RenderD7::TLBtn> lst = {
