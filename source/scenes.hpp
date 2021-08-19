@@ -5,11 +5,9 @@ class DBSel : public RenderD7::Scene
 {
      public:
      DBSel();
-     DBLoader H(){ return this->dbld; }
      void Draw(void) const override;
      void Logic(u32 hDown, u32 hHeld, u32 hUp, touchPosition touch) override;
      private:
-     DBLoader dbld;
      int dirsel = 0;
      int SPos = 0;
      std::vector<RenderD7::TLBtn> lst = {
@@ -33,7 +31,6 @@ class appver : public RenderD7::Scene
      //DBLoader dbld;
      int dirsel = 0;
      int SPos = 0;
-     DBLoader dbld = DBSel::H();
      std::vector<RenderD7::TLBtn> lst = {
           {0, 30, 400, 30},
           {0, 60, 400, 30},
