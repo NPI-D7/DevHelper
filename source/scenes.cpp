@@ -61,7 +61,7 @@ void appver::Draw(void) const
     RenderD7::DrawTLBtns(lst, RenderD7::Color::Hex("#CCCCCC"), dirsel <= 6 ? dirsel : 6);
     for (int Idx = 0; Idx < 6 && Idx < (int)dbld.versions.size(); Idx++) {
 
-		RenderD7::DrawTextCentered(0, this->lst[Idx].y + 7, 0.5f, RenderD7::Color::Hex("#111111"), dbld.versions[SPos + Idx].version, 400);
+		RenderD7::DrawTextCentered(0, this->lst[Idx].y + 7, 0.5f, RenderD7::Color::Hex("#111111"), dbld.versions[SPos + Idx].ver, 400);
     };
     RenderD7::OnScreen(Bottom);
     D_P();
