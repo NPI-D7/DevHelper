@@ -37,10 +37,29 @@ void DBLoader::LoadDB(std::string link)
              this->secs.push_back(section);
      }
      D_P();
-     for (int i = 1; i < (int)this->secs.size(); i++)
+     for (int i = 1; i < (int)this->appsecs.size(); i++)
      {
-          dbe = {ini[this->secs[i]]["name"], ini[this->secs[i]]["data"]};
+          dbe = {ini[this->appsecs[i]]["name"], ini[this->appsecs[i]]["data"]};
           this->db.e_list.push_back(dbe);
      }
      D_P();
+}
+
+void DBLoader::LoadEntry(std::string filename)
+{
+     INI::INIFile file("sdmc:/DevHelper/dbs/" + filename);
+     INI::INIStructure ini;
+     file.read(ini);
+     APPH dbe;
+     for (auto const& it : ini)
+     {
+	     auto const& section = it.first;
+	     std::cout << "[" << section << "]" << std::endl;
+             this->appsecs.push_back(section);
+     }
+     for (int i = 0; i < (int)this->secs.size(); i++)
+     {
+          dbe = {ini[this->appsecs[i]]["name"], ini[this->appsecs[i]]["data"]};
+          this->versions.push_back(dbe);
+     }
 }
