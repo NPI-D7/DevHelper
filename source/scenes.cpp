@@ -24,7 +24,11 @@ void DBSel::Draw(void) const
     D_P();
     DrawFMBG();
     D_P();
-    
+    RenderD7::DrawTLBtns(lst, RenderD7::Color::Hex("#CCCCCC"), dirsel);
+    for (int Idx = 0; Idx < 6 && Idx < (int)this->dbld.db.e_list.size(); Idx++) {
+
+		RenderD7::DrawTextCentered(0, this->lst[Idx].y + 7, 0.5f, RenderD7::Color::Hex("#111111"), dbld.db.e_list[SPos + Idx].name, 400);
+    };
     RenderD7::OnScreen(Bottom);
     D_P();
     RenderD7::DrawRect(0, 0, 320, 240, RenderD7::Color::Hex("#EEEEEE"));
