@@ -1,7 +1,7 @@
 #include "scenes.hpp"
 
 std::string standard = "https://github.com/NPI-D7/nightlys/raw/master/nightlys-Database.ini";
-DBLoader dbld;
+
 
 void DrawFMBG()
 {
