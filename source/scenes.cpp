@@ -68,6 +68,7 @@ void DBSel::Logic(u32 hDown, u32 hHeld, u32 hUp, touchPosition touch)
      }
      if (state == APPV) {
          if (hDown & KEY_A) {dirsel = 0;}
+         if (hDown & KEY_B) {dirsel = 0; state = DB;}
          if (hDown & KEY_UP && dirsel > 0) dirsel--;
          if (hDown & KEY_DOWN && dirsel < (int)dbld.versions.size() - 1) dirsel++;
          if (hDown & KEY_LEFT && dirsel - 6 > 0) dirsel -= 6;
