@@ -58,7 +58,7 @@ void DBSel::Draw(void) const
 void DBSel::Logic(u32 hDown, u32 hHeld, u32 hUp, touchPosition touch)
 {
      if (state == DB) {
-         if (hDown & KEY_A) {dbld.DownloadEntry(dirsel); state = APPV;}
+         if (hDown & KEY_A) {dirsel = 0; dbld.DownloadEntry(dirsel); state = APPV;}
          if (hDown & KEY_UP && dirsel > 0) dirsel--;
          if (hDown & KEY_DOWN && dirsel < (int)dbld.db.e_list.size() - 1) dirsel++;
          if (hDown & KEY_LEFT && dirsel - 6 > 0) dirsel -= 6;
@@ -67,7 +67,7 @@ void DBSel::Logic(u32 hDown, u32 hHeld, u32 hUp, touchPosition touch)
          else if (dirsel > this->SPos + 6 - 1) this->SPos = dirsel - 6 + 1;
      }
      if (state == APPV) {
-        // if (hDown & KEY_A) dbld.DownloadEntry(dirsel);
+         if (hDown & KEY_A) {dirsel = 0;}
          if (hDown & KEY_UP && dirsel > 0) dirsel--;
          if (hDown & KEY_DOWN && dirsel < (int)dbld.versions.size() - 1) dirsel++;
          if (hDown & KEY_LEFT && dirsel - 6 > 0) dirsel -= 6;
