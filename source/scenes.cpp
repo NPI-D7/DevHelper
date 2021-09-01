@@ -47,37 +47,3 @@ void DBSel::Logic(u32 hDown, u32 hHeld, u32 hUp, touchPosition touch)
     if (dirsel < this->SPos) this->SPos = dirsel;
     else if (dirsel > this->SPos + 6 - 1) this->SPos = dirsel - 6 + 1;
 }
-
-appver::appver()
-{
-    D_P();
-}
-void appver::Draw(void) const
-{
-    RenderD7::OnScreen(Top);
-    D_P();
-    RenderD7::DrawRect(0, 0, 400, 240, RenderD7::Color::Hex("#EEEEEE"));
-    D_P();
-    DrawFMBG();
-    D_P();
-    RenderD7::DrawTLBtns(lst, RenderD7::Color::Hex("#CCCCCC"), dirsel <= 6 ? dirsel : 6);
-    for (int Idx = 0; Idx < 6 && Idx < (int)dbld.versions.size(); Idx++) {
-
-		RenderD7::DrawTextCentered(0, this->lst[Idx].y + 7, 0.5f, RenderD7::Color::Hex("#111111"), dbld.versions[SPos + Idx].ver, 400);
-    };
-    RenderD7::OnScreen(Bottom);
-    D_P();
-    RenderD7::DrawRect(0, 0, 320, 240, RenderD7::Color::Hex("#EEEEEE"));
-    D_P();
-}
-
-void appver::Logic(u32 hDown, u32 hHeld, u32 hUp, touchPosition touch)
-{
-    if (hDown & KEY_A) dbld.DownloadEntry(dirsel);
-    if (hDown & KEY_UP && dirsel > 0) dirsel--;
-    if (hDown & KEY_DOWN && dirsel < (int)dbld.versions.size() - 1) dirsel++;
-    if (hDown & KEY_LEFT && dirsel - 6 > 0) dirsel -= 6;
-    if (hDown & KEY_RIGHT && dirsel + 6 < (int)dbld.versions.size() - 1) dirsel += 6;
-    if (dirsel < this->SPos) this->SPos = dirsel;
-    else if (dirsel > this->SPos + 6 - 1) this->SPos = dirsel - 6 + 1;
-}
