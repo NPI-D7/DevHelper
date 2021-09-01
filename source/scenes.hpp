@@ -1,6 +1,10 @@
 #include "renderd7.hpp"
 #include "nightlyreader.hpp"
 
+enum MState{
+     DB,
+     APPV
+};
 class DBSel : public RenderD7::Scene
 {
      public:
@@ -11,6 +15,7 @@ class DBSel : public RenderD7::Scene
      int dirsel = 0;
      int SPos = 0;
      DBLoader dbld;
+     MState state = DB;
      std::vector<RenderD7::TLBtn> lst = {
           {0, 30, 400, 30},
           {0, 60, 400, 30},
