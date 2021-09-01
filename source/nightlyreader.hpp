@@ -35,7 +35,7 @@ class DBLoader
      ~DBLoader(){}
      void LoadDB(std::string link);
      void DownloadEntry(int index);
-     void LoadEntry(std::string filename);
+     void LoadEntry(int index);
      std::string GetRepoName(){ return this->db.reponame; }
      std::string GetRepoHost(){ return this->db.repo_host; }
      DB db;
