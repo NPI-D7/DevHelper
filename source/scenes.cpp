@@ -64,7 +64,7 @@ void DBSel::Logic(u32 hDown, u32 hHeld, u32 hUp, touchPosition touch)
          if (hDown & KEY_LEFT && dirsel - 6 > 0) dirsel -= 6;
          if (hDown & KEY_RIGHT && dirsel + 6 < (int)dbld.db.e_list.size() - 1) dirsel += 6;
          if (dirsel < this->SPos) this->SPos = dirsel;
-         else if (dirsel > this->SPos + 6 - 1) this->SPos = dirsel - 6 + 1;
+         else if (dirsel > this->SPos + 7 - 1) this->SPos = dirsel - 7 + 1;
      }
      if (state == APPV) {
          if (hDown & KEY_A) {dirsel = 0;}
@@ -74,6 +74,6 @@ void DBSel::Logic(u32 hDown, u32 hHeld, u32 hUp, touchPosition touch)
          if (hDown & KEY_LEFT && dirsel - 6 > 0) dirsel -= 6;
          if (hDown & KEY_RIGHT && dirsel + 6 < (int)dbld.versions.size() - 1) dirsel += 6;
          if (dirsel < this->SPos) this->SPos = dirsel;
-         else if (dirsel > this->SPos + 6 - 1) this->SPos = dirsel - 6 + 1;
+         else if (dirsel > this->SPos + 7 - 1) this->SPos = dirsel - 7 + 1;
      }
 }
