@@ -12,7 +12,6 @@ void DBLoader::DownloadEntry(int index)
      if (index <= (int)this->db.e_list.size() + 1) downloadToFile(this->db.e_list[index].dl_link, "sdmc:/DevHelper/dbs/" + DBLoader::GetRepoName() + "/" + GetFileName<std::string>(this->db.e_list[index].dl_link));
      else {/** Do Nothing Yet*/}
      D_P();
-     this->LoadEntry(GetFileName<std::string>(this->db.e_list[index].dl_link));
      D_P();
 }
 
@@ -49,9 +48,9 @@ void DBLoader::LoadDB(std::string link)
      D_P();
 }
 
-void DBLoader::LoadEntry(std::string filename)
+void DBLoader::LoadEntry(int index)
 {
-     INI::INIFile file("sdmc:/DevHelper/dbs/" + filename);
+     INI::INIFile file("sdmc:/DevHelper/dbs/" + GetFileName<std::string>(this->db.e_list[index].dl_link));
      D_P();
      INI::INIStructure ini;
      D_P();
