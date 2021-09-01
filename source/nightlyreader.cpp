@@ -50,7 +50,7 @@ void DBLoader::LoadDB(std::string link)
 
 void DBLoader::LoadEntry(int index)
 {
-     INI::INIFile file("sdmc:/DevHelper/dbs/" + GetFileName<std::string>(this->db.e_list[index].dl_link));
+     INI::INIFile file("sdmc:/DevHelper/dbs/" + DBLoader::GetRepoName() + "/" + GetFileName<std::string>(this->db.e_list[index].dl_link));
      D_P();
      INI::INIStructure ini;
      D_P();
