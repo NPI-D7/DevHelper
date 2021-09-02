@@ -6,7 +6,6 @@
 void DBLoader::DownloadEntry(int index)
 {
      this->versions.clear();
-     this->versions.resize(0);
      std::string s = "sdmc:/DevHelper/dbs/" + DBLoader::GetRepoName() + "/";
      mkdir("sdmc:/DevHelper/", 0777);
      mkdir("sdmc:/DevHelper/dbs/", 0777);
