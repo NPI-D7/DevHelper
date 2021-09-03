@@ -6,6 +6,7 @@
 void DBLoader::DownloadEntry(int index)
 {
      this->versions.clear();
+     delete[] versions;
      std::string s = "sdmc:/DevHelper/dbs/" + DBLoader::GetRepoName() + "/";
      mkdir("sdmc:/DevHelper/", 0777);
      mkdir("sdmc:/DevHelper/dbs/", 0777);
@@ -51,6 +52,7 @@ void DBLoader::LoadDB(std::string link)
 
 void DBLoader::LoadEntry(int index)
 {
+     versions = new std::vector<APPH>;
      INI::INIFile file("sdmc:/DevHelper/dbs/" + DBLoader::GetRepoName() + "/" + GetFileName<std::string>(this->db.e_list[index].dl_link));
      D_P();
      INI::INIStructure ini;
