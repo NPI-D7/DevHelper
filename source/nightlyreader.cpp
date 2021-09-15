@@ -12,7 +12,7 @@ void DBLoader::DownloadEntry(int index)
      mkdir("sdmc:/DevHelper/dbs/", 0777);
      mkdir(s.c_str(), 0777);
      if (index <= (int)this->db.e_list.size() + 1) downloadToFile(this->db.e_list[index].dl_link, "sdmc:/DevHelper/dbs/" + DBLoader::GetRepoName() + "/" + GetFileName<std::string>(this->db.e_list[index].dl_link));
-     else {/** Do Nothing Yet*/}
+     else {/** Do Nothing Yet!*/}
      D_P();
      D_P();
 }
