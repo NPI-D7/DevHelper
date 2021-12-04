@@ -5,7 +5,6 @@
 int main()
 {
     RenderD7::Init::Main("Dev-Helper");
-   // consoleInit(GFX_BOTTOM, NULL);
     RenderD7::Scene::Load(std::make_unique<DBSel>());
     while(RenderD7::MainLoop())
     {
