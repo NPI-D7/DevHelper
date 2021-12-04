@@ -52,7 +52,6 @@ void DBLoader::LoadDB(std::string link)
 
 void DBLoader::LoadEntry(int index)
 {
-     versions = new std::vector<APPH>;
      INI::INIFile file("sdmc:/DevHelper/dbs/" + DBLoader::GetRepoName() + "/" + GetFileName<std::string>(this->db.e_list[index].dl_link));
      D_P();
      INI::INIStructure ini;
