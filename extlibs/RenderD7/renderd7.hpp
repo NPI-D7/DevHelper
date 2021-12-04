@@ -133,6 +133,17 @@ namespace RenderD7
 
     namespace Color
     {
+        struct rgba
+        {
+            u8 r, g, b, a;
+        };
+        class RGBA{
+            public:
+            RGBA(u8 r, u8 g, u8 b, u8 a) : m_r(r),m_g(g),m_b(b),m_a(a){}
+            u32 toRGBA() const {return (m_r << 24) | (m_g << 16) | (m_b << 8) | m_a;}
+            
+            u8 m_r, m_g ,m_b, m_a;
+        };
         u32 Hex(const std::string color, u8 a = 255);
     }
     void DrawMetrikOvl();
@@ -144,7 +155,7 @@ namespace RenderD7
     }
     namespace Init
     {
-        Result Main();
+        Result Main(std::string app_name = "RD7Game");
         void NdspFirm(bool useit = false);
     }
     namespace Exit
@@ -161,6 +172,7 @@ namespace RenderD7
     namespace Convert
     {
         inline float StringtoFloat(std::string inp){return std::atof(inp.c_str());}
+        inline int StringtoInt(std::string inp){return std::atoi(inp.c_str());}
         inline bool FloatToBool(float inp){if(inp == 1)return true; else return false;}
     }
     namespace FS
@@ -252,8 +264,31 @@ namespace RenderD7
         std::string path;
         bool isDir;
     };
+    
+    /*class Console
+    {
+         public:
+           Console();
+           Console(int x, int y, int w, int h, int a = 255);
+           Console(int x, int y, int w, int h, RenderD7::rgba col);
+           Console(int x, int y, int w, int h, std::string name, RenderD7::rgba col = {255, 255, 255, 255}, RenderD7::rgba barcol = {0, 0, 0, 255}, RenderD7::rgba outlinecol = {222, 222, 222, 255});
+           void On(C3D_RenderTarget *t_cscreen);
+           bool Update();
+           ~Console();
+         private:
+           std::vector<std::string> m_lines;
+           int x, y, w, h;
+           std::string m_name = "";
+           C3D_RenderTarget *cscreen;
+           bool m_nconsole = false;
+           bool m_mconsole = false;
+           RenderD7::rgba color = {255, 255, 255, 255};
+           RenderD7::rgba outlinecol = {222, 222, 222, 255};
+           RenderD7::rgba barcolor = {0, 0, 0, 255};
+    };*/
 
     bool NameIsEndingWith(const std::string &name, const std::vector<std::string> &extensions);
     void GetDirContentsExt(std::vector<RenderD7::DirContent> &dircontent, const std::vector<std::string> &extensions);
     void GetDirContents(std::vector<RenderD7::DirContent> &dircontent);
+
 } /// RenderD7

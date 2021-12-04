@@ -13,9 +13,13 @@ std::stack<std::unique_ptr<RenderD7::Scene>> RenderD7::Scene::scenes;
 bool usedbgmsg = false;
 std::string dspststus = "Not Initialisized!";
 
+int cobj___;
+int maxobj__;
 //INI::INIFile cfgfile;
 std::unique_ptr<INI::INIFile> cfgfile = nullptr;
 INI::INIStructure cfgstruct;
+
+std::string D_app_name;
 
 u32 d7_hDown;
 u32 d7_hHeld;
@@ -34,9 +38,13 @@ float d11framerate = 0;
 
 //Metrik-------------------------------------
 u32 mt_color;
+u32 mt_txtcolor;
+int mt_screen;
+float mt_txtSize;
+bool metrikd = false;
 //-------------------------------------------
 bool currentScreen = false;
-bool metrikd = false;
+
 C3D_RenderTarget* Top;
 C3D_RenderTarget* TopRight;
 C3D_RenderTarget* Bottom;
@@ -264,6 +272,9 @@ bool RenderD7::MainLoop()
 	C2D_TargetClear(Top, C2D_Color32(0, 0, 0, 0));
 	C2D_TargetClear(Bottom, C2D_Color32(0, 0, 0, 0));
     frameloop();
+        RenderD7::Scene::doDraw();
+        RenderD7::Scene::doLogic(d7_hDown, d7_hHeld, d7_hUp, d7_touch);
+        
 	if (metrikd)RenderD7::DrawMetrikOvl();
     return running;
 }
@@ -517,16 +528,23 @@ void MetrikThread(RenderD7::Parameter param) {
         RenderD7::Thread::sleep(1000 * 1); // wait; also, this is needed to allow for concurrency (refer to the documentation for m3d::Thread::sleep())
     }
 }
-Result RenderD7::Init::Main()
+Result RenderD7::Init::Main(std::string app_name)
 {
     gfxInitDefault();
     aptInit();
     romfsInit();
     cfguInit();
+    if (cobj___){maxobj__ = cobj___;}
+    if (!cobj___){maxobj__ = C2D_DEFAULT_MAX_OBJECTS;}
+    D_app_name = app_name;
+    std::string cfgpath = "sdmc:/RenderD7/Apps/";
+    cfgpath += D_app_name;
 	mkdir("sdmc:/RenderD7/", 0777);
-	if (!FS::FileExist("sdmc:/RenderD7/config.ini"))
+        mkdir("sdmc:/RenderD7/Apps", 0777);
+        mkdir(cfgpath.c_str(), 0777);
+	if (!FS::FileExist(cfgpath + "/config.ini"))
 	{
-		cfgfile = std::make_unique<INI::INIFile>("sdmc:/RenderD7/config.ini");
+		cfgfile = std::make_unique<INI::INIFile>(cfgpath+ "/config.ini");
 		cfgfile->read(cfgstruct);
 		cfgstruct["info"]["version"] = CFGVER;
 		cfgstruct["info"]["renderd7ver"] = RENDERD7VSTRING;
@@ -536,24 +554,31 @@ Result RenderD7::Init::Main()
 		cfgstruct["settings"]["super-reselution"] = "0";
 		cfgstruct["metrik-settings"]["enableoverlay"] = "0";
 		cfgstruct["metrik-settings"]["Screen"] = "0";
-		cfgstruct["metrik-settings"]["Color"] = "#ffffff";
-		cfgstruct["metrik-settings"]["ColorA"] = "255";
+		cfgstruct["metrik-settings"]["txtColor"] = "#ffffff";
+		cfgstruct["metrik-settings"]["txtColorA"] = "255";
+                cfgstruct["metrik-settings"]["ColorA"] = "255";
+                cfgstruct["metrik-settings"]["Color"] = "#000000";
+                cfgstruct["metrik-settings"]["txtSize"] = "0.7f";
 		cfgfile->write(cfgstruct);
 	}
-	cfgfile = std::make_unique<INI::INIFile>("sdmc:/RenderD7/config.ini");
+	cfgfile = std::make_unique<INI::INIFile>(cfgpath+ "/config.ini");
 	cfgfile->read(cfgstruct);
 	std::string Fps = cfgstruct["settings"]["forceFrameRate"];
 	C3D_FrameRate(RenderD7::Convert::StringtoFloat(Fps));
 	metrikd = RenderD7::Convert::FloatToBool(RenderD7::Convert::StringtoFloat(cfgstruct["metrik-settings"]["enableoverlay"]));
-	mt_color = RenderD7::Color::Hex(cfgstruct["metrik-settings"]["Color"], (u8)RenderD7::Convert::StringtoFloat(cfgstruct["metrik-settings"]["ColorA"]));
-    osSetSpeedupEnable(true);
+	mt_txtcolor = RenderD7::Color::Hex(cfgstruct["metrik-settings"]["txtColor"], (u8)RenderD7::Convert::StringtoFloat(cfgstruct["metrik-settings"]["txtColorA"]));
+        mt_color = RenderD7::Color::Hex(cfgstruct["metrik-settings"]["Color"], (u8)RenderD7::Convert::StringtoFloat(cfgstruct["metrik-settings"]["ColorA"]));
+        mt_txtSize = RenderD7::Convert::StringtoFloat(cfgstruct["metrik-settings"]["txtSize"]);
+        mt_screen = RenderD7::Convert::StringtoInt(cfgstruct["metrik-settings"]["Screen"]);
+        
+        osSetSpeedupEnable(true);
 	/*if(metrikd)
 	{
 		RenderD7::Thread tr(MetrikThread);
 		tr.start();
 	}*/
     C3D_Init(C3D_DEFAULT_CMDBUF_SIZE);
-	C2D_Init(C2D_DEFAULT_MAX_OBJECTS);
+	C2D_Init(size_t(maxobj__));
 	C2D_Prepare();
 	Top = C2D_CreateScreenTarget(GFX_TOP, GFX_LEFT);
 	TopRight = C2D_CreateScreenTarget(GFX_TOP, GFX_RIGHT);
@@ -795,6 +820,66 @@ void RenderD7::DrawList1(RenderD7::ScrollList1 &l, float txtsize, C3D_RenderTarg
 
 void RenderD7::DrawMetrikOvl()
 {
-	RenderD7::OnScreen(Top);
-	RenderD7::DrawText(0, 0, 0.6f, mt_color, "HI");
+        switch (mt_screen)
+        {
+            case 0:
+                RenderD7::OnScreen(Top);
+            case 1:
+                RenderD7::OnScreen(Bottom);
+            default:
+                RenderD7::OnScreen(Bottom);
+        }
+	RenderD7::DrawText(0, 0, mt_txtSize, mt_txtcolor, "FPS: " + RenderD7::GetFramerate());
 }
+
+/*RenderD7::Console::Console()
+{
+    this->x = 0;
+    this->y = 0;
+    this->w = 320;
+    this->h = 240;
+    this->color = {0, 0, 0, 255};
+}
+RenderD7::Console::Console(int x, int y, int w, int h, u8 a)
+{
+    this->x = x;
+    this->y = y;
+    this->w = w;
+    this->h = h;
+    this->color = {0, 0, 0, a};
+    
+}
+RenderD7::Console::Console(int x, int y, int w, int h, RenderD7::rgba col)
+{
+    this->x = x;
+    this->y = y;
+    this->w = w;
+    this->h = h;
+    this->color = col;
+}
+RenderD7::Console::Console(int x, int y, int w, int h, std::string name, RenderD7::rgba col, RenderD7::rgba barcol, RenderD7::rgba outlinecol)
+{
+    this->x = x;
+    this->y = y;
+    this->w = w;
+    this->h = h;
+    this->color = col;
+    this->outlinecol = outlinecol;
+    this->barcolor = barcol;
+    this->m_name = name;
+}
+RenderD7::Console::~Console()
+{
+
+}
+void RenderD7::Console::On(C3D_RenderTarget *t_cscreen)
+{
+     this->cscreen = t_cscreen;
+}
+bool RenderD7:: Console::Update()
+{
+     bool dr_sc = true;
+     return dr_sc;
+}
+
+*/
