@@ -15,7 +15,6 @@ DBSel::DBSel()
 {
     state = DB;
     dbld.LoadDB(standard);
-    D_P();
 }
 void DBSel::Draw(void) const
 {
