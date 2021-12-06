@@ -6,7 +6,6 @@
 void DBLoader::DownloadEntry(int index)
 {
      this->versions.clear();
-     this->db.e_list.clear();
      std::string s = "sdmc:/DevHelper/dbs/" + DBLoader::GetRepoName() + "/";
      mkdir("sdmc:/DevHelper/", 0777);
      mkdir("sdmc:/DevHelper/dbs/", 0777);
@@ -59,6 +58,8 @@ void DBLoader::LoadEntry(int index)
      file.read(ini);
      D_P();
      APPH dbe;
+     this->appsecs.clear();
+     this->versions.clear();
      D_P();
      for (auto const& it : ini)
      {
