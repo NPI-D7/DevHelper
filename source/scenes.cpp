@@ -46,7 +46,7 @@ void DBSel::Draw(void) const
          RenderD7::DrawTLBtns(lst, RenderD7::Color::Hex("#CCCCCC"), SPos);
          for (int Idx = 0; Idx < 7 && Idx < (int)dbld.versions.size(); Idx++) {
      
-	     	RenderD7::DrawTextCentered(0, this->lst[Idx].y + 7, 0.5f, RenderD7::Color::Hex("#111111"), dbld.versions[SPos + Idx].ver, 400);
+	     	RenderD7::DrawTextCentered(0, this->lst[Idx].y + 7, 0.5f, RenderD7::Color::Hex("#EEEEEE"), dbld.versions[SPos + Idx].ver, 400);
          };
          RenderD7::OnScreen(Bottom);
          D_P();
