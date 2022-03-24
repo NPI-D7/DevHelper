@@ -16,6 +16,16 @@ void DBLoader::DownloadEntry(int index)
      D_P();
 }
 
+void DBLoader::Download3dsx(int index)
+{
+     std::string s = "sdmc:/3ds/";
+     mkdir(s.c_str(), 0777);
+     if (index <= (int)this->db.e_list.size() + 1) downloadToFile(this->versions[index].dl_3dsx, s + GetFileName<std::string>(this->versions[index].dl_3dsx));
+     else {/** Do Nothing Yet!*/}
+     D_P();
+     D_P();
+}
+
 void DBLoader::LoadDB(std::string link)
 {
      D_P();

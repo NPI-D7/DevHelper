@@ -35,6 +35,7 @@ class DBLoader
      ~DBLoader(){}
      void LoadDB(std::string link);
      void DownloadEntry(int index);
+     void Download3dsx(int index);
      void LoadEntry(int index);
      void DownloadApp(int index, bool _3dsx = true);
      std::string GetRepoName(){ return this->db.reponame; }
