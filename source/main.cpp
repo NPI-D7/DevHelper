@@ -7,7 +7,7 @@ Log flog;
 
 int main()
 {
-    flog.Init("DevHelper.log");
+    flog.Init("sdmc:/DevHelper.log");
     RenderD7::Init::Main("Dev-Helper");
     flog.Write("Loaded RenderD7");
     RenderD7::Scene::Load(std::make_unique<DBSel>());
