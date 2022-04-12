@@ -1,6 +1,8 @@
 #include "scenes.hpp"
-
+#include "log.hpp"
 std::string standard = "https://github.com/NPI-D7/nightlys/raw/master/nightlys-Database.ini";
+
+extern Log flog;
 
 void DrawFMBG()
 {
@@ -13,12 +15,15 @@ void DrawFMBG()
 
 DBSel::DBSel()
 {
+    flog.Write("Loaded SetState");
     state = DB;
+    flog.Write("Loading DB");
     dbld.LoadDB(standard);
 }
 void DBSel::Draw(void) const
 {
      if (state == DB){
+         flog.Write("Draw DB STate");
          RenderD7::OnScreen(Top);
          D_P();
          RenderD7::DrawRect(0, 0, 400, 240, RenderD7::Color::Hex("#EEEEEE"));
@@ -36,6 +41,7 @@ void DBSel::Draw(void) const
          D_P();
      }
      if (state == APPV){
+         flog.Write("Draw Appv STate");
          RenderD7::OnScreen(Top);
          D_P();
          RenderD7::DrawRect(0, 0, 400, 240, RenderD7::Color::Hex("#EEEEEE"));
