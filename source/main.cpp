@@ -7,6 +7,11 @@ Log flog;
 
 int main()
 {
+    if (osGetWifiStrength() == 0)
+    {
+        RenderD7::Error::DisplayFatalError("DevHelper->Error", "You are not Connected To Wifi or your connection is bad.")
+    }
+     
     flog.Init("sdmc:/DevHelper.log");
     RenderD7::Init::Main("Dev-Helper");
     flog.Write("Loaded RenderD7");

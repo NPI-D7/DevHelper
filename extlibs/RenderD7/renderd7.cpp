@@ -216,6 +216,8 @@ void RenderD7::Error::DisplayFatalError(std::string toptext, std::string errorte
     RenderD7::DrawTextCentered(0, 0, 0.7f, DSEVENWHITE, toptext, 400);
 	RenderD7::DrawTextCentered(0, 100, 0.6f, DSEVENWHITE, errortext, 400);
 	RenderD7::DrawTextCentered(0, 200, 0.6f, DSEVENWHITE, "Press Start to Exit!", 400);
+	RenderD7::OnScreen(Bottom);
+	RenderD7::DrawTextCentered(0, 0, 0.6f, DSEVENWHITE, "You can Press B to get\nBack to the App.\nIn most cases your Console will Crash!", 400);
 	C3D_FrameEnd(0);
     while (error___)
 	{
@@ -223,7 +225,12 @@ void RenderD7::Error::DisplayFatalError(std::string toptext, std::string errorte
 		{
 			RenderD7::ExitApp();
 		}
-        }
+		if (d7_hDown & KEY_SELECT)
+		{
+			error___ = false;
+		}
+		
+    }
 }
 u32 RenderD7::Color::Hex(const std::string color, u8 a)
 {
