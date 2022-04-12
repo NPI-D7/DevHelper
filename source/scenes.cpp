@@ -69,7 +69,7 @@ void DBSel::Logic(u32 hDown, u32 hHeld, u32 hUp, touchPosition touch)
 {
      if (state == DB) {
          if (hDown & KEY_A) {
-            RenderD7::Msg::DisplayWithProgress("DevHelper->Download-3dsx", "Downloading 3dsx ...", (float)downloadNow, (float)downloadTotal, RenderD7::Color::Hex("#00ff00"));
+            RenderD7::Msg::DisplayWithProgress("DevHelper->Download-APPV", "Downloading App Data ...", (float)downloadNow, (float)downloadTotal, RenderD7::Color::Hex("#00ff00"));
             dbld.DownloadEntry(dirsel);
             dbld.LoadEntry(dirsel); state = APPV; dirsel = 0;
         }
@@ -81,7 +81,10 @@ void DBSel::Logic(u32 hDown, u32 hHeld, u32 hUp, touchPosition touch)
          else if (dirsel > this->SPos + 7 - 1) this->SPos = dirsel - 7 + 1;
      }
      if (state == APPV) {
-         if (hDown & KEY_A) {dbld.Download3dsx(dirsel);}
+         if (hDown & KEY_A) {
+             RenderD7::Msg::DisplayWithProgress("DevHelper->Download-3dsx", "Downloading 3dsx ...", (float)downloadNow, (float)downloadTotal, RenderD7::Color::Hex("#00ff00"));
+             dbld.Download3dsx(dirsel);
+     }
          if (hDown & KEY_B) {dirsel = 0; state = DB;}
          if (hDown & KEY_UP && dirsel > 0) dirsel--;
          if (hDown & KEY_DOWN && dirsel < (int)dbld.versions.size() - 1) dirsel++;
