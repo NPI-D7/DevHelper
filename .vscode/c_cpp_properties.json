@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "name": "3DS | Windows",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "C:/devkitpro/libctru/include/**",
+                "C:/devkitpro/devkitARM/include/**",
+                "C:/devkitpro/devkitARM/arm-none-eabi/include/**",
+                "C:/devkitpro/portlibs/3ds/include/**"
+            ],
+            "compilerPath": "C:/devkitpro/devkitARM/bin/arm-none-eabi-g++.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++20",
+            "intelliSenseMode": "gcc-x64",
+            "browse": {
+                "path": [],
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "compilerArgs": []
+        }
+    ],
+    "version": 4
+}
