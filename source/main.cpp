@@ -9,7 +9,7 @@ int main()
 {
     if (osGetWifiStrength() == 0)
     {
-        RenderD7::Error::DisplayFatalError("DevHelper->Error", "You are not Connected To Wifi or your connection is bad.")
+        RenderD7::Error::DisplayFatalError("DevHelper->Error", "You are not Connected To Wifi or your connection is bad.");
     }
      
     flog.Init("sdmc:/DevHelper.log");
