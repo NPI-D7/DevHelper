@@ -1,7 +1,11 @@
 #include "scenes.hpp"
 #include "log.hpp"
+#include <curl/curl.h>
+
 std::string standard = "https://github.com/NPI-D7/nightlys/raw/master/nightlys-Database.ini";
 
+extern curl_off_t downloadTotal;
+extern curl_off_t downloadNow;
 extern Log flog;
 
 void DrawFMBG()
@@ -18,6 +22,7 @@ DBSel::DBSel()
     flog.Write("Loaded SetState");
     state = DB;
     flog.Write("Loading DB");
+    RenderD7::Msg::Display("Dev_Helper->LoadingDB", "Loading Database ...", Top);
     dbld.LoadDB(standard);
 }
 void DBSel::Draw(void) const
@@ -63,7 +68,11 @@ void DBSel::Draw(void) const
 void DBSel::Logic(u32 hDown, u32 hHeld, u32 hUp, touchPosition touch)
 {
      if (state == DB) {
-         if (hDown & KEY_A) {dbld.DownloadEntry(dirsel); dbld.LoadEntry(dirsel); state = APPV; dirsel = 0;}
+         if (hDown & KEY_A) {
+            RenderD7::Msg::DisplayWithProgress("DevHelper->Download-3dsx", "Downloading 3dsx ...", (float)downloadNow, (float)downloadTotal, RenderD7::Color::Hex("#00ff00"));
+            dbld.DownloadEntry(dirsel);
+            dbld.LoadEntry(dirsel); state = APPV; dirsel = 0;
+        }
          if (hDown & KEY_UP && dirsel > 0) dirsel--;
          if (hDown & KEY_DOWN && dirsel < (int)dbld.db.e_list.size() - 1) dirsel++;
          if (hDown & KEY_LEFT && dirsel - 6 > 0) dirsel -= 6;
