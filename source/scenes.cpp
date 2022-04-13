@@ -23,42 +23,42 @@ DBSel::DBSel()
 }
 void DBSel::Draw(void) const
 {
-     if (state == DB){
-         flog.Write("Draw DB STate");
-         RenderD7::OnScreen(Top);
-         D_P();
-         RenderD7::DrawRect(0, 0, 400, 240, RenderD7::Color::Hex("#EEEEEE"));
-         D_P();
-         DrawFMBG();
-         D_P();
-         RenderD7::DrawTLBtns(lst, RenderD7::Color::Hex("#CCCCCC"), dirsel <= 6 ? dirsel : 6);
-         for (int Idx = 0; Idx < 7 && Idx < (int)dbld.db.e_list.size(); Idx++) {
+    if (state == DB){
+        flog.Write("Draw DB STate");
+        RenderD7::OnScreen(Top);
+        D_P();
+        RenderD7::DrawRect(0, 0, 400, 240, RenderD7::Color::Hex("#EEEEEE"));
+        D_P();
+        DrawFMBG();
+        D_P();
+        RenderD7::DrawTLBtns(lst, RenderD7::Color::Hex("#CCCCCC"), dirsel <= 6 ? dirsel : 6);
+        for (int Idx = 0; Idx < 7 && Idx < (int)dbld.db.e_list.size(); Idx++) {
      
 	     	RenderD7::DrawTextCentered(0, this->lst[Idx].y + 7, 0.5f, RenderD7::Color::Hex("#EEEEEE"), dbld.db.e_list[SPos + Idx].name, 400);
-         };
-         RenderD7::OnScreen(Bottom);
-         D_P();
-         RenderD7::DrawRect(0, 0, 320, 240, RenderD7::Color::Hex("#EEEEEE"));
-         D_P();
-     }
-     if (state == APPV){
-         flog.Write("Draw Appv STate");
-         RenderD7::OnScreen(Top);
-         D_P();
-         RenderD7::DrawRect(0, 0, 400, 240, RenderD7::Color::Hex("#EEEEEE"));
-         D_P();
-         DrawFMBG();
-         D_P();
-         RenderD7::DrawTLBtns(lst, RenderD7::Color::Hex("#CCCCCC"), SPos);
-         for (int Idx = 0; Idx < 7 && Idx < (int)dbld.versions.size(); Idx++) {
+        };
+        RenderD7::OnScreen(Bottom);
+        D_P();
+        RenderD7::DrawRect(0, 0, 320, 240, RenderD7::Color::Hex("#EEEEEE"));
+        D_P();
+    }
+    if (state == APPV){
+        flog.Write("Draw Appv STate");
+        RenderD7::OnScreen(Top);
+        D_P();
+        RenderD7::DrawRect(0, 0, 400, 240, RenderD7::Color::Hex("#EEEEEE"));
+        D_P();
+        DrawFMBG();
+        D_P();
+        RenderD7::DrawTLBtns(lst, RenderD7::Color::Hex("#CCCCCC"), SPos);
+        for (int Idx = 0; Idx < 7 && Idx < (int)dbld.versions.size(); Idx++) {
      
 	     	RenderD7::DrawTextCentered(0, this->lst[Idx].y + 7, 0.5f, RenderD7::Color::Hex("#EEEEEE"), dbld.versions[SPos + Idx].ver, 400);
-         };
-         RenderD7::OnScreen(Bottom);
-         D_P();
-         RenderD7::DrawRect(0, 0, 320, 240, RenderD7::Color::Hex("#EEEEEE"));
-         D_P();
-     }
+        };
+        RenderD7::OnScreen(Bottom);
+        D_P();
+        RenderD7::DrawRect(0, 0, 320, 240, RenderD7::Color::Hex("#EEEEEE"));
+        D_P();
+    }
 }
 
 void DBSel::Logic(u32 hDown, u32 hHeld, u32 hUp, touchPosition touch)

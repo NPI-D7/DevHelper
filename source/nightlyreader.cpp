@@ -26,7 +26,7 @@ void DBLoader::Download3dsx(int index)
 {
      std::string s = "sdmc:/3ds/";
      mkdir(s.c_str(), 0777);
-     RenderD7::Msg::DisplayWithProgress("DevHelper->Download-3dsx", "Downloading 3dsx ...", (float)((u64)downloadNow), (float)((u64)downloadTotal), RenderD7::Color::Hex("#00ff00"));
+     RenderD7::Msg::Display("DevHelper->Download-3dsx", "Downloading 3dsx ...", Top);
      downloadToFile(this->versions[index].dl_3dsx, s + GetFileName<std::string>(this->versions[index].dl_3dsx));
      D_P();
      D_P();
@@ -41,10 +41,12 @@ void DBLoader::InstallCia(int index)
      {
           ___is___ = true;
      }
-     RenderD7::Msg::DisplayWithProgress("DevHelper->Download-3dsx", "Downloading Cia ...", (float)((u64)downloadNow), (float)((u64)downloadTotal), RenderD7::Color::Hex("#00ff00"));
+     RenderD7::Msg::Display("DevHelper->Download-Cia", "Downloading Cia ...", Top);
      downloadToFile(this->versions[index].dl_cia, s + GetFileName<std::string>(this->versions[index].dl_cia));
      std::string pathof = s + GetFileName<std::string>(this->versions[index].dl_cia);
+     RenderD7::Msg::Display("DevHelper->Download-Cia", "Installing Cia ...", Top);
      installCia(pathof.c_str(), ___is___);
+     RenderD7::Msg::Display("DevHelper->Download-Cia", "Deleting Cia ...", Top);
      remove(pathof.c_str());
      D_P();
      D_P();
