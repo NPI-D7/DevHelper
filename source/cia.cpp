@@ -1,4 +1,5 @@
 #include "cia.hpp"
+#include <stdio.h>
 
 Result CIA_LaunchTitle(u64 titleId, FS_MediaType mediaType) {
 	Result ret = 0;
