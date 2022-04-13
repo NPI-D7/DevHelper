@@ -35,11 +35,16 @@ void DBLoader::Download3dsx(int index)
 void DBLoader::InstallCia(int index)
 {
      std::string s = "sdmc:/3ds/";
+     bool ___is___ = false;
      mkdir(s.c_str(), 0777);
+     if (this->versions[index].Name == "DevHelper")
+     {
+          ___is___ = true;
+     }
      RenderD7::Msg::DisplayWithProgress("DevHelper->Download-3dsx", "Downloading Cia ...", (float)((u64)downloadNow), (float)((u64)downloadTotal), RenderD7::Color::Hex("#00ff00"));
      downloadToFile(this->versions[index].dl_cia, s + GetFileName<std::string>(this->versions[index].dl_cia));
      std::string pathof = s + GetFileName<std::string>(this->versions[index].dl_cia);
-     installCia(pathof.c_str(), false);
+     installCia(pathof.c_str(), ___is___);
      remove(pathof.c_str());
      D_P();
      D_P();
