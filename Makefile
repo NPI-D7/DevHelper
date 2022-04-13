@@ -66,8 +66,8 @@ VERSION_MICRO := 0
 #---------------------------------------------------------------------------------
 TARGET		:=	DevHelper
 BUILD		:=	build
-LIBTWEEN	:=  $(CURDIR)extlibs/RenderD7/external/tween-engine/
-UNIVCORE	:=	extlibs/RenderD7 extlibs/RenderD7/internal extlibs/RenderD7/external extlibs/RenderD7/external/tween-engine/include/ extlibs/RenderD7/external/tween-engine/include/TweenEngine extlibs/RenderD7/external/tween-engine/source
+LIBTWEEN	:=  $(CURDIR)/RenderD7/external/tween-engine/
+UNIVCORE	:=	RenderD7 RenderD7/internal RenderD7/external RenderD7/external/tween-engine/include/ RenderD7/external/tween-engine/include/TweenEngine RenderD7/external/tween-engine/source
 SOURCES		:=	$(UNIVCORE) source source/qr 
 DATA		:=	data
 INCLUDES	:=	$(UNIVCORE) source source/qr 

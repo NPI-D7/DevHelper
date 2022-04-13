@@ -28,6 +28,7 @@ void DBLoader::Download3dsx(int index)
 
 void DBLoader::LoadDB(std::string link)
 {
+     int dtmm = 0;
      D_P();
      mkdir("sdmc:/DevHelper/", 0777);
      mkdir("sdmc:/DevHelper/dbs/", 0777);
@@ -47,13 +48,16 @@ void DBLoader::LoadDB(std::string link)
      {
 	     auto const& section = it.first;
 	     std::cout << "[" << section << "]" << std::endl;
-             this->secs.push_back(section);
+          this->secs.push_back(section);
+          RenderD7::Msg::DisplayWithProgress("DevHelper", "Reading Database Sections", dtmm, (int)ini.size(), RenderD7::Color::Hex("#00ff00"));
+          dtmm++;
      }
      D_P();
      for (int i = 1; i < (int)this->secs.size(); i++)
      {
           dbe = {ini[this->secs[i]]["name"], ini[this->secs[i]]["data"]};
           this->db.e_list.push_back(dbe);
+          RenderD7::Msg::DisplayWithProgress("DevHelper", "Reading Database Data", i, (int)this->secs.size(), RenderD7::Color::Hex("#00ff00"));
      }
      
      D_P();
@@ -61,6 +65,7 @@ void DBLoader::LoadDB(std::string link)
 
 void DBLoader::LoadEntry(int index)
 {
+     int dtmm = 0;
      INI::INIFile file("sdmc:/DevHelper/dbs/" + DBLoader::GetRepoName() + "/" + GetFileName<std::string>(this->db.e_list[index].dl_link));
      D_P();
      INI::INIStructure ini;
@@ -76,12 +81,15 @@ void DBLoader::LoadEntry(int index)
              D_P();
 	     auto const& section = it.first;
 	     std::cout << "[" << section << "]" << std::endl;
-             this->appsecs.push_back(section);
+          this->appsecs.push_back(section);
+          RenderD7::Msg::DisplayWithProgress("DevHelper", "Reading APPV Sections", dtmm, (int)ini.size(), RenderD7::Color::Hex("#00ff00"));
+          dtmm++;
      }
      for (int i = 0; i < (int)this->appsecs.size(); i++)
      {
           D_P();
           dbe = {ini[this->appsecs[i]]["name"], ini[this->appsecs[i]]["author"], ini[this->appsecs[i]]["commit_tag"], ini[this->appsecs[i]]["desc"], ini[this->appsecs[i]]["version"], ini[this->appsecs[i]]["3dsx"], ini[this->appsecs[i]]["cia"]};
           this->versions.push_back(dbe);
+          RenderD7::Msg::DisplayWithProgress("DevHelper", "Reading APPV Data", i, (int)this->appsecs.size(), RenderD7::Color::Hex("#00ff00"));
      }
 }

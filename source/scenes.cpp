@@ -22,7 +22,6 @@ DBSel::DBSel()
     flog.Write("Loaded SetState");
     state = DB;
     flog.Write("Loading DB");
-    RenderD7::Msg::Display("Dev_Helper->LoadingDB", "Loading Database ...", Top);
     dbld.LoadDB(standard);
 }
 void DBSel::Draw(void) const
@@ -69,7 +68,6 @@ void DBSel::Logic(u32 hDown, u32 hHeld, u32 hUp, touchPosition touch)
 {
      if (state == DB) {
          if (hDown & KEY_A) {
-            RenderD7::Msg::DisplayWithProgress("DevHelper->Download-APPV", "Downloading App Data ...", (float)downloadNow, (float)downloadTotal, RenderD7::Color::Hex("#00ff00"));
             dbld.DownloadEntry(dirsel);
             dbld.LoadEntry(dirsel); state = APPV; dirsel = 0;
         }
