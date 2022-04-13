@@ -1,5 +1,11 @@
 #include "cia.hpp"
 #include <stdio.h>
+#include <cstdlib>
+extern "C"
+{
+	#include "fs.h"
+}
+
 
 Result CIA_LaunchTitle(u64 titleId, FS_MediaType mediaType) {
 	Result ret = 0;
@@ -72,8 +78,8 @@ Result installCia(const char * ciaPath, bool updatingSelf) {
 	AM_TitleEntry info;
 	Result ret = 0;
 	FS_MediaType media = MEDIATYPE_SD;
-
-	ret = openFile(&fileHandle, ciaPath, false);
+	FS_OpenArchive(&sdmc_archive, ARCHIVE_SDMC);
+	ret = FS_OpenFile(&fileHandle, sdmc_archive, ciaPath, (FS_OPEN_WRITE | FS_OPEN_CREATE), 0);
 	if (R_FAILED(ret)) {
 		printf("Error in:\nopenFile\n");
 		return ret;
@@ -133,6 +139,6 @@ Result installCia(const char * ciaPath, bool updatingSelf) {
 	if (updatingSelf) {
 		if (R_FAILED(ret = CIA_LaunchTitle(info.titleID, MEDIATYPE_SD)))	return ret;
 	}
-
+	FS_CloseArchive(sdmc_archive);
 	return 0;
 }
