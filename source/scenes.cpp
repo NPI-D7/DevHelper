@@ -1,11 +1,8 @@
 #include "scenes.hpp"
 #include "log.hpp"
-#include <curl/curl.h>
 
 std::string standard = "https://github.com/NPI-D7/nightlys/raw/master/nightlys-Database.ini";
 
-extern curl_off_t downloadTotal;
-extern curl_off_t downloadNow;
 extern Log flog;
 
 void DrawFMBG()
@@ -80,9 +77,11 @@ void DBSel::Logic(u32 hDown, u32 hHeld, u32 hUp, touchPosition touch)
      }
      if (state == APPV) {
          if (hDown & KEY_A) {
-             RenderD7::Msg::DisplayWithProgress("DevHelper->Download-3dsx", "Downloading 3dsx ...", (float)downloadNow, (float)downloadTotal, RenderD7::Color::Hex("#00ff00"));
              dbld.Download3dsx(dirsel);
-     }
+        }
+        if (hDown & KEY_Y) {
+             dbld.InstallCia(dirsel);
+        }
          if (hDown & KEY_B) {dirsel = 0; state = DB;}
          if (hDown & KEY_UP && dirsel > 0) dirsel--;
          if (hDown & KEY_DOWN && dirsel < (int)dbld.versions.size() - 1) dirsel++;

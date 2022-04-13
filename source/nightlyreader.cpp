@@ -2,6 +2,12 @@
 #include "renderd7.hpp"
 #include "download.hpp"
 #include <iostream>
+#include "cia.hpp"
+
+#include <curl/curl.h>
+
+extern curl_off_t downloadTotal;
+extern curl_off_t downloadNow;
 
 void DBLoader::DownloadEntry(int index)
 {
@@ -20,8 +26,21 @@ void DBLoader::Download3dsx(int index)
 {
      std::string s = "sdmc:/3ds/";
      mkdir(s.c_str(), 0777);
-     if (index <= (int)this->db.e_list.size() + 1) downloadToFile(this->versions[index].dl_3dsx, s + GetFileName<std::string>(this->versions[index].dl_3dsx));
-     else {/** Do Nothing Yet!*/}
+     RenderD7::Msg::DisplayWithProgress("DevHelper->Download-3dsx", "Downloading 3dsx ...", (float)((u64)downloadNow), (float)((u64)downloadTotal), RenderD7::Color::Hex("#00ff00"));
+     downloadToFile(this->versions[index].dl_3dsx, s + GetFileName<std::string>(this->versions[index].dl_3dsx));
+     D_P();
+     D_P();
+}
+
+void DBLoader::InstallCia(int index)
+{
+     std::string s = "sdmc:/3ds/";
+     mkdir(s.c_str(), 0777);
+     RenderD7::Msg::DisplayWithProgress("DevHelper->Download-3dsx", "Downloading Cia ...", (float)((u64)downloadNow), (float)((u64)downloadTotal), RenderD7::Color::Hex("#00ff00"));
+     downloadToFile(this->versions[index].dl_cia, s + GetFileName<std::string>(this->versions[index].dl_cia));
+     std::string pathof = s + GetFileName<std::string>(this->versions[index].dl_cia);
+     installCia(pathof.c_str(), false);
+     remove(pathof.c_str());
      D_P();
      D_P();
 }
