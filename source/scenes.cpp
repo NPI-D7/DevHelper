@@ -21,43 +21,70 @@ DBSel::DBSel()
     flog.Write("Loading DB");
     dbld.LoadDB(standard);
 }
+
+int timer = 0;
+
 void DBSel::Draw(void) const
 {
     if (state == DB){
         flog.Write("Draw DB STate");
         RenderD7::OnScreen(Top);
-        D_P();
         RenderD7::DrawRect(0, 0, 400, 240, RenderD7::Color::Hex("#EEEEEE"));
-        D_P();
+        RenderD7::DrawRect(0, 0, 400, 26, RenderD7::Color::Hex("#111111"));
+        RenderD7::DrawText(2, 4, 0.7f, RenderD7::Color::Hex("#eeeeee"), "DevHelper->DB Browser");
         DrawFMBG();
-        D_P();
-        RenderD7::DrawTLBtns(lst, RenderD7::Color::Hex("#CCCCCC"), dirsel <= 6 ? dirsel : 6);
-        for (int Idx = 0; Idx < 7 && Idx < (int)dbld.db.e_list.size(); Idx++) {
-     
-	     	RenderD7::DrawTextCentered(0, this->lst[Idx].y + 7, 0.5f, RenderD7::Color::Hex("#EEEEEE"), dbld.db.e_list[SPos + Idx].name, 400);
-        };
+        std::string dirs;
+        for (int i = this->dirsel < 9 ? 0 : this->dirsel - 9; (int)dbld.db.e_list.size() && i < ((this->dirsel < 9) ? 10 : this->dirsel + 1); i++)
+        {
+            if (i == dirsel)
+            {
+                dirs += "> " + dbld.db.e_list[i].name + "\n";
+            }
+            else
+            {
+                dirs += dbld.db.e_list[i].name + "\n";
+            } 
+        }
+        for (uint i = 0; i < ((dbld.db.e_list.size() < 10) ? 10 - dbld.db.e_list.size() : 0); i++) {
+	    	dirs += "\n\n";
+	    }
+
+        RenderD7::DrawText(10, 30, 0.6f, RenderD7::Color::Hex("#111111"), dirs.c_str());
+        RenderD7::DrawTextCentered(0, 216, 0.7f, RenderD7::Color::Hex("#111111"), "Entry: " + std::to_string((dirsel + 1)) + "/" + std::to_string(dbld.db.e_list.size()), 400);
         RenderD7::OnScreen(Bottom);
-        D_P();
         RenderD7::DrawRect(0, 0, 320, 240, RenderD7::Color::Hex("#EEEEEE"));
-        D_P();
     }
     if (state == APPV){
         flog.Write("Draw Appv STate");
         RenderD7::OnScreen(Top);
-        D_P();
         RenderD7::DrawRect(0, 0, 400, 240, RenderD7::Color::Hex("#EEEEEE"));
-        D_P();
+        RenderD7::DrawRect(0, 0, 400, 26, RenderD7::Color::Hex("#111111"));
+        RenderD7::DrawText(2, 4, 0.7f, RenderD7::Color::Hex("#eeeeee"), "DevHelper->App-Ver Browser");
         DrawFMBG();
-        D_P();
-        RenderD7::DrawTLBtns(lst, RenderD7::Color::Hex("#CCCCCC"), SPos);
-        for (int Idx = 0; Idx < 7 && Idx < (int)dbld.versions.size(); Idx++) {
-     
-	     	RenderD7::DrawTextCentered(0, this->lst[Idx].y + 7, 0.5f, RenderD7::Color::Hex("#EEEEEE"), dbld.versions[SPos + Idx].ver, 400);
-        };
+        std::string dirs;
+        for (int i = this->dirsel < 9 ? 0 : this->dirsel - 9; (int)dbld.versions.size() && i < ((this->dirsel < 9) ? 10 : this->dirsel + 1); i++)
+        {
+            if (i == dirsel)
+            {
+                dirs += "> " + dbld.versions[i].ver + "\n";
+            }
+            else
+            {
+                dirs += dbld.versions[i].ver + "\n";
+            } 
+        }
+        for (uint i = 0; i < ((dbld.versions.size() < 10) ? 10 - dbld.versions.size() : 0); i++) {
+	    	dirs += "\n\n";
+	    }
+        RenderD7::DrawText(10, 30, 0.6f, RenderD7::Color::Hex("#111111"), dirs.c_str());
+        RenderD7::DrawTextCentered(0, 216, 0.7f, RenderD7::Color::Hex("#111111"), "Version: " + std::to_string((dirsel + 1)) + "/" + std::to_string(dbld.versions.size()), 400);
         RenderD7::OnScreen(Bottom);
-        D_P();
         RenderD7::DrawRect(0, 0, 320, 240, RenderD7::Color::Hex("#EEEEEE"));
-        D_P();
+        RenderD7::DrawText(2, 4, 0.7f, RenderD7::Color::Hex("#111111"), "Name: " + dbld.versions[dirsel].Name);
+        RenderD7::DrawText(2, 24, 0.7f, RenderD7::Color::Hex("#111111"), "Author: " + dbld.versions[dirsel].author);
+        RenderD7::DrawText(2, 44, 0.7f, RenderD7::Color::Hex("#111111"), "Commit: " + dbld.versions[dirsel].commit_tag);
+        RenderD7::DrawText(2, 64, 0.7f, RenderD7::Color::Hex("#111111"), "Desc: " + dbld.versions[dirsel].desc);
+        RenderD7::DrawText(2, 84, 0.7f, RenderD7::Color::Hex("#111111"), "Version: " + dbld.versions[dirsel].ver);
     }
 }
 
@@ -65,6 +92,7 @@ void DBSel::Logic(u32 hDown, u32 hHeld, u32 hUp, touchPosition touch)
 {
      if (state == DB) {
          if (hDown & KEY_A) {
+            timer = 0;
             dbld.DownloadEntry(dirsel);
             dbld.LoadEntry(dirsel); state = APPV; dirsel = 0;
         }
@@ -76,7 +104,8 @@ void DBSel::Logic(u32 hDown, u32 hHeld, u32 hUp, touchPosition touch)
          else if (dirsel > this->SPos + 7 - 1) this->SPos = dirsel - 7 + 1;
      }
      if (state == APPV) {
-         if (hDown & KEY_A) {
+        timer ++;
+        if (hDown & KEY_A && timer > 60) {
              dbld.Download3dsx(dirsel);
         }
         if (hDown & KEY_Y) {
