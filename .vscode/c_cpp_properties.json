@@ -4,10 +4,12 @@
             "name": "3DS | Windows",
             "includePath": [
                 "${workspaceFolder}/**",
+                "${workspaceFolder}/RenderD7/**",
                 "/opt/devkitpro/libctru/include/**",
                 "/opt/devkitpro/devkitARM/include/**",
                 "/opt/devkitpro/devkitARM/arm-none-eabi/include/**",
                 "/opt/devkitpro/portlibs/3ds/include/**"
+                
             ],
             //"compilerPath": "/opt/devkitpro/devkitARM/bin/arm-none-eabi-g++.exe",
             "cStandard": "c11",
