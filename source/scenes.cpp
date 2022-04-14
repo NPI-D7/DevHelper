@@ -34,6 +34,7 @@ void DBSel::Draw(void) const
         RenderD7::DrawText(2, 4, 0.7f, RenderD7::Color::Hex("#eeeeee"), "DevHelper->DB Browser");
         DrawFMBG();
         std::string dirs;
+        dirs.clear();
         for (int i = this->dirsel < 9 ? 0 : this->dirsel - 9; (int)dbld.db.e_list.size() && i < ((this->dirsel < 9) ? 10 : this->dirsel + 1); i++)
         {
             if (i == dirsel)
@@ -62,6 +63,7 @@ void DBSel::Draw(void) const
         RenderD7::DrawText(2, 4, 0.7f, RenderD7::Color::Hex("#eeeeee"), "DevHelper->App-Ver Browser");
         DrawFMBG();
         std::string dirs;
+        dirs.clear();
         for (int i = this->dirsel < 9 ? 0 : this->dirsel - 9; (int)dbld.versions.size() && i < ((this->dirsel < 9) ? 10 : this->dirsel + 1); i++)
         {
             if (i == dirsel)
