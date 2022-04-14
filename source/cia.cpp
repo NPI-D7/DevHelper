@@ -78,8 +78,9 @@ Result installCia(const char * ciaPath, bool updatingSelf) {
 	AM_TitleEntry info;
 	Result ret = 0;
 	FS_MediaType media = MEDIATYPE_SD;
-	FS_OpenArchive(&sdmc_archive, ARCHIVE_SDMC);
-	ret = FS_OpenFile(&fileHandle, sdmc_archive, ciaPath, (FS_OPEN_WRITE | FS_OPEN_CREATE), 0);
+	//FS_OpenArchive(&sdmc_archive, ARCHIVE_SDMC);
+	ret = openFile(&fileHandle, ciaPath, false);
+	//ret = FS_OpenFile(&fileHandle, sdmc_archive, ciaPath, (FS_OPEN_WRITE | FS_OPEN_CREATE), 0);
 	if (R_FAILED(ret)) {
 		printf("Error in:\nopenFile\n");
 		return ret;

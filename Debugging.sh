@@ -1,0 +1,1 @@
+$DEVKITARM/bin/arm-none-eabi-gdb DevHelper.elf

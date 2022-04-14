@@ -47,7 +47,7 @@ void DBLoader::InstallCia(int index)
      RenderD7::Msg::Display("DevHelper->Download-Cia", "Installing Cia ...", Top);
      installCia(pathof.c_str(), ___is___);
      RenderD7::Msg::Display("DevHelper->Download-Cia", "Deleting Cia ...", Top);
-     remove(pathof.c_str());
+     //remove(pathof.c_str());
      D_P();
      D_P();
 }
