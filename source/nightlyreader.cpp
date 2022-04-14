@@ -16,6 +16,7 @@ void DBLoader::DownloadEntry(int index)
      mkdir("sdmc:/DevHelper/", 0777);
      mkdir("sdmc:/DevHelper/dbs/", 0777);
      mkdir(s.c_str(), 0777);
+     RenderD7::Msg::Display("DevHelper->Download", "Downloading Entry ...", Top);
      if (index <= (int)this->db.e_list.size() + 1) downloadToFile(this->db.e_list[index].dl_link, "sdmc:/DevHelper/dbs/" + DBLoader::GetRepoName() + "/" + GetFileName<std::string>(this->db.e_list[index].dl_link));
      else {/** Do Nothing Yet!*/}
      D_P();
@@ -59,6 +60,7 @@ void DBLoader::LoadDB(std::string link)
      mkdir("sdmc:/DevHelper/", 0777);
      mkdir("sdmc:/DevHelper/dbs/", 0777);
      D_P();
+     RenderD7::Msg::Display("DevHelper->Download", "Downloading Downloading DB ...", Top);
      downloadToFile(link, "sdmc:/DevHelper/dbs/" + GetFileName<std::string>(link));
      D_P();
      INI::INIFile file("sdmc:/DevHelper/dbs/" + GetFileName<std::string>(link));
