@@ -35,7 +35,7 @@ void DBLoader::Download3dsx(int index)
 
 void DBLoader::InstallCia(int index)
 {
-     std::string s = "sdmc:/";
+     std::string s = "/";
      bool ___is___ = false;
      mkdir(s.c_str(), 0777);
      if (this->versions[index].Name == "DevHelper")
@@ -44,7 +44,7 @@ void DBLoader::InstallCia(int index)
      }
      RenderD7::Msg::Display("DevHelper->Download-Cia", "Downloading Cia ...", Top);
      downloadToFile(this->versions[index].dl_cia, s + GetFileName<std::string>(this->versions[index].dl_cia));
-     std::string pathof = GetFileName<std::string>(this->versions[index].dl_cia);
+     std::string pathof = s + GetFileName<std::string>(this->versions[index].dl_cia);
      RenderD7::Msg::Display("DevHelper->Download-Cia", "Installing Cia ...", Top);
      installCia(pathof.c_str(), ___is___);
      RenderD7::Msg::Display("DevHelper->Download-Cia", "Deleting Cia ...", Top);
