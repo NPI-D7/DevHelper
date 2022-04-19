@@ -72,74 +72,52 @@ FS_MediaType getTitleDestination(u64 titleId) {
 u64 installSize = 0, installOffset = 0;
 
 Result installCia(const char * ciaPath, bool updatingSelf) {
-	u32 bytes_read = 0, bytes_written;
-	installSize = 0, installOffset = 0; u64 size = 0;
-	Handle ciaHandle, fileHandle;
-	AM_TitleEntry info;
-	Result ret = 0;
-	FS_MediaType media = MEDIATYPE_SD;
-	//FS_OpenArchive(&sdmc_archive, ARCHIVE_SDMC);
-	ret = openFile(&fileHandle, ciaPath, false);
-	//ret = FS_OpenFile(&fileHandle, sdmc_archive, ciaPath, (FS_OPEN_WRITE | FS_OPEN_CREATE), 0);
-	if (R_FAILED(ret)) {
-		printf("Error in:\nopenFile\n");
-		return ret;
-	}
+    u64 size = 0;
+    u32 bytes;
+    Handle ciaHandle, fileHandle;
+    AM_TitleEntry info;
+    
+    result = FSUSER_OpenFileDirectly(&fileHandle, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, ""), fsMakePath(PATH_ASCII, ciaPath.c_str()), FS_OPEN_READ, 0);
+    if (R_FAILED(result))
+    {
+        return;
+    }
+    
+    if (R_FAILED(result = AM_GetCiaFileInfo(MEDIATYPE_SD, &info, fileHandle)))
+    {
+        return;
+    }
+    
+    deletePrevious(info.titleID);
+    if (R_FAILED(result))
+    {
+        return;
+    }
+    
+    if (R_FAILED(result = FSFILE_GetSize(fileHandle, &size)))
+    {
+        return;
+    }
 
-	ret = AM_GetCiaFileInfo(media, &info, fileHandle);
-	if (R_FAILED(ret)) {
-		printf("Error in:\nAM_GetCiaFileInfo\n");
-		return ret;
-	}
+    if (R_FAILED(result = AM_StartCiaInstall(MEDIATYPE_SD, &ciaHandle)))
+    {
+        return;
+    }
+    
+    u32 toRead = 0x1000;
+    u8* cia_buffer = malloc(toRead);
+    for (u64 startSize = size; size != 0; size -= toRead)
+    {
+        if (size < toRead) toRead = size;
+        FSFILE_Read(fileHandle, &bytes, startSize-size, cia_buffer, toRead);
+        FSFILE_Write(ciaHandle, &bytes, startSize-size, cia_buffer, toRead, 0);
+    }
+    free(cia_buffer);
 
-	media = getTitleDestination(info.titleID);
+    if (R_FAILED(result = AM_FinishCiaInstall(ciaHandle)))
+    {
+        return;
+    }
 
-	if (!updatingSelf) {
-		ret = deletePrevious(info.titleID, media);
-		if (R_FAILED(ret))
-			return ret;
-	}
-
-	ret = FSFILE_GetSize(fileHandle, &size);
-	if (R_FAILED(ret)) {
-		printf("Error in:\nFSFILE_GetSize\n");
-		return ret;
-	}
-	ret = AM_StartCiaInstall(media, &ciaHandle);
-	if (R_FAILED(ret)) {
-		printf("Error in:\nAM_StartCiaInstall\n");
-		return ret;
-	}
-
-	u32 toRead = 0x200000;
-	u8 *buf = new u8[toRead];
-	if(buf == nullptr) {
-		return -1;
-	}
-
-	installSize = size;
-	do {
-		FSFILE_Read(fileHandle, &bytes_read, installOffset, buf, toRead);
-		FSFILE_Write(ciaHandle, &bytes_written, installOffset, buf, toRead, FS_WRITE_FLUSH);
-		installOffset += bytes_read;
-	} while(installOffset < installSize);
-	delete[] buf;
-
-	ret = AM_FinishCiaInstall(ciaHandle);
-	if (R_FAILED(ret)) {
-		printf("Error in:\nAM_FinishCiaInstall\n");
-		return ret;
-	}
-
-	ret = FSFILE_Close(fileHandle);
-	if (R_FAILED(ret)) {
-		printf("Error in:\nFSFILE_Close\n");
-		return ret;
-	}
-
-	if (updatingSelf) {
-		if (R_FAILED(ret = CIA_LaunchTitle(info.titleID, MEDIATYPE_SD)))	return ret;
-	}
-	FS_CloseArchive(sdmc_archive);
-	return 0;
+    result = FSFILE_Close(fileHandle);
 }
