@@ -15,6 +15,7 @@ int main()
     flog.Init("sdmc:/DevHelper.log");
     RenderD7::Init::Main("Dev-Helper");
     flog.Write("Loaded RenderD7");
+    consoleInit(GFX_BOTOM, NULL);
     RenderD7::Scene::Load(std::make_unique<DBSel>());
     flog.Write("Loading Scene");
     while(RenderD7::MainLoop())
