@@ -12,7 +12,7 @@ int main()
         RenderD7::Error::DisplayFatalError("DevHelper->Error", "You are not Connected To Wifi or your connection is bad.");
     }
      
-    flog.Init("sdmc:/DevHelper.log");
+    flog.Init("DevHelper");
     RenderD7::Init::Main("Dev-Helper");
     flog.Write("Loaded RenderD7");
     consoleInit(GFX_BOTTOM, NULL);
