@@ -9,6 +9,10 @@
 extern curl_off_t downloadTotal;
 extern curl_off_t downloadNow;
 
+#include "log.hpp"
+
+extern Log flog;
+
 void DBLoader::DownloadEntry(int index)
 {
      this->versions.clear();
@@ -46,6 +50,7 @@ void DBLoader::InstallCia(int index)
      downloadToFile(this->versions[index].dl_cia, s + GetFileName<std::string>(this->versions[index].dl_cia));
      std::string pathof = s + GetFileName<std::string>(this->versions[index].dl_cia);
      RenderD7::Msg::Display("DevHelper->Download-Cia", "Installing Cia ...", Top);
+     flog.Write(pathof);
      installCia(pathof.c_str(), ___is___);
      RenderD7::Msg::Display("DevHelper->Download-Cia", "Deleting Cia ...", Top);
      //remove(pathof.c_str());
