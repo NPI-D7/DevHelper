@@ -1,6 +1,9 @@
 #include "cia.hpp"
 #include <stdio.h>
 #include <cstdlib>
+
+extern Log flog;
+
 extern "C"
 {
 	#include "fs.h"
@@ -31,6 +34,7 @@ Result deletePrevious(u64 titleid, FS_MediaType media) {
 	ret = AM_GetTitleCount(media, &titles_amount);
 	if (R_FAILED(ret)) {
 		printf("Error in:\nAM_GetTitleCount\n");
+                flog.Write("Error: AM_GetTitleCount");
 		return ret;
 	}
 
@@ -40,6 +44,7 @@ Result deletePrevious(u64 titleid, FS_MediaType media) {
 	if (R_FAILED(ret)) {
 		free(titleIDs);
 		printf("Error in:\nAM_GetTitleList\n");
+                flog.Write("Error: AM_GetTitleList");
 		return ret;
 	}
 
@@ -53,6 +58,7 @@ Result deletePrevious(u64 titleid, FS_MediaType media) {
 	free(titleIDs);
 	if (R_FAILED(ret)) {
 		printf("Error in:\nAM_DeleteAppTitle\n");
+                flog.Write("Failed to delete Title");
 		return ret;
 	}
 
@@ -83,12 +89,14 @@ Result installCia(const char * ciaPath, bool updatingSelf) {
 	//ret = FS_OpenFile(&fileHandle, sdmc_archive, ciaPath, (FS_OPEN_WRITE | FS_OPEN_CREATE), 0);
 	if (R_FAILED(ret)) {
 		printf("Error in:\nopenFile\n");
+                flog.Write("Cant open File");
 		return ret;
 	}
 
 	ret = AM_GetCiaFileInfo(media, &info, fileHandle);
 	if (R_FAILED(ret)) {
 		printf("Error in:\nAM_GetCiaFileInfo\n");
+                flog.Write("Cant get File Info");
 		return ret;
 	}
 
@@ -103,11 +111,13 @@ Result installCia(const char * ciaPath, bool updatingSelf) {
 	ret = FSFILE_GetSize(fileHandle, &size);
 	if (R_FAILED(ret)) {
 		printf("Error in:\nFSFILE_GetSize\n");
+                flog.Write("Cant get File size");
 		return ret;
 	}
 	ret = AM_StartCiaInstall(media, &ciaHandle);
 	if (R_FAILED(ret)) {
 		printf("Error in:\nAM_StartCiaInstall\n");
+                flog.Write("Cant start Install");
 		return ret;
 	}
 
@@ -128,12 +138,14 @@ Result installCia(const char * ciaPath, bool updatingSelf) {
 	ret = AM_FinishCiaInstall(ciaHandle);
 	if (R_FAILED(ret)) {
 		printf("Error in:\nAM_FinishCiaInstall\n");
+                flog.Write("Cant finish install");
 		return ret;
 	}
 
 	ret = FSFILE_Close(fileHandle);
 	if (R_FAILED(ret)) {
 		printf("Error in:\nFSFILE_Close\n");
+                flog.Write("Cant close file");
 		return ret;
 	}
 
