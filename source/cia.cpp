@@ -1,6 +1,7 @@
 #include "cia.hpp"
 #include <stdio.h>
 #include <cstdlib>
+#include "log.hpp"
 
 extern Log flog;
 
