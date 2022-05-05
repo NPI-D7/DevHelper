@@ -27,7 +27,7 @@ int timer = 0;
 void DBSel::Draw(void) const
 {
     if (state == DB){
-        flog.Write("Draw DB STate");
+        //flog.Write("Draw DB STate");
         RenderD7::OnScreen(Top);
         RenderD7::DrawRect(0, 0, 400, 240, RenderD7::Color::Hex("#EEEEEE"));
         RenderD7::DrawRect(0, 0, 400, 26, RenderD7::Color::Hex("#111111"));
@@ -56,7 +56,7 @@ void DBSel::Draw(void) const
         //RenderD7::DrawRect(0, 0, 320, 240, RenderD7::Color::Hex("#EEEEEE"));
     }
     if (state == APPV){
-        flog.Write("Draw Appv STate");
+        //flog.Write("Draw Appv STate");
         RenderD7::OnScreen(Top);
         RenderD7::DrawRect(0, 0, 400, 240, RenderD7::Color::Hex("#EEEEEE"));
         RenderD7::DrawRect(0, 0, 400, 26, RenderD7::Color::Hex("#111111"));
