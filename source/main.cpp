@@ -22,7 +22,7 @@ int main()
     {
         if (d7_hDown & KEY_START) RenderD7::ExitApp();
   
-        C3D_FrameEnd(0);
+        RenderD7::FrameEnd();
     }
     flog.Write("Call RD7::Exit::Main");
     RenderD7::Exit::Main();
