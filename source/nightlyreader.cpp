@@ -83,15 +83,17 @@ void DBLoader::LoadDB(std::string link)
 	     std::cout << "[" << section << "]" << std::endl;
           this->secs.push_back(section);
           RenderD7::Msg::DisplayWithProgress("DevHelper", "Reading Database Sections", dtmm, (int)ini.size(), RenderD7::Color::Hex("#00ff00"));
+          dbe = {ini[section]["name"], ini[section]["data"]};
+          this->db.e_list.push_back(dbe);
           dtmm++;
      }
      D_P();
-     for (int i = 1; i < (int)this->secs.size(); i++)
+     /*for (int i = 1; i < (int)this->secs.size(); i++)
      {
           dbe = {ini[this->secs[i]]["name"], ini[this->secs[i]]["data"]};
           this->db.e_list.push_back(dbe);
           RenderD7::Msg::DisplayWithProgress("DevHelper", "Reading Database Data", i, (int)this->secs.size(), RenderD7::Color::Hex("#00ff00"));
-     }
+     }*/
      
      D_P();
 }
@@ -116,13 +118,15 @@ void DBLoader::LoadEntry(int index)
 	     std::cout << "[" << section << "]" << std::endl;
           this->appsecs.push_back(section);
           RenderD7::Msg::DisplayWithProgress("DevHelper", "Reading APPV Sections", dtmm, (int)ini.size(), RenderD7::Color::Hex("#00ff00"));
+          dbe = {ini[section]["name"], ini[section]["author"], ini[section]["commit_tag"], ini[section]["desc"], ini[section]["version"], ini[section]["3dsx"], ini[section]["cia"]};
+          this->versions.push_back(dbe);
           dtmm++;
      }
-     for (int i = 0; i < (int)this->appsecs.size(); i++)
+     /*for (int i = 0; i < (int)this->appsecs.size(); i++)
      {
           D_P();
           dbe = {ini[this->appsecs[i]]["name"], ini[this->appsecs[i]]["author"], ini[this->appsecs[i]]["commit_tag"], ini[this->appsecs[i]]["desc"], ini[this->appsecs[i]]["version"], ini[this->appsecs[i]]["3dsx"], ini[this->appsecs[i]]["cia"]};
           this->versions.push_back(dbe);
           RenderD7::Msg::DisplayWithProgress("DevHelper", "Reading APPV Data", i, (int)this->appsecs.size(), RenderD7::Color::Hex("#00ff00"));
-     }
+     }*/
 }

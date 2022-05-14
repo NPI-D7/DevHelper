@@ -1,0 +1,9 @@
+make.exe --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/Tobi/DevHelper'
+ 
+[ -d build ] || mkdir -p build
+ 
+make: *** No rule to make target '/home/Tobi/DevHelper/build', needed by 'all'.
+
+make: Leaving directory '/home/Tobi/DevHelper'
+ 
