@@ -39,7 +39,7 @@ void DBLoader::Download3dsx(int index)
 
 void DBLoader::InstallCia(int index)
 {
-     std::string s = "/";
+     std::string s = "sdmc:/";
      bool ___is___ = false;
      mkdir(s.c_str(), 0777);
      if (this->versions[index].Name == "DevHelper")
