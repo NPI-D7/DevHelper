@@ -7,14 +7,19 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # There is NO WARRANTY, to the extent permitted by law.
  
 
-# Make data base, printed on Sun May 15 00:03:33 2022
+# Make data base, printed on Wed May 18 15:56:52 2022
 
 # Variables
 
+ 
+# environment
+FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 # makefile (from 'Makefile', line 39)
 MAKEROM = C:/devkitpro/tools/bin/makerom.exe
 # environment
 SYSTEMDRIVE = C:
+# environment
+JAVA_HOME = C:\Program Files\Eclipse Adoptium\jdk-11.0.15.10-hotspot\
 # makefile (from '/opt/devkitpro/devkitARM/base_rules', line 6)
 PORTLIBS_PATH := /opt/devkitpro/portlibs
 # makefile (from '/opt/devkitpro/devkitARM/base_tools', line 23)
@@ -30,22 +35,21 @@ ROMFS_T3XFILES :=
 # environment
 USERPROFILE = C:\Users\Tobi
 # makefile (from 'Makefile', line 169)
-OFILES :=    cia.o download.o main.o nightlyreader.o scenes.o  
+OFILES :=    log.o renderd7.o sound.o Clock.o Time.o lang.o thread.o lodepng.o cia.o download.o main.o nightlyreader.o scenes.o fs.o 
 # environment
 LOCALAPPDATA = C:\Users\Tobi\AppData\Local
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-ce1f99f8-f83b-41c3-b7ba-7667eeee6170-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-84404a5d-5a6c-4182-bf33-a3df0f84b259-sock
 # makefile (from 'Makefile', line 123)
 VPATH := /home/Tobi/DevHelper/RenderD7 /home/Tobi/DevHelper/RenderD7/internal /home/Tobi/DevHelper/RenderD7/external /home/Tobi/DevHelper/RenderD7/external/tween-engine/include/ /home/Tobi/DevHelper/RenderD7/external/tween-engine/include/TweenEngine /home/Tobi/DevHelper/RenderD7/external/tween-engine/source /home/Tobi/DevHelper/source /home/Tobi/DevHelper/source/qr /home/Tobi/DevHelper/gfx /home/Tobi/DevHelper/data
 # makefile (from 'Makefile', line 129)
-CFILES := $(subst ,,       )
+CFILES :=   fs.c     
 # environment
 VSCODE_CWD = C:\Users\Tobi\AppData\Local\Programs\Microsoft VS Code
 # makefile (from 'Makefile', line 40)
 BANNERTOOL = C:/devkitpro/tools/bin/bannertool.exe
 # environment
 SYSTEMROOT = C:\Windows
- 
 # makefile (from 'Makefile', line 104)
 LIBS := -lcurl -lmbedtls -lmbedx509 -lmbedcrypto -lbz2 -llzma -lz -lstdc++ -lm -lcitro2d -lcitro3d -lctru
 # makefile (from '/opt/devkitpro/devkitARM/base_tools', line 43)
@@ -61,9 +65,11 @@ OFILES_BIN := $(subst ,,  )
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_4612_EVGTYQNUVXQTBQUP
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_11520_KEMYWXKREKMNXMXX
 # makefile (from 'Makefile', line 130)
-CPPFILES :=       cia.cpp download.cpp main.cpp nightlyreader.cpp scenes.cpp 
+CPPFILES := log.cpp renderd7.cpp sound.cpp Clock.cpp Time.cpp lang.cpp thread.cpp lodepng.cpp    cia.cpp download.cpp main.cpp nightlyreader.cpp scenes.cpp 
+# environment
+FPS_BROWSER_USER_PROFILE_STRING = Default
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -129,7 +135,7 @@ ASFLAGS := -g -march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 4612
+VSCODE_PID = 11520
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # makefile (from '/opt/devkitpro/devkitARM/base_tools', line 28)
@@ -146,6 +152,7 @@ INCLUDES := RenderD7 RenderD7/internal RenderD7/external RenderD7/external/tween
 *F = $(notdir $*)
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
+ 
 # makefile (from 'Makefile', line 59)
 VERSION_MAJOR := 1
 # environment
@@ -167,7 +174,7 @@ HOMEPATH = \Users\Tobi
 # default
 MAKECMDGOALS := all
 # makefile (from 'Makefile', line 164)
-OFILES_SOURCES := cia.o download.o main.o nightlyreader.o scenes.o  
+OFILES_SOURCES := log.o renderd7.o sound.o Clock.o Time.o lang.o thread.o lodepng.o cia.o download.o main.o nightlyreader.o scenes.o fs.o 
 # environment
 DRIVERDATA = C:\Windows\System32\Drivers\DriverData
 # environment
@@ -185,7 +192,7 @@ MAKE = $(MAKE_COMMAND)
 # makefile (from 'Makefile', line 133)
 SHLISTFILES := $(subst ,,       )
 # makefile (from '/opt/devkitpro/devkitARM/3ds_rules', line 9)
-PATH := /opt/devkitpro/portlibs/3ds/bin:/opt/devkitpro/tools/bin:/opt/devkitpro/devkitARM/bin:/opt/devkitpro/msys2/usr/bin:/c/Windows/system32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/System32/WindowsPowerShell/v1.0:/c/Windows/System32/OpenSSH:/c/Program Files/Git/cmd:/opt/devkitpro/tools/bin:/home/Tobi/AppData/Local/Programs/Python/Python310/Scripts:/home/Tobi/AppData/Local/Programs/Python/Python310:/home/Tobi/AppData/Local/Microsoft/WindowsApps:/home/Tobi/AppData/Local/Programs/Microsoft VS Code/bin
+PATH := /opt/devkitpro/portlibs/3ds/bin:/opt/devkitpro/tools/bin:/opt/devkitpro/devkitARM/bin:/c/Program Files/Eclipse Adoptium/jdk-11.0.15.10-hotspot/bin:/opt/devkitpro/msys2/usr/bin:/c/Windows/system32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/System32/WindowsPowerShell/v1.0:/c/Windows/System32/OpenSSH:/c/Program Files/Git/cmd:/opt/devkitpro/tools/bin:/c/Program Files/CMake/bin:/c/Program Files/Meson:/home/Tobi/AppData/Local/Programs/Python/Python310/Scripts:/home/Tobi/AppData/Local/Programs/Python/Python310:/home/Tobi/AppData/Local/Microsoft/WindowsApps:/home/Tobi/AppData/Local/Programs/Microsoft VS Code/bin:/home/Tobi/AppData/Local/GitHubDesktop/bin
 # environment
 COMPUTERNAME = PC
 # default
@@ -275,7 +282,7 @@ BNR_AUDIO := app/BannerAudio.wav
 # environment
 APPDATA = C:\Users\Tobi\AppData\Roaming
 # makefile (from 'Makefile', line 97)
-CFLAGS := -g -Wall -Wno-psabi -O2 -mword-relocations -DV_STRING=\"72e0a9d\" -fomit-frame-pointer -ffunction-sections -march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft  -D__3DS__ -D_GNU_SOURCE=1
+CFLAGS := -g -Wall -Wno-psabi -O2 -mword-relocations -DV_STRING=\"a73b96b\" -fomit-frame-pointer -ffunction-sections -march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft  -D__3DS__ -D_GNU_SOURCE=1
 # environment
 HOMEDRIVE = C:
 # makefile (from 'Makefile', line 70)
@@ -308,10 +315,10 @@ NM := arm-none-eabi-gcc-nm
 RSF_FILE := app/build-cia.rsf
 # default
 .RECIPEPREFIX := 
- 
 # automatic
 <F = $(notdir $<)
 # makefile (from 'Makefile', line 134)
+ 
 GFXFILES := 
 # makefile (from 'Makefile', line 76)
 ROMFS := romfs
@@ -326,9 +333,9 @@ LD := arm-none-eabi-g++
 # environment
 SESSIONNAME = Console
 # makefile (from 'Makefile', line 52)
-GIT_VER := 72e0a9d
+GIT_VER := a73b96b
 # makefile (from 'Makefile', line 99)
-CXXFLAGS := -g -Wall -Wno-psabi -O2 -mword-relocations -DV_STRING=\"72e0a9d\" -fomit-frame-pointer -ffunction-sections -march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft  -D__3DS__ -D_GNU_SOURCE=1 -fno-rtti -fno-exceptions -std=gnu++20 
+CXXFLAGS := -g -Wall -Wno-psabi -O2 -mword-relocations -DV_STRING=\"a73b96b\" -fomit-frame-pointer -ffunction-sections -march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft  -D__3DS__ -D_GNU_SOURCE=1 -fno-rtti -fno-exceptions -std=gnu++20 
 # makefile (from '/opt/devkitpro/devkitARM/base_tools', line 26)
 STRIP := arm-none-eabi-strip
 # default
@@ -356,7 +363,7 @@ _3DSXDEPS := /home/Tobi/DevHelper/DevHelper.smdh
 # environment
 PROCESSOR_IDENTIFIER = AMD64 Family 25 Model 33 Stepping 0, AuthenticAMD
 # variable set hash-table stats:
-# Load=171/1024=17%, Rehash=0, Collisions=35/376=9%
+# Load=174/1024=17%, Rehash=0, Collisions=38/379=10%
 
 # Pattern-specific Variable Values
 
@@ -366,13 +373,13 @@ PROCESSOR_IDENTIFIER = AMD64 Family 25 Model 33 Stepping 0, AuthenticAMD
 
 # RenderD7/external/tween-engine/include/: could not be stat'd.
 # /home/Tobi/DevHelper/RenderD7/external/tween-engine/source: could not be stat'd.
-# /home/Tobi/DevHelper/RenderD7 (device 1820687712, inode 562949953843047): 2 files, no impossibilities.
+# /home/Tobi/DevHelper/RenderD7 (device 1820687712, inode 562949953843047): 18 files, no impossibilities.
 # /home/Tobi/DevHelper/gfx (device 1820687712, inode 562949953843055): 3 files, no impossibilities.
-# RenderD7/external: could not be stat'd.
+# RenderD7/external (device 1820687712, inode 562949953895473): 9 files, no impossibilities.
 # /home/Tobi/DevHelper/RenderD7/external/tween-engine/include/TweenEngine: could not be stat'd.
 # /home/Tobi/DevHelper/source/qr: could not be stat'd.
 # /home/Tobi/DevHelper/source (device 1820687712, inode 562949953843060): 11 files, no impossibilities.
-# RenderD7 (device 1820687712, inode 562949953843047): 2 files, no impossibilities.
+# RenderD7 (device 1820687712, inode 562949953843047): 18 files, no impossibilities.
 # /home/Tobi/DevHelper/data: could not be stat'd.
 # . (device 1820687712, inode 5629499534634602): 15 files, no impossibilities.
 # source/qr: could not be stat'd.
@@ -380,13 +387,13 @@ PROCESSOR_IDENTIFIER = AMD64 Family 25 Model 33 Stepping 0, AuthenticAMD
 # source (device 1820687712, inode 562949953843060): 11 files, no impossibilities.
 # data: could not be stat'd.
 # gfx (device 1820687712, inode 562949953843055): 3 files, no impossibilities.
-# /home/Tobi/DevHelper/RenderD7/internal: could not be stat'd.
-# /home/Tobi/DevHelper/RenderD7/external: could not be stat'd.
+# /home/Tobi/DevHelper/RenderD7/internal (device 1820687712, inode 562949953895484): 15 files, no impossibilities.
+# /home/Tobi/DevHelper/RenderD7/external (device 1820687712, inode 562949953895473): 9 files, no impossibilities.
 # RenderD7/external/tween-engine/source: could not be stat'd.
-# RenderD7/internal: could not be stat'd.
+# RenderD7/internal (device 1820687712, inode 562949953895484): 15 files, no impossibilities.
 # /home/Tobi/DevHelper/RenderD7/external/tween-engine/include: could not be stat'd.
 
-# 47 files, no impossibilities in 21 directories.
+# 127 files, no impossibilities in 21 directories.
 
 # Implicit Rules
 
@@ -422,6 +429,7 @@ PROCESSOR_IDENTIFIER = AMD64 Family 25 Model 33 Stepping 0, AuthenticAMD
 	$(SILENTCMD)$(CC) -MMD -MP -MF $(DEPSDIR)/$*.thumb.d $(CFLAGS) -mthumb -c $< -o $@ $(ERROR_FILTER)
 
 %.thumb.o: %.thumb.m
+ 
 #  recipe to execute (from '/opt/devkitpro/devkitARM/base_rules', line 43):
 	$(SILENTMSG) $(notdir $<)
 	$(SILENTCMD)$(CC) -MMD -MP -MF $(DEPSDIR)/$*.thumb.d $(OBJCFLAGS) -mthumb -c $< -o $@ $(ERROR_FILTER)
@@ -435,7 +443,6 @@ PROCESSOR_IDENTIFIER = AMD64 Family 25 Model 33 Stepping 0, AuthenticAMD
 #  recipe to execute (from '/opt/devkitpro/devkitARM/base_rules', line 53):
 	$(SILENTMSG) $(notdir $<)
 	$(SILENTCMD)$(CC) -MMD -MP -MF $(DEPSDIR)/$*.iwram.d $(CFLAGS) -marm -mlong-calls -c $< -o $@ $(ERROR_FILTER)
- 
 
 %.iwram.o: %.iwram.m
 #  recipe to execute (from '/opt/devkitpro/devkitARM/base_rules', line 58):
@@ -580,7 +587,6 @@ all: build romfs/gfx /home/Tobi/DevHelper/build
 #  Needs to be updated (-q is set).
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/3=0%
- 
 #  recipe to execute (from 'Makefile', line 207):
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
@@ -592,6 +598,7 @@ run:
 	@flatpak run org.citra_emu.citra $(TARGET).3dsx
 
 build:
+ 
 #  Implicit rule search has not been done.
 #  Implicit/static pattern stem: ''
 #  File does not exist.
@@ -657,12 +664,12 @@ send:
 # General ('VPATH' variable) search path:
 # /home/Tobi/DevHelper/RenderD7:/home/Tobi/DevHelper/RenderD7/internal:/home/Tobi/DevHelper/RenderD7/external:/home/Tobi/DevHelper/RenderD7/external/tween-engine/include:/home/Tobi/DevHelper/RenderD7/external/tween-engine/include/TweenEngine:/home/Tobi/DevHelper/RenderD7/external/tween-engine/source:/home/Tobi/DevHelper/source:/home/Tobi/DevHelper/source/qr:/home/Tobi/DevHelper/gfx:/home/Tobi/DevHelper/data
 
-# strcache buffers: 1 (0) / strings = 90 / storage = 1314 B / avg = 14 B
-# current buf: size = 8162 B / used = 1314 B / count = 90 / avg = 14 B
+# strcache buffers: 1 (0) / strings = 122 / storage = 1634 B / avg = 13 B
+# current buf: size = 8162 B / used = 1634 B / count = 122 / avg = 13 B
 
-# strcache performance: lookups = 151 / hit rate = 40%
+# strcache performance: lookups = 191 / hit rate = 36%
 # hash-table stats:
-# Load=90/8192=1%, Rehash=0, Collisions=4/151=3%
-# Finished Make data base on Sun May 15 00:03:33 2022
+# Load=122/8192=1%, Rehash=0, Collisions=4/191=2%
+# Finished Make data base on Wed May 18 15:56:52 2022
 
  

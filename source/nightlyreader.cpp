@@ -83,8 +83,11 @@ void DBLoader::LoadDB(std::string link)
 	     std::cout << "[" << section << "]" << std::endl;
           this->secs.push_back(section);
           RenderD7::Msg::DisplayWithProgress("DevHelper", "Reading Database Sections", dtmm, (int)ini.size(), RenderD7::Color::Hex("#00ff00"));
-          dbe = {ini[section]["name"], ini[section]["data"]};
-          this->db.e_list.push_back(dbe);
+          if (ini[section]["name"] != "")
+          {
+               dbe = {ini[section]["name"], ini[section]["data"]};
+               this->db.e_list.push_back(dbe);
+          }
           dtmm++;
      }
      D_P();
