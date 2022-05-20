@@ -5,13 +5,11 @@ make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --quest
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
- 
 
-# Make data base, printed on Wed May 18 15:56:52 2022
+# Make data base, printed on Fri May 20 22:24:00 2022
 
 # Variables
 
- 
 # environment
 FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 # makefile (from 'Makefile', line 39)
@@ -39,7 +37,7 @@ OFILES :=    log.o renderd7.o sound.o Clock.o Time.o lang.o thread.o lodepng.o c
 # environment
 LOCALAPPDATA = C:\Users\Tobi\AppData\Local
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-84404a5d-5a6c-4182-bf33-a3df0f84b259-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-486e22e8-1be8-49cb-b2d9-d62a656cd724-sock
 # makefile (from 'Makefile', line 123)
 VPATH := /home/Tobi/DevHelper/RenderD7 /home/Tobi/DevHelper/RenderD7/internal /home/Tobi/DevHelper/RenderD7/external /home/Tobi/DevHelper/RenderD7/external/tween-engine/include/ /home/Tobi/DevHelper/RenderD7/external/tween-engine/include/TweenEngine /home/Tobi/DevHelper/RenderD7/external/tween-engine/source /home/Tobi/DevHelper/source /home/Tobi/DevHelper/source/qr /home/Tobi/DevHelper/gfx /home/Tobi/DevHelper/data
 # makefile (from 'Makefile', line 129)
@@ -65,7 +63,7 @@ OFILES_BIN := $(subst ,,  )
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_11520_KEMYWXKREKMNXMXX
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_5484_ZEFMNVNSVMIILQRN
 # makefile (from 'Makefile', line 130)
 CPPFILES := log.cpp renderd7.cpp sound.cpp Clock.cpp Time.cpp lang.cpp thread.cpp lodepng.cpp    cia.cpp download.cpp main.cpp nightlyreader.cpp scenes.cpp 
 # environment
@@ -83,7 +81,7 @@ VSCODE_LOG_STACK = false
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_CODE_CACHE_PATH = C:\Users\Tobi\AppData\Roaming\Code\CachedData\da15b6fd3ef856477bf6f4fb29ba1b7af717770d
+VSCODE_CODE_CACHE_PATH = C:\Users\Tobi\AppData\Roaming\Code\CachedData\c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
 # environment
 LANG = C
 # default
@@ -135,7 +133,7 @@ ASFLAGS := -g -march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 11520
+VSCODE_PID = 5484
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # makefile (from '/opt/devkitpro/devkitARM/base_tools', line 28)
@@ -152,11 +150,10 @@ INCLUDES := RenderD7 RenderD7/internal RenderD7/external RenderD7/external/tween
 *F = $(notdir $*)
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
- 
 # makefile (from 'Makefile', line 59)
 VERSION_MAJOR := 1
 # environment
-VSCODE_NLS_CONFIG = {"locale":"de","availableLanguages":{"*":"de"},"_languagePackId":"76abe230f76758c10463f0219f362aef.de","_translationsConfigFile":"C:\\Users\\Tobi\\AppData\\Roaming\\Code\\clp\\76abe230f76758c10463f0219f362aef.de\\tcf.json","_cacheRoot":"C:\\Users\\Tobi\\AppData\\Roaming\\Code\\clp\\76abe230f76758c10463f0219f362aef.de","_resolvedLanguagePackCoreLocation":"C:\\Users\\Tobi\\AppData\\Roaming\\Code\\clp\\76abe230f76758c10463f0219f362aef.de\\da15b6fd3ef856477bf6f4fb29ba1b7af717770d","_corruptedFile":"C:\\Users\\Tobi\\AppData\\Roaming\\Code\\clp\\76abe230f76758c10463f0219f362aef.de\\corrupted.info","_languagePackSupport":true}
+VSCODE_NLS_CONFIG = {"locale":"de","availableLanguages":{"*":"de"},"_languagePackId":"76abe230f76758c10463f0219f362aef.de","_translationsConfigFile":"C:\\Users\\Tobi\\AppData\\Roaming\\Code\\clp\\76abe230f76758c10463f0219f362aef.de\\tcf.json","_cacheRoot":"C:\\Users\\Tobi\\AppData\\Roaming\\Code\\clp\\76abe230f76758c10463f0219f362aef.de","_resolvedLanguagePackCoreLocation":"C:\\Users\\Tobi\\AppData\\Roaming\\Code\\clp\\76abe230f76758c10463f0219f362aef.de\\c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5","_corruptedFile":"C:\\Users\\Tobi\\AppData\\Roaming\\Code\\clp\\76abe230f76758c10463f0219f362aef.de\\corrupted.info","_languagePackSupport":true}
 # makefile (from 'Makefile', line 192)
 APP_ICON := /home/Tobi/DevHelper/app/icon.png
 # makefile (from '/opt/devkitpro/devkitARM/3ds_rules', line 11)
@@ -192,7 +189,7 @@ MAKE = $(MAKE_COMMAND)
 # makefile (from 'Makefile', line 133)
 SHLISTFILES := $(subst ,,       )
 # makefile (from '/opt/devkitpro/devkitARM/3ds_rules', line 9)
-PATH := /opt/devkitpro/portlibs/3ds/bin:/opt/devkitpro/tools/bin:/opt/devkitpro/devkitARM/bin:/c/Program Files/Eclipse Adoptium/jdk-11.0.15.10-hotspot/bin:/opt/devkitpro/msys2/usr/bin:/c/Windows/system32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/System32/WindowsPowerShell/v1.0:/c/Windows/System32/OpenSSH:/c/Program Files/Git/cmd:/opt/devkitpro/tools/bin:/c/Program Files/CMake/bin:/c/Program Files/Meson:/home/Tobi/AppData/Local/Programs/Python/Python310/Scripts:/home/Tobi/AppData/Local/Programs/Python/Python310:/home/Tobi/AppData/Local/Microsoft/WindowsApps:/home/Tobi/AppData/Local/Programs/Microsoft VS Code/bin:/home/Tobi/AppData/Local/GitHubDesktop/bin
+PATH := /opt/devkitpro/portlibs/3ds/bin:/opt/devkitpro/tools/bin:/opt/devkitpro/devkitARM/bin:/c/Program Files/Eclipse Adoptium/jdk-11.0.15.10-hotspot/bin:/opt/devkitpro/msys2/usr/bin:/c/Windows/system32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/System32/WindowsPowerShell/v1.0:/c/Windows/System32/OpenSSH:/c/Program Files/Git/cmd:/opt/devkitpro/tools/bin:/c/Program Files/CMake/bin:/c/Program Files/Meson:/opt/devkitpro/devkitARM/bin:/home/Tobi/vcpkg:/home/Tobi/Documents/jdk-17.0.2/bin:/home/Tobi/AppData/Local/Programs/Python/Python310/Scripts:/home/Tobi/AppData/Local/Programs/Python/Python310:/home/Tobi/AppData/Local/Microsoft/WindowsApps:/home/Tobi/AppData/Local/Programs/Microsoft VS Code/bin:/home/Tobi/AppData/Local/GitHubDesktop/bin
 # environment
 COMPUTERNAME = PC
 # default
@@ -282,7 +279,7 @@ BNR_AUDIO := app/BannerAudio.wav
 # environment
 APPDATA = C:\Users\Tobi\AppData\Roaming
 # makefile (from 'Makefile', line 97)
-CFLAGS := -g -Wall -Wno-psabi -O2 -mword-relocations -DV_STRING=\"a73b96b\" -fomit-frame-pointer -ffunction-sections -march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft  -D__3DS__ -D_GNU_SOURCE=1
+CFLAGS := -g -Wall -Wno-psabi -O2 -mword-relocations -DV_STRING=\"a97a8b1\" -fomit-frame-pointer -ffunction-sections -march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft  -D__3DS__ -D_GNU_SOURCE=1
 # environment
 HOMEDRIVE = C:
 # makefile (from 'Makefile', line 70)
@@ -306,7 +303,7 @@ ELECTRON_RUN_AS_NODE = 1
 # environment
 TEMP = /home/Tobi/AppData/Local/Temp
 # environment
-VSCODE_IPC_HOOK = \\.\pipe\8a33a0d379aadca85b3e7306d64b2615-1.67.1-main-sock
+VSCODE_IPC_HOOK = \\.\pipe\8a33a0d379aadca85b3e7306d64b2615-1.67.2-main-sock
 # environment
 TERM = xterm-256color
 # makefile (from '/opt/devkitpro/devkitARM/base_tools', line 27)
@@ -318,7 +315,6 @@ RSF_FILE := app/build-cia.rsf
 # automatic
 <F = $(notdir $<)
 # makefile (from 'Makefile', line 134)
- 
 GFXFILES := 
 # makefile (from 'Makefile', line 76)
 ROMFS := romfs
@@ -333,9 +329,9 @@ LD := arm-none-eabi-g++
 # environment
 SESSIONNAME = Console
 # makefile (from 'Makefile', line 52)
-GIT_VER := a73b96b
+GIT_VER := a97a8b1
 # makefile (from 'Makefile', line 99)
-CXXFLAGS := -g -Wall -Wno-psabi -O2 -mword-relocations -DV_STRING=\"a73b96b\" -fomit-frame-pointer -ffunction-sections -march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft  -D__3DS__ -D_GNU_SOURCE=1 -fno-rtti -fno-exceptions -std=gnu++20 
+CXXFLAGS := -g -Wall -Wno-psabi -O2 -mword-relocations -DV_STRING=\"a97a8b1\" -fomit-frame-pointer -ffunction-sections -march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft  -D__3DS__ -D_GNU_SOURCE=1 -fno-rtti -fno-exceptions -std=gnu++20 
 # makefile (from '/opt/devkitpro/devkitARM/base_tools', line 26)
 STRIP := arm-none-eabi-strip
 # default
@@ -429,7 +425,6 @@ PROCESSOR_IDENTIFIER = AMD64 Family 25 Model 33 Stepping 0, AuthenticAMD
 	$(SILENTCMD)$(CC) -MMD -MP -MF $(DEPSDIR)/$*.thumb.d $(CFLAGS) -mthumb -c $< -o $@ $(ERROR_FILTER)
 
 %.thumb.o: %.thumb.m
- 
 #  recipe to execute (from '/opt/devkitpro/devkitARM/base_rules', line 43):
 	$(SILENTMSG) $(notdir $<)
 	$(SILENTCMD)$(CC) -MMD -MP -MF $(DEPSDIR)/$*.thumb.d $(OBJCFLAGS) -mthumb -c $< -o $@ $(ERROR_FILTER)
@@ -481,6 +476,7 @@ PROCESSOR_IDENTIFIER = AMD64 Family 25 Model 33 Stepping 0, AuthenticAMD
 
 %.o: %.s
 #  recipe to execute (from '/opt/devkitpro/devkitARM/base_rules', line 94):
+ 
 	$(SILENTMSG) $(notdir $<)
 	$(SILENTCMD)$(CC) -MMD -MP -MF $(DEPSDIR)/$*.d -x assembler-with-cpp $(ASFLAGS) -c $< -o $@ $(ERROR_FILTER)
 
@@ -598,7 +594,6 @@ run:
 	@flatpak run org.citra_emu.citra $(TARGET).3dsx
 
 build:
- 
 #  Implicit rule search has not been done.
 #  Implicit/static pattern stem: ''
 #  File does not exist.
@@ -670,6 +665,6 @@ send:
 # strcache performance: lookups = 191 / hit rate = 36%
 # hash-table stats:
 # Load=122/8192=1%, Rehash=0, Collisions=4/191=2%
-# Finished Make data base on Wed May 18 15:56:52 2022
+# Finished Make data base on Fri May 20 22:24:00 2022
 
  
