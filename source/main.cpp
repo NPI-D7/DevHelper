@@ -8,7 +8,7 @@ Log flog;
 
 bool __l = false;
 
-int timer = 10000;
+int w__timer = 10000;
 
 bool CheckWifiStatus(void) {
 	u32 wifiStatus;
@@ -35,15 +35,15 @@ int main()
     {
         if (!CheckWifiStatus())
         {
-            timer++;
-            if (timer >= 10000){
-                timer = 0;
+            w__timer++;
+            if (w__timer >= 10000){
+                w__timer = 0;
                 RenderD7::AddOvl(std::make_unique<Warnings>("Warning", "No Wifi Connection"));
             }
         }
         if (!__l && CheckWifiStatus())
         {
-            timer = 10000;
+            w__timer = 10000;
             RenderD7::Scene::Load(std::make_unique<DBSel>());
             __l = true;
         }
