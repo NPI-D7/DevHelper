@@ -52,8 +52,8 @@ void DBSel::Draw(void) const
 
         RenderD7::DrawText(10, 30, 0.6f, RenderD7::Color::Hex("#111111"), dirs.c_str());
         RenderD7::DrawTextCentered(0, 216, 0.7f, RenderD7::Color::Hex("#111111"), "Entry: " + std::to_string((dirsel + 1)) + "/" + std::to_string(dbld.db.e_list.size()), 400);
-        //RenderD7::OnScreen(Bottom);
-        //RenderD7::DrawRect(0, 0, 320, 240, RenderD7::Color::Hex("#EEEEEE"));
+        RenderD7::OnScreen(Bottom);
+        RenderD7::DrawRect(0, 0, 320, 240, RenderD7::Color::Hex("#EEEEEE"));
     }
     if (state == APPV){
         //flog.Write("Draw Appv STate");

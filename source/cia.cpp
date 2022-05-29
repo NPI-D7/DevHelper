@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <cstdlib>
 #include "log.hpp"
+#include "Ovls.hpp"
 
 extern Log flog;
 
@@ -90,6 +91,7 @@ Result installCia(const char * ciaPath, bool updatingSelf) {
 	//ret = FS_OpenFile(&fileHandle, sdmc_archive, ciaPath, (FS_OPEN_WRITE | FS_OPEN_CREATE), 0);
 	if (R_FAILED(ret)) {
 		printf("Error in:\nopenFile\n");
+		RenderD7::AddOvl(std::make_unique<Warnings>("Installer->Error", "File Not Found!"));
                 flog.Write("Cant open File");
 		return ret;
 	}
@@ -97,6 +99,7 @@ Result installCia(const char * ciaPath, bool updatingSelf) {
 	ret = AM_GetCiaFileInfo(media, &info, fileHandle);
 	if (R_FAILED(ret)) {
 		printf("Error in:\nAM_GetCiaFileInfo\n");
+		RenderD7::AddOvl(std::make_unique<Warnings>("Installer->Error", "Can't get Cis File Info!"));
                 flog.Write("Cant get File Info");
 		return ret;
 	}
@@ -112,12 +115,14 @@ Result installCia(const char * ciaPath, bool updatingSelf) {
 	ret = FSFILE_GetSize(fileHandle, &size);
 	if (R_FAILED(ret)) {
 		printf("Error in:\nFSFILE_GetSize\n");
+		RenderD7::AddOvl(std::make_unique<Warnings>("Installer->Error", "Can't Get Cia File Size!"));
                 flog.Write("Cant get File size");
 		return ret;
 	}
 	ret = AM_StartCiaInstall(media, &ciaHandle);
 	if (R_FAILED(ret)) {
 		printf("Error in:\nAM_StartCiaInstall\n");
+		RenderD7::AddOvl(std::make_unique<Warnings>("Installer->Error", "Can't get File Size"));
                 flog.Write("Cant start Install");
 		return ret;
 	}
@@ -139,6 +144,7 @@ Result installCia(const char * ciaPath, bool updatingSelf) {
 	ret = AM_FinishCiaInstall(ciaHandle);
 	if (R_FAILED(ret)) {
 		printf("Error in:\nAM_FinishCiaInstall\n");
+		RenderD7::AddOvl(std::make_unique<Warnings>("Installer->Error", "Failed to finish Cia Install!"));
                 flog.Write("Cant finish install");
 		return ret;
 	}
@@ -146,6 +152,7 @@ Result installCia(const char * ciaPath, bool updatingSelf) {
 	ret = FSFILE_Close(fileHandle);
 	if (R_FAILED(ret)) {
 		printf("Error in:\nFSFILE_Close\n");
+		RenderD7::AddOvl(std::make_unique<Warnings>("Installer", "Failed to Close Handle!"));
                 flog.Write("Cant close file");
 		return ret;
 	}
