@@ -33,14 +33,14 @@ int main()
     flog.Write("Loading Scene");
     while(RenderD7::MainLoop())
     {
-        if (!CheckWifiStatus())
+        /*if (!CheckWifiStatus())
         {
             w__timer++;
             if (w__timer >= 10000){
                 w__timer = 0;
                 RenderD7::AddOvl(std::make_unique<Warnings>("Warning", "No Wifi Connection"));
             }
-        }
+        }*/
         if (!__l && CheckWifiStatus())
         {
             w__timer = 10000;
