@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 #include <string>
 #include <3ds.h>
 
