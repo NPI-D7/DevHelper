@@ -25,11 +25,11 @@ int main()
     RenderD7::Init::Main("Dev-Helper");
     flog.Write("Loaded RenderD7");
     /*consoleInit(GFX_BOTTOM, NULL);*/
-    if (CheckWifiStatus())
-    {
+    //if (CheckWifiStatus())
+    //{
         RenderD7::Scene::Load(std::make_unique<DBSel>());
-        __l = true;
-    }
+        //__l = true;
+    //}
     flog.Write("Loading Scene");
     while(RenderD7::MainLoop())
     {
@@ -41,12 +41,12 @@ int main()
                 RenderD7::AddOvl(std::make_unique<Warnings>("Warning", "No Wifi Connection"));
             }
         }*/
-        if (!__l && CheckWifiStatus())
+        /*if (!__l && CheckWifiStatus())
         {
             w__timer = 10000;
             RenderD7::Scene::Load(std::make_unique<DBSel>());
             __l = true;
-        }
+        }*/
         if (d7_hDown & KEY_START) RenderD7::ExitApp();
   
         RenderD7::FrameEnd();
