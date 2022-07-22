@@ -18,7 +18,7 @@ void Warnings::Draw(void) const
 void Warnings::Logic()
 {
 	this->delay++/*=(int)RenderD7::GetDeltaTime()*/;
-	if (msgposy > 170 && delay < 5*60) msgposy--/*=(int)RenderD7::GetDeltaTime()*/;
+	if (msgposy > 170 && delay < 2*60) msgposy--/*=(int)RenderD7::GetDeltaTime()*/;
 	
 	if (delay >= 5*60)
 	{

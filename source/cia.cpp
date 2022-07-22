@@ -19,10 +19,12 @@ Result CIA_LaunchTitle(u64 titleId, FS_MediaType mediaType) {
 
 	if (R_FAILED(ret = APT_PrepareToDoApplicationJump(0, titleId, mediaType))) {
 		printf("Error In:\nAPT_PrepareToDoApplicationJump");
+		RenderD7::AddOvl(std::make_unique<Warnings>("Installer->Error", "Can't prepare Application Jump!"));
 		return ret;
 	}
 	if (R_FAILED(ret = APT_DoApplicationJump(param, sizeof(param), hmac))) {
 		printf("Error In:\nAPT_DoApplicationJump");
+		RenderD7::AddOvl(std::make_unique<Warnings>("Installer->Error", "Can't do Application Jump!"));
 		return ret;
 	}
 
@@ -37,6 +39,7 @@ Result deletePrevious(u64 titleid, FS_MediaType media) {
 	if (R_FAILED(ret)) {
 		printf("Error in:\nAM_GetTitleCount\n");
                 flog.Write("Error: AM_GetTitleCount");
+		RenderD7::AddOvl(std::make_unique<Warnings>("Installer->Error", "Can't get Title Count!"));
 		return ret;
 	}
 
@@ -47,6 +50,7 @@ Result deletePrevious(u64 titleid, FS_MediaType media) {
 		free(titleIDs);
 		printf("Error in:\nAM_GetTitleList\n");
                 flog.Write("Error: AM_GetTitleList");
+		RenderD7::AddOvl(std::make_unique<Warnings>("Installer->Error", "Can't get Title List!"));
 		return ret;
 	}
 
@@ -61,6 +65,7 @@ Result deletePrevious(u64 titleid, FS_MediaType media) {
 	if (R_FAILED(ret)) {
 		printf("Error in:\nAM_DeleteAppTitle\n");
                 flog.Write("Failed to delete Title");
+		RenderD7::AddOvl(std::make_unique<Warnings>("Installer->Error", "Can't delete Title!"));
 		return ret;
 	}
 
@@ -99,7 +104,7 @@ Result installCia(const char * ciaPath, bool updatingSelf) {
 	ret = AM_GetCiaFileInfo(media, &info, fileHandle);
 	if (R_FAILED(ret)) {
 		printf("Error in:\nAM_GetCiaFileInfo\n");
-		RenderD7::AddOvl(std::make_unique<Warnings>("Installer->Error", "Can't get Cis File Info!"));
+		RenderD7::AddOvl(std::make_unique<Warnings>("Installer->Error", "Can't get Cia File Info!"));
                 flog.Write("Cant get File Info");
 		return ret;
 	}
@@ -108,8 +113,10 @@ Result installCia(const char * ciaPath, bool updatingSelf) {
 
 	if (!updatingSelf) {
 		ret = deletePrevious(info.titleID, media);
-		if (R_FAILED(ret))
+		if (R_FAILED(ret)){
+			RenderD7::AddOvl(std::make_unique<Warnings>("Installer->Error", "Can't delete File"));
 			return ret;
+		}
 	}
 
 	ret = FSFILE_GetSize(fileHandle, &size);

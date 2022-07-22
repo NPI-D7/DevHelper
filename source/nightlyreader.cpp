@@ -22,7 +22,7 @@ void DBLoader::DownloadEntry(int index)
      mkdir(s.c_str(), 0777);
      RenderD7::Msg::Display("DevHelper->Download", "Downloading Entry ...", Top);
      if (index <= (int)this->db.e_list.size() + 1) downloadToFile(this->db.e_list[index].dl_link, "sdmc:/DevHelper/dbs/" + DBLoader::GetRepoName() + "/" + GetFileName<std::string>(this->db.e_list[index].dl_link));
-     else {/** Do Nothing Yet!*/}
+     else {RenderD7::AddOvl(std::make_unique<Warnings>("Menu->Error", "What are you trying to do?"));}
      D_P();
      D_P();
 }
@@ -45,6 +45,7 @@ void DBLoader::InstallCia(int index)
      if (this->versions[index].Name == "DevHelper")
      {
           ___is___ = true;
+          RenderD7::AddOvl(std::make_unique<Warnings>("Menu->Info", "Normally the app should Update it Self..."));
      }
      RenderD7::Msg::Display("DevHelper->Download-Cia", "Downloading Cia ...", Top);
      downloadToFile(this->versions[index].dl_cia, s + GetFileName<std::string>(this->versions[index].dl_cia));
