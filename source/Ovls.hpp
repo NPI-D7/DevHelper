@@ -1,3 +1,4 @@
+#pragma once
 #include "renderd7.hpp"
 
 class Warnings : public RenderD7::Ovl
