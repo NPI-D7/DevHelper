@@ -126,6 +126,7 @@ void DBLoader::LoadEntry(int index)
           this->versions.push_back(dbe);
           dtmm++;
      }
+     std::reverse(this->versions.begin(), this->versions.end());
      /*for (int i = 0; i < (int)this->appsecs.size(); i++)
      {
           D_P();
