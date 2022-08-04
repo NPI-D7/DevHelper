@@ -40,7 +40,7 @@ void DBSel::Draw(void) const
         RenderD7::OnScreen(Top);
         RenderD7::DrawRect(0, 0, 400, 240, RenderD7::Color::Hex("#EEEEEE"));
         RenderD7::DrawRect(0, 0, 400, 26, RenderD7::Color::Hex("#111111"));
-        RenderD7::DrawText(2, 4, 0.7f, RenderD7::Color::Hex("#eeeeee"), "DevHelper->DB Browser");
+        RenderD7::DrawText(2, 2, 0.7f, RenderD7::Color::Hex("#eeeeee"), "DevHelper->DB Browser");
         DrawFMBG();
         std::string dirs;
         dirs.clear();
@@ -69,7 +69,7 @@ void DBSel::Draw(void) const
         RenderD7::OnScreen(Top);
         RenderD7::DrawRect(0, 0, 400, 240, RenderD7::Color::Hex("#EEEEEE"));
         RenderD7::DrawRect(0, 0, 400, 26, RenderD7::Color::Hex("#111111"));
-        RenderD7::DrawText(2, 4, 0.7f, RenderD7::Color::Hex("#eeeeee"), "DevHelper->App-Ver Browser");
+        RenderD7::DrawText(2, 2, 0.7f, RenderD7::Color::Hex("#eeeeee"), "DevHelper->App-Ver Browser");
         DrawFMBG();
         std::string dirs;
         dirs.clear();
@@ -88,7 +88,7 @@ void DBSel::Draw(void) const
 	    	dirs += "\n\n";
 	    }
         RenderD7::DrawText(10, 30, 0.6f, RenderD7::Color::Hex("#111111"), dirs.c_str());
-        RenderD7::DrawTextCentered(0, 216, 0.7f, RenderD7::Color::Hex("#111111"), "Version: " + std::to_string((dirsel + 1)) + "/" + std::to_string(dbld.versions.size()), 400);
+        RenderD7::DrawTextCentered(0, 216, 0.7f, RenderD7::Color::Hex("#111111"), "Version: " + std::to_string((dbld.versions.size() - dirsel)) + "/" + std::to_string(dbld.versions.size()), 400);
         RenderD7::OnScreen(Bottom);
         RenderD7::DrawRect(0, 0, 320, 240, RenderD7::Color::Hex("#EEEEEE"));
         RenderD7::DrawText(2, 4, 0.7f, RenderD7::Color::Hex("#111111"), "Name: " + dbld.versions[dirsel].Name);
