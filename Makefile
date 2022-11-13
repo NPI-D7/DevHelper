@@ -66,11 +66,9 @@ VERSION_MICRO := 0
 #---------------------------------------------------------------------------------
 TARGET		:=	DevHelper
 BUILD		:=	build
-LIBTWEEN	:=  $(CURDIR)/RenderD7/external/tween-engine/
-UNIVCORE	:=	RenderD7 RenderD7/internal RenderD7/external RenderD7/external/libnsbmp RenderD7/external/tween-engine/include/ RenderD7/external/tween-engine/include/TweenEngine RenderD7/external/tween-engine/source
-SOURCES		:=	$(UNIVCORE) source source/qr 
+SOURCES		:=  source source/qr 
 DATA		:=	data
-INCLUDES	:=	$(UNIVCORE) source source/qr 
+INCLUDES	:=	source source/qr 
 GRAPHICS	:=	gfx
 #GFXBUILD	:=	$(BUILD)
 ROMFS		:=	romfs
@@ -101,7 +99,7 @@ CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++20
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=3dsx.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:= -lcurl -lmbedtls -lmbedx509 -lmbedcrypto -lbz2 -llzma -lz -lstdc++ -lm -lcitro2d -lcitro3d -lctru
+LIBS	:= -lcurl -lmbedtls -lmbedx509 -lmbedcrypto -lbz2 -llzma -lz -lstdc++ -lm -lrenderd7 -lcitro2d -lcitro3d -lctru
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
