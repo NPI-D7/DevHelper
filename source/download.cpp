@@ -20,6 +20,9 @@ curl_off_t downloadTotal =
     1; // Dont initialize with 0 to avoid division by zero later.
 curl_off_t downloadNow = 0;
 
+float DLTotal = 1; // Dont initialize with 0 to avoid division by zero later.
+float DLNow = 0;
+
 static FILE *downfile = nullptr;
 static size_t file_buffer_pos = 0;
 static size_t file_toCommit_size = 0;
@@ -36,6 +39,8 @@ static int curlProgress(CURL *hnd, curl_off_t dltotal, curl_off_t dlnow,
                         curl_off_t ultotal, curl_off_t ulnow) {
   downloadTotal = dltotal;
   downloadNow = dlnow;
+  DLTotal = downloadTotal;
+  DLNow = downloadNow;
 
   return 0;
 }

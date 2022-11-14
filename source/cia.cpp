@@ -96,23 +96,29 @@ Result installCia(const char *ciaPath, bool updatingSelf) {
   AM_TitleEntry info;
   Result ret = 0;
   FS_MediaType media = MEDIATYPE_SD;
-  // FS_OpenArchive(&sdmc_archive, ARCHIVE_SDMC);
-  ret = openFile(&fileHandle, ciaPath, false);
-  // ret = FS_OpenFile(&fileHandle, sdmc_archive, ciaPath, (FS_OPEN_WRITE |
-  // FS_OPEN_CREATE), 0);
+  FSUSER_OpenFileDirectly(&fileHandle, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, ""), fsMakePath(PATH_ASCII, ciaPath), FS_OPEN_READ, 0);
+  //ret = openFile(&fileHandle, ciaPath, false);
   if (R_FAILED(ret)) {
-    printf("Error in:\nopenFile\n");
-    RenderD7::AddOvl(
-        std::make_unique<Warnings>("Installer->Error", "File Not Found!"));
+    std::cout << ("Error in:\nopenFile\n");
+    RenderD7::AddOvl(std::make_unique<Warnings>(
+        "Installer->Error", "File Not Found!\nC(" +
+                                std::to_string(R_LEVEL(ret)) + ") - D(" +
+                                std::to_string(R_DESCRIPTION(ret)) + ") - S(" +
+                                std::to_string(R_SUMMARY(ret)) + ") - M(" +
+                                std::to_string(R_MODULE(ret)) + ")"));
     flog.Write("Cant open File");
     return ret;
   }
 
   ret = AM_GetCiaFileInfo(media, &info, fileHandle);
   if (R_FAILED(ret)) {
-    printf("Error in:\nAM_GetCiaFileInfo\n");
-    RenderD7::AddOvl(std::make_unique<Warnings>("Installer->Error",
-                                                "Can't get Cia File Info!"));
+    std::cout << ("Error in:\nAM_GetCiaFileInfo\n");
+    RenderD7::AddOvl(std::make_unique<Warnings>(
+        "Installer->Error", "Can't get Cia File Info!\nC(" +
+                                std::to_string(R_LEVEL(ret)) + ") - D(" +
+                                std::to_string(R_DESCRIPTION(ret)) + ") - S(" +
+                                std::to_string(R_SUMMARY(ret)) + ") - M(" +
+                                std::to_string(R_MODULE(ret)) + ")"));
     flog.Write("Cant get File Info");
     return ret;
   }
@@ -122,25 +128,37 @@ Result installCia(const char *ciaPath, bool updatingSelf) {
   if (!updatingSelf) {
     ret = deletePrevious(info.titleID, media);
     if (R_FAILED(ret)) {
-      RenderD7::AddOvl(
-          std::make_unique<Warnings>("Installer->Error", "Can't delete File"));
+      RenderD7::AddOvl(std::make_unique<Warnings>(
+          "Installer->Error",
+          "Can't delete File\nC(" + std::to_string(R_LEVEL(ret)) + ") - D(" +
+              std::to_string(R_DESCRIPTION(ret)) + ") - S(" +
+              std::to_string(R_SUMMARY(ret)) + ") - M(" +
+              std::to_string(R_MODULE(ret)) + ")"));
       return ret;
     }
   }
 
   ret = FSFILE_GetSize(fileHandle, &size);
   if (R_FAILED(ret)) {
-    printf("Error in:\nFSFILE_GetSize\n");
-    RenderD7::AddOvl(std::make_unique<Warnings>("Installer->Error",
-                                                "Can't Get Cia File Size!"));
+    std::cout << ("Error in:\nFSFILE_GetSize\n");
+    RenderD7::AddOvl(std::make_unique<Warnings>(
+        "Installer->Error", "Can't Get Cia File Size!\nC(" +
+                                std::to_string(R_LEVEL(ret)) + ") - D(" +
+                                std::to_string(R_DESCRIPTION(ret)) + ") - S(" +
+                                std::to_string(R_SUMMARY(ret)) + ") - M(" +
+                                std::to_string(R_MODULE(ret)) + ")"));
     flog.Write("Cant get File size");
     return ret;
   }
   ret = AM_StartCiaInstall(media, &ciaHandle);
   if (R_FAILED(ret)) {
-    printf("Error in:\nAM_StartCiaInstall\n");
-    RenderD7::AddOvl(
-        std::make_unique<Warnings>("Installer->Error", "Can't get File Size"));
+    std::cout << ("Error in:\nAM_StartCiaInstall\n");
+    RenderD7::AddOvl(std::make_unique<Warnings>(
+        "Installer->Error", "Can't get File Size\nC(" +
+                                std::to_string(R_LEVEL(ret)) + ") - D(" +
+                                std::to_string(R_DESCRIPTION(ret)) + ") - S(" +
+                                std::to_string(R_SUMMARY(ret)) + ") - M(" +
+                                std::to_string(R_MODULE(ret)) + ")"));
     flog.Write("Cant start Install");
     return ret;
   }
@@ -162,18 +180,26 @@ Result installCia(const char *ciaPath, bool updatingSelf) {
 
   ret = AM_FinishCiaInstall(ciaHandle);
   if (R_FAILED(ret)) {
-    printf("Error in:\nAM_FinishCiaInstall\n");
+    std::cout << ("Error in:\nAM_FinishCiaInstall\n");
     RenderD7::AddOvl(std::make_unique<Warnings>(
-        "Installer->Error", "Failed to finish Cia Install!"));
+        "Installer->Error", "Failed to finish Cia Install!\nC(" +
+                                std::to_string(R_LEVEL(ret)) + ") - D(" +
+                                std::to_string(R_DESCRIPTION(ret)) + ") - S(" +
+                                std::to_string(R_SUMMARY(ret)) + ") - M(" +
+                                std::to_string(R_MODULE(ret)) + ")"));
     flog.Write("Cant finish install");
     return ret;
   }
 
   ret = FSFILE_Close(fileHandle);
   if (R_FAILED(ret)) {
-    printf("Error in:\nFSFILE_Close\n");
-    RenderD7::AddOvl(
-        std::make_unique<Warnings>("Installer", "Failed to Close Handle!"));
+    std::cout << ("Error in:\nFSFILE_Close\n");
+    RenderD7::AddOvl(std::make_unique<Warnings>(
+        "Installer", "Failed to Close Handle!\nC(" +
+                         std::to_string(R_LEVEL(ret)) + ") - D(" +
+                         std::to_string(R_DESCRIPTION(ret)) + ") - S(" +
+                         std::to_string(R_SUMMARY(ret)) + ") - M(" +
+                         std::to_string(R_MODULE(ret)) + ")"));
     flog.Write("Cant close file");
     return ret;
   }

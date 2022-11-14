@@ -1,10 +1,16 @@
 #include "scenes.hpp"
 #include <renderd7/log.hpp>
+#include <stringextra.hpp>
 
 std::string standard =
     "https://github.com/NPI-D7/nightlys/raw/master/nightlys-Database.ini";
 
 extern Log flog;
+
+extern std::unique_ptr<RenderD7::StealConsole> st_stdout;
+
+extern float DLTotal;
+extern float DLNow;
 
 bool CheckWifiStatus(void) {
   u32 wifiStatus;
@@ -54,7 +60,7 @@ void DBSel::Draw(void) const {
         dirs += dbld.db.e_list[i].name + "\n";
       }
     }
-    for (uint i = 0;
+    for (int i = 0;
          i < ((dbld.db.e_list.size() < 10) ? 10 - dbld.db.e_list.size() : 0);
          i++) {
       dirs += "\n\n";
@@ -69,6 +75,10 @@ void DBSel::Draw(void) const {
                                  400);
     RenderD7::OnScreen(Bottom);
     RenderD7::Draw::Rect(0, 0, 320, 240, RenderD7::Color::Hex("#EEEEEE"));
+    // std::cout << "FPS: " << RenderD7::GetFramerate()
+    //           << " Time: " << RenderD7::GetDeltaTime() << std::endl;
+    RenderD7::Draw::Text(0, 0, 0.6f, RenderD7::Color::Hex("#ff0000"),
+                         last_lines(st_stdout->GetStdout(), 12));
   }
   if (state == APPV) {
     // flog.Write("Draw Appv STate");
@@ -90,7 +100,7 @@ void DBSel::Draw(void) const {
         dirs += dbld.versions[i].ver + "\n";
       }
     }
-    for (uint i = 0;
+    for (int i = 0;
          i < ((dbld.versions.size() < 10) ? 10 - dbld.versions.size() : 0);
          i++) {
       dirs += "\n\n";
@@ -114,6 +124,8 @@ void DBSel::Draw(void) const {
                          "Desc: " + dbld.versions[dirsel].desc);
     RenderD7::Draw::Text(2, 84, 0.7f, RenderD7::Color::Hex("#111111"),
                          "Version: " + dbld.versions[dirsel].ver);
+    RenderD7::Draw::Text(0, 0, 0.4f, RenderD7::Color::Hex("#ff0000"),
+                         last_lines(st_stdout->GetStdout(), 18));
   }
 }
 
