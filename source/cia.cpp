@@ -1,28 +1,10 @@
 #include "cia.hpp"
-#include "Ovls.hpp"
-#include <cstdlib>
 #include <renderd7/log.hpp>
-#include <stdio.h>
 
 extern Log flog;
 
 Result CIA_LaunchTitle(u64 titleId, FS_MediaType mediaType) {
-  Result ret = 0;
-  u8 param[0x300];
-  u8 hmac[0x20];
-
-  if (R_FAILED(ret = APT_PrepareToDoApplicationJump(0, titleId, mediaType))) {
-    printf("Error In:\nAPT_PrepareToDoApplicationJump");
-    RenderD7::AddOvl(std::make_unique<Warnings>(
-        "Installer->Error", "Can't prepare Application Jump!"));
-    return ret;
-  }
-  if (R_FAILED(ret = APT_DoApplicationJump(param, sizeof(param), hmac))) {
-    printf("Error In:\nAPT_DoApplicationJump");
-    RenderD7::AddOvl(std::make_unique<Warnings>("Installer->Error",
-                                                "Can't do Application Jump!"));
-    return ret;
-  }
+  aptSetChainloaderToSelf();
 
   return 0;
 }
@@ -33,22 +15,17 @@ Result deletePrevious(u64 titleid, FS_MediaType media) {
   u32 titles_amount = 0;
   ret = AM_GetTitleCount(media, &titles_amount);
   if (R_FAILED(ret)) {
-    printf("Error in:\nAM_GetTitleCount\n");
-    flog.Write("Error: AM_GetTitleCount");
-    RenderD7::AddOvl(std::make_unique<Warnings>("Installer->Error",
-                                                "Can't get Title Count!"));
+    flog.Write("Error in:\nAM_GetTitleCount\n");
     return ret;
   }
 
   u32 read_titles = 0;
   u64 *titleIDs = (u64 *)malloc(titles_amount * sizeof(u64));
   ret = AM_GetTitleList(&read_titles, media, titles_amount, titleIDs);
+
   if (R_FAILED(ret)) {
     free(titleIDs);
-    printf("Error in:\nAM_GetTitleList\n");
-    flog.Write("Error: AM_GetTitleList");
-    RenderD7::AddOvl(std::make_unique<Warnings>("Installer->Error",
-                                                "Can't get Title List!"));
+    flog.Write("Error in:\nAM_GetTitleList\n");
     return ret;
   }
 
@@ -61,10 +38,7 @@ Result deletePrevious(u64 titleid, FS_MediaType media) {
 
   free(titleIDs);
   if (R_FAILED(ret)) {
-    printf("Error in:\nAM_DeleteAppTitle\n");
-    flog.Write("Failed to delete Title");
-    RenderD7::AddOvl(
-        std::make_unique<Warnings>("Installer->Error", "Can't delete Title!"));
+    flog.Write("Error in:\nAM_DeleteAppTitle\n");
     return ret;
   }
 
@@ -76,8 +50,8 @@ FS_MediaType getTitleDestination(u64 titleId) {
   u16 category = (u16)((titleId >> 32) & 0xFFFF);
   u8 variation = (u8)(titleId & 0xFF);
 
-  //     DSiWare                3DS                    DSiWare, System, DLP
-  //     Application           System Title
+  /*     DSiWare                3DS                    DSiWare, System, DLP
+   * Application           System Title */
   return platform == 0x0003 || (platform == 0x0004 &&
                                 ((category & 0x8011) != 0 ||
                                  (category == 0x0000 && variation == 0x02)))
@@ -85,7 +59,7 @@ FS_MediaType getTitleDestination(u64 titleId) {
              : MEDIATYPE_SD;
 }
 
-// Variables.
+/* Variables. */
 u64 installSize = 0, installOffset = 0;
 
 Result installCia(const char *ciaPath, bool updatingSelf) {
@@ -96,30 +70,18 @@ Result installCia(const char *ciaPath, bool updatingSelf) {
   AM_TitleEntry info;
   Result ret = 0;
   FS_MediaType media = MEDIATYPE_SD;
-  FSUSER_OpenFileDirectly(&fileHandle, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, ""), fsMakePath(PATH_ASCII, ciaPath), FS_OPEN_READ, 0);
-  //ret = openFile(&fileHandle, ciaPath, false);
+
+  ret = openFile(&fileHandle, ciaPath, false);
+
   if (R_FAILED(ret)) {
-    std::cout << ("Error in:\nopenFile\n");
-    RenderD7::AddOvl(std::make_unique<Warnings>(
-        "Installer->Error", "File Not Found!\nC(" +
-                                std::to_string(R_LEVEL(ret)) + ") - D(" +
-                                std::to_string(R_DESCRIPTION(ret)) + ") - S(" +
-                                std::to_string(R_SUMMARY(ret)) + ") - M(" +
-                                std::to_string(R_MODULE(ret)) + ")"));
-    flog.Write("Cant open File");
+    flog.Write("Error in:\nopenFile\n");
     return ret;
   }
 
   ret = AM_GetCiaFileInfo(media, &info, fileHandle);
+
   if (R_FAILED(ret)) {
-    std::cout << ("Error in:\nAM_GetCiaFileInfo\n");
-    RenderD7::AddOvl(std::make_unique<Warnings>(
-        "Installer->Error", "Can't get Cia File Info!\nC(" +
-                                std::to_string(R_LEVEL(ret)) + ") - D(" +
-                                std::to_string(R_DESCRIPTION(ret)) + ") - S(" +
-                                std::to_string(R_SUMMARY(ret)) + ") - M(" +
-                                std::to_string(R_MODULE(ret)) + ")"));
-    flog.Write("Cant get File Info");
+    flog.Write("Error in:\nAM_GetCiaFileInfo\n");
     return ret;
   }
 
@@ -127,39 +89,21 @@ Result installCia(const char *ciaPath, bool updatingSelf) {
 
   if (!updatingSelf) {
     ret = deletePrevious(info.titleID, media);
-    if (R_FAILED(ret)) {
-      RenderD7::AddOvl(std::make_unique<Warnings>(
-          "Installer->Error",
-          "Can't delete File\nC(" + std::to_string(R_LEVEL(ret)) + ") - D(" +
-              std::to_string(R_DESCRIPTION(ret)) + ") - S(" +
-              std::to_string(R_SUMMARY(ret)) + ") - M(" +
-              std::to_string(R_MODULE(ret)) + ")"));
+    if (R_FAILED(ret))
       return ret;
-    }
   }
 
   ret = FSFILE_GetSize(fileHandle, &size);
+
   if (R_FAILED(ret)) {
-    std::cout << ("Error in:\nFSFILE_GetSize\n");
-    RenderD7::AddOvl(std::make_unique<Warnings>(
-        "Installer->Error", "Can't Get Cia File Size!\nC(" +
-                                std::to_string(R_LEVEL(ret)) + ") - D(" +
-                                std::to_string(R_DESCRIPTION(ret)) + ") - S(" +
-                                std::to_string(R_SUMMARY(ret)) + ") - M(" +
-                                std::to_string(R_MODULE(ret)) + ")"));
-    flog.Write("Cant get File size");
+    flog.Write("Error in:\nFSFILE_GetSize\n");
     return ret;
   }
+
   ret = AM_StartCiaInstall(media, &ciaHandle);
+
   if (R_FAILED(ret)) {
-    std::cout << ("Error in:\nAM_StartCiaInstall\n");
-    RenderD7::AddOvl(std::make_unique<Warnings>(
-        "Installer->Error", "Can't get File Size\nC(" +
-                                std::to_string(R_LEVEL(ret)) + ") - D(" +
-                                std::to_string(R_DESCRIPTION(ret)) + ") - S(" +
-                                std::to_string(R_SUMMARY(ret)) + ") - M(" +
-                                std::to_string(R_MODULE(ret)) + ")"));
-    flog.Write("Cant start Install");
+    flog.Write("Error in:\nAM_StartCiaInstall\n");
     return ret;
   }
 
@@ -170,37 +114,27 @@ Result installCia(const char *ciaPath, bool updatingSelf) {
   }
 
   installSize = size;
+
   do {
     FSFILE_Read(fileHandle, &bytes_read, installOffset, buf, toRead);
     FSFILE_Write(ciaHandle, &bytes_written, installOffset, buf, toRead,
                  FS_WRITE_FLUSH);
     installOffset += bytes_read;
   } while (installOffset < installSize);
+
   delete[] buf;
 
   ret = AM_FinishCiaInstall(ciaHandle);
+
   if (R_FAILED(ret)) {
-    std::cout << ("Error in:\nAM_FinishCiaInstall\n");
-    RenderD7::AddOvl(std::make_unique<Warnings>(
-        "Installer->Error", "Failed to finish Cia Install!\nC(" +
-                                std::to_string(R_LEVEL(ret)) + ") - D(" +
-                                std::to_string(R_DESCRIPTION(ret)) + ") - S(" +
-                                std::to_string(R_SUMMARY(ret)) + ") - M(" +
-                                std::to_string(R_MODULE(ret)) + ")"));
-    flog.Write("Cant finish install");
+    flog.Write("Error in:\nAM_FinishCiaInstall\n");
     return ret;
   }
 
   ret = FSFILE_Close(fileHandle);
+
   if (R_FAILED(ret)) {
-    std::cout << ("Error in:\nFSFILE_Close\n");
-    RenderD7::AddOvl(std::make_unique<Warnings>(
-        "Installer", "Failed to Close Handle!\nC(" +
-                         std::to_string(R_LEVEL(ret)) + ") - D(" +
-                         std::to_string(R_DESCRIPTION(ret)) + ") - S(" +
-                         std::to_string(R_SUMMARY(ret)) + ") - M(" +
-                         std::to_string(R_MODULE(ret)) + ")"));
-    flog.Write("Cant close file");
+    flog.Write("Error in:\nFSFILE_Close\n");
     return ret;
   }
 
@@ -208,6 +142,6 @@ Result installCia(const char *ciaPath, bool updatingSelf) {
     if (R_FAILED(ret = CIA_LaunchTitle(info.titleID, MEDIATYPE_SD)))
       return ret;
   }
-  FS_CloseArchive(sdmc_archive);
+
   return 0;
 }

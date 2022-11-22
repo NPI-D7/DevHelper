@@ -1,5 +1,6 @@
 // FROM UNIVERSAL-UPDATER 2.5.1
 #pragma once
+#include "Files.hpp"
 #include <3ds.h>
 
 Result CIA_LaunchTitle(u64 titleId, FS_MediaType mediaType);

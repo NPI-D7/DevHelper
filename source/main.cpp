@@ -9,7 +9,7 @@ Log flog;
 std::unique_ptr<RenderD7::StealConsole> st_stdout;
 
 int main() {
-  st_stdout = std::make_unique<RenderD7::StealConsole>();
+  //st_stdout = std::make_unique<RenderD7::StealConsole>();
   std::cout << "hello\n";
   flog.Init("DevHelper");
   RenderD7::Init::Main("Dev-Helper");

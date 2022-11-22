@@ -9,6 +9,8 @@
 #include <unistd.h>
 #include <vector>
 
+#include <rd7.hpp>
+
 #define USER_AGENT APP_TITLE "-" VERSION_STRING
 
 #define TIME_IN_US 1
@@ -34,6 +36,13 @@ static LightEvent waitCommit;
 static bool killThread = false;
 static bool writeError = false;
 #define FILE_ALLOC_SIZE 0x60000
+
+int progressBarType = 0;
+char progressBarMsg[128] = "";
+bool showProgressBar = false;
+
+/* That are our install Progressbar variables. */
+extern u64 installSize, installOffset;
 
 static int curlProgress(CURL *hnd, curl_off_t dltotal, curl_off_t dlnow,
                         curl_off_t ultotal, curl_off_t ulnow) {
@@ -231,4 +240,80 @@ exit:
   writeError = false;
 
   return retcode;
+}
+
+/* adapted from GM9i's byte parsing. */
+std::string formatBytes(int bytes) {
+	char out[32];
+	
+	if (bytes == 1)
+		snprintf(out, sizeof(out), "%d Byte", bytes);
+
+	else if (bytes < 1024)
+		snprintf(out, sizeof(out), "%d Bytes", bytes);
+
+	else if (bytes < 1024 * 1024)
+		snprintf(out, sizeof(out), "%.1f KB", (float)bytes / 1024);
+
+	else if (bytes < 1024 * 1024 * 1024)
+		snprintf(out, sizeof(out), "%.1f MB", (float)bytes / 1024 / 1024);
+
+	else
+		snprintf(out, sizeof(out), "%.1f GB", (float)bytes / 1024 / 1024 / 1024);
+
+	return out;
+}
+
+void displayProgressBar() {
+	char str[256];
+	while(showProgressBar) {
+		if (DLTotal < 1.0f) DLTotal = 1.0f;
+
+		if (DLTotal < DLNow) DLTotal = DLNow;
+
+		if (progressBarType == 0) {
+			snprintf(str, sizeof(str), "%s / %s (%.2f%%)",
+					formatBytes(DLNow).c_str(),
+					formatBytes(DLTotal).c_str(),
+					((float)DLNow/(float)DLTotal) * 100.0f
+			);
+
+		} else {
+			snprintf(str, sizeof(str), "%s / %s (%.2f%%)",
+					formatBytes(installOffset).c_str(),
+					formatBytes(installSize).c_str(),
+					((float)installOffset/(float)installSize) * 100.0f);
+		};
+
+		RenderD7::ClearTextBufs();
+		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+		C2D_TargetClear(Top, RenderD7::Color::Hex("#000000"));
+		C2D_TargetClear(Bottom, RenderD7::Color::Hex("#000000"));
+		RenderD7::OnScreen(Top);
+
+    RenderD7::OnScreen(Top);
+    RenderD7::Draw::Rect(0, 0, 400, 240, RenderD7::Color::Hex("#111111"));
+    RenderD7::Draw::Rect(0, 0, 400, 26, RenderD7::Color::Hex("#333333", 200));
+    RenderD7::Draw::Text(5, 2, 0.7f, RenderD7::Color::Hex("#ffffff"), APP_TITLE);
+    RenderD7::Draw::Text(5, 30, 0.6f, RenderD7::Color::Hex("#ffffff"), progressBarMsg);
+    RenderD7::Draw::Rect(30, 120, 342, 30, RenderD7::Color::Hex("#333333"));
+    
+    RenderD7::Draw::TextCentered(5, 124, 0.7f, RenderD7::Color::Hex("#111111"),
+                               str, 390);
+
+		/* Download. */
+		if (progressBarType == 0) {
+      RenderD7::Draw::Rect(31, 121, (int)(((float)DLNow / (float)DLTotal) * 338.0f),
+                         28, RenderD7::Color::Hex("#00ff11"));
+
+		/* Install. */
+		} else {
+      RenderD7::Draw::Rect(31, 121, (int)(((float)installOffset / (float)installSize) * 338.0f),
+                         28, RenderD7::Color::Hex("#00ff11"));
+		}
+
+		RenderD7::OnScreen(Bottom);
+		C3D_FrameEnd(0);
+		gspWaitForVBlank();
+	}
 }
