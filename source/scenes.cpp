@@ -1,6 +1,11 @@
 #include "scenes.hpp"
 #include <renderd7/log.hpp>
 #include <stringextra.hpp>
+#include <download.hpp>
+#include <Tasks.hpp>
+
+extern bool showProgressBar;
+extern int progressBarType;
 
 std::string standard =
     "https://github.com/NPI-D7/nightlys/raw/master/nightlys-Database.ini";
@@ -45,6 +50,7 @@ void DBSel::Draw(void) const {
     RenderD7::OnScreen(Top);
     RenderD7::Draw::Rect(0, 0, 400, 240, RenderD7::Color::Hex("#EEEEEE"));
     RenderD7::Draw::Rect(0, 0, 400, 26, RenderD7::Color::Hex("#111111"));
+    RenderD7::Draw::Rect(0, 214, 400, 26, RenderD7::Color::Hex("#111111"));
     RenderD7::Draw::Text(2, 2, 0.7f, RenderD7::Color::Hex("#eeeeee"),
                          "DevHelper->DB Browser");
     DrawFMBG();
@@ -68,7 +74,7 @@ void DBSel::Draw(void) const {
 
     RenderD7::Draw::Text(10, 30, 0.6f, RenderD7::Color::Hex("#111111"),
                          dirs.c_str());
-    RenderD7::Draw::TextCentered(0, 216, 0.7f, RenderD7::Color::Hex("#111111"),
+    RenderD7::Draw::TextCentered(0, 216, 0.7f, RenderD7::Color::Hex("#ffffff"),
                                  "Entry: " + std::to_string((dirsel + 1)) +
                                      "/" +
                                      std::to_string(dbld.db.e_list.size()),
@@ -85,6 +91,7 @@ void DBSel::Draw(void) const {
     RenderD7::OnScreen(Top);
     RenderD7::Draw::Rect(0, 0, 400, 240, RenderD7::Color::Hex("#EEEEEE"));
     RenderD7::Draw::Rect(0, 0, 400, 26, RenderD7::Color::Hex("#111111"));
+    RenderD7::Draw::Rect(0, 214, 400, 26, RenderD7::Color::Hex("#111111"));
     RenderD7::Draw::Text(2, 2, 0.7f, RenderD7::Color::Hex("#eeeeee"),
                          "DevHelper->App-Ver Browser");
     DrawFMBG();
@@ -108,7 +115,7 @@ void DBSel::Draw(void) const {
     RenderD7::Draw::Text(10, 30, 0.6f, RenderD7::Color::Hex("#111111"),
                          dirs.c_str());
     RenderD7::Draw::TextCentered(
-        0, 216, 0.7f, RenderD7::Color::Hex("#111111"),
+        0, 216, 0.7f, RenderD7::Color::Hex("#ffffff"),
         "Version: " + std::to_string((dbld.versions.size() - dirsel)) + "/" +
             std::to_string(dbld.versions.size()),
         400);
@@ -160,6 +167,12 @@ void DBSel::Logic(u32 hDown, u32 hHeld, u32 hUp, touchPosition touch) {
     }
     if (hDown & KEY_Y) {
       dbld.InstallCia(dirsel);
+    }
+    if (hDown & KEY_X) {
+      showProgressBar = true;
+      Tasks::create((ThreadFunc)displayProgressBar);
+      downloadToFile("https://speed.hetzner.de/100MB.bin", "100mb.bin");
+      showProgressBar = false;
     }
     if (hDown & KEY_B) {
       dirsel = 0;

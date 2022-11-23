@@ -17,6 +17,6 @@ enum DownloadError {
 };
 
 Result downloadToFile(const std::string &url, const std::string &path);
-// Result downloadFromRelease(const std::string &url, const std::string &asset,
-// const std::string &path, bool includePrereleases);
+//Result downloadFromRelease(std::string url, std::string asset, std::string path, bool includePrereleases);
 void displayProgressBar();
+bool checkWifiStatus(void);

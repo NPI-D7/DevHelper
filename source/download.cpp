@@ -18,12 +18,16 @@
 #define TIMEOPT CURLINFO_TOTAL_TIME_T
 #define MINIMAL_PROGRESS_FUNCTIONALITY_INTERVAL 3000000
 
+CURL *CURL_HND;
+
 curl_off_t downloadTotal =
     1; // Dont initialize with 0 to avoid division by zero later.
 curl_off_t downloadNow = 0;
+curl_off_t downloadSpeed = 0;
 
 float DLTotal = 1; // Dont initialize with 0 to avoid division by zero later.
 float DLNow = 0;
+float DLSpeed = 0;
 
 static FILE *downfile = nullptr;
 static size_t file_buffer_pos = 0;
@@ -128,7 +132,7 @@ Result downloadToFile(const std::string &url, const std::string &path) {
   downloadNow = 0;
 
   CURLcode curlResult;
-  CURL *hnd;
+  
   Result retcode = 0;
   int res;
 
@@ -164,24 +168,24 @@ Result downloadToFile(const std::string &url, const std::string &path) {
   }
   printf("done!");
 
-  hnd = curl_easy_init();
-  curl_easy_setopt(hnd, CURLOPT_BUFFERSIZE, FILE_ALLOC_SIZE);
-  curl_easy_setopt(hnd, CURLOPT_URL, url.c_str());
-  curl_easy_setopt(hnd, CURLOPT_NOPROGRESS, 0L);
-  curl_easy_setopt(hnd, CURLOPT_USERAGENT, USER_AGENT);
-  curl_easy_setopt(hnd, CURLOPT_FOLLOWLOCATION, 1L);
-  curl_easy_setopt(hnd, CURLOPT_FAILONERROR, 1L);
-  curl_easy_setopt(hnd, CURLOPT_ACCEPT_ENCODING, "gzip");
-  curl_easy_setopt(hnd, CURLOPT_MAXREDIRS, 50L);
-  curl_easy_setopt(hnd, CURLOPT_XFERINFOFUNCTION, curlProgress);
-  curl_easy_setopt(hnd, CURLOPT_HTTP_VERSION, (long)CURL_HTTP_VERSION_2TLS);
-  curl_easy_setopt(hnd, CURLOPT_WRITEFUNCTION, file_handle_data);
-  curl_easy_setopt(hnd, CURLOPT_SSL_VERIFYPEER, 0L);
-  curl_easy_setopt(hnd, CURLOPT_VERBOSE, 1L);
-  curl_easy_setopt(hnd, CURLOPT_STDERR, stdout);
+  CURL_HND = curl_easy_init();
+  curl_easy_setopt(CURL_HND, CURLOPT_BUFFERSIZE, FILE_ALLOC_SIZE);
+  curl_easy_setopt(CURL_HND, CURLOPT_URL, url.c_str());
+  curl_easy_setopt(CURL_HND, CURLOPT_NOPROGRESS, 0L);
+  curl_easy_setopt(CURL_HND, CURLOPT_USERAGENT, USER_AGENT);
+  curl_easy_setopt(CURL_HND, CURLOPT_FOLLOWLOCATION, 1L);
+  curl_easy_setopt(CURL_HND, CURLOPT_FAILONERROR, 1L);
+  curl_easy_setopt(CURL_HND, CURLOPT_ACCEPT_ENCODING, "gzip");
+  curl_easy_setopt(CURL_HND, CURLOPT_MAXREDIRS, 50L);
+  curl_easy_setopt(CURL_HND, CURLOPT_XFERINFOFUNCTION, curlProgress);
+  curl_easy_setopt(CURL_HND, CURLOPT_HTTP_VERSION, (long)CURL_HTTP_VERSION_2TLS);
+  curl_easy_setopt(CURL_HND, CURLOPT_WRITEFUNCTION, file_handle_data);
+  curl_easy_setopt(CURL_HND, CURLOPT_SSL_VERIFYPEER, 0L);
+  curl_easy_setopt(CURL_HND, CURLOPT_VERBOSE, 1L);
+  curl_easy_setopt(CURL_HND, CURLOPT_STDERR, stdout);
 
-  curlResult = curl_easy_perform(hnd);
-  curl_easy_cleanup(hnd);
+  curlResult = curl_easy_perform(CURL_HND);
+  curl_easy_cleanup(CURL_HND);
 
   if (curlResult != CURLE_OK) {
     retcode = -curlResult;
@@ -264,18 +268,43 @@ std::string formatBytes(int bytes) {
 	return out;
 }
 
+/* adapted from GM9i's byte parsing. */
+std::string formatSBytes(int bytes) {
+	char out[32];
+	
+	if (bytes == 1)
+		snprintf(out, sizeof(out), "%d Byte/s", bytes);
+
+	else if (bytes < 1024)
+		snprintf(out, sizeof(out), "%d Bytes/s", bytes);
+
+	else if (bytes < 1024 * 1024)
+		snprintf(out, sizeof(out), "%.1f kb/s", (float)bytes / 1024);
+
+	else if (bytes < 1024 * 1024 * 1024)
+		snprintf(out, sizeof(out), "%.1f mb/s", (float)bytes / 1024 / 1024);
+
+	else
+		snprintf(out, sizeof(out), "%.1f gb/s", (float)bytes / 1024 / 1024 / 1024);
+
+	return out;
+}
+
 void displayProgressBar() {
 	char str[256];
 	while(showProgressBar) {
+    if(CURL_HND)curl_easy_getinfo(CURL_HND, CURLINFO_SPEED_DOWNLOAD_T, &downloadSpeed);
+    DLSpeed = downloadSpeed;
 		if (DLTotal < 1.0f) DLTotal = 1.0f;
 
 		if (DLTotal < DLNow) DLTotal = DLNow;
 
 		if (progressBarType == 0) {
-			snprintf(str, sizeof(str), "%s / %s (%.2f%%)",
+			snprintf(str, sizeof(str), "%s / %s (%.2f%%)\nSpeed: %s",
 					formatBytes(DLNow).c_str(),
 					formatBytes(DLTotal).c_str(),
-					((float)DLNow/(float)DLTotal) * 100.0f
+					((float)DLNow/(float)DLTotal) * 100.0f,
+          formatSBytes(DLSpeed).c_str()
 			);
 
 		} else {
@@ -308,11 +337,22 @@ void displayProgressBar() {
       RenderD7::Draw::Rect(31, 121, (int)(((float)installOffset / (float)installSize) * 338.0f),
                          28, RenderD7::Color::Hex("#00ff11"));
 		}
-    RenderD7::Draw::TextCentered(5, 124, 0.7f, RenderD7::Color::Hex("#111111"),
+    RenderD7::Draw::TextCentered(5, 70, 0.7f, RenderD7::Color::Hex("#ffffff"),
                                str, 390);
 
 		RenderD7::OnScreen(Bottom);
+    RenderD7::Draw::Rect(0, 0, 320, 240, RenderD7::Color::Hex("#111111"));
 		C3D_FrameEnd(0);
 		gspWaitForVBlank();
 	}
+}
+
+bool checkWifiStatus(void)
+{
+	u32 wifiStatus;
+	bool res = false;
+
+	if (R_SUCCEEDED(ACU_GetWifiStatus(&wifiStatus)) && wifiStatus) res = true;
+
+	return res;
 }
