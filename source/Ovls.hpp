@@ -13,3 +13,15 @@ private:
   int msgposy = 240;
   int delay = 0;
 };
+
+class Errors : public RenderD7::Ovl {
+public:
+  Errors(Result code);
+  void Draw(void) const override;
+  void Logic() override;
+
+private:
+  Result rescode;
+  int msgposy = 240;
+  int delay = 0;
+};

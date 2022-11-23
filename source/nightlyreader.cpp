@@ -53,7 +53,7 @@ void DBLoader::Download3dsx(int index) {
 }
 
 void DBLoader::InstallCia(int index) {
-  std::string s = "sdmc:/";
+  std::string s = "sdmc:/DevHelper/cache/";
 
   bool ___is___ = false;
   mkdir(s.c_str(), 0777);
@@ -72,22 +72,18 @@ void DBLoader::InstallCia(int index) {
   flog.Write(pathof);
   Result res = installCia(pathof.c_str(), ___is___);
   if (res != R_OK) {
-    RenderD7::ResultDecoder decc;
-    decc.Load(res);
-
+    RenderD7::AddOvl(std::make_unique<Errors>(res));
     RenderD7::AddOvl(std::make_unique<Warnings>(
-        "Installer->Error (" + decc.GetCode() + ") " + decc.GetDescription(),
-        "Error when installing Cia file!\n" + decc.GetModule() + " " +
-            decc.GetLevel() + " " + decc.GetSummary()));
+        "Installer->Error", "Error when installing Cia file!\n"));
   }
   progressBarType = 0;
   showProgressBar = false;
   RenderD7::Msg::Display("DevHelper->Download-Cia", "Deleting Cia ...", Top);
   // remove(pathof.c_str());
 }
- 
+
 void DBLoader::LoadDB(std::string link) {
-  int dtmm = 0; 
+  int dtmm = 0;
   mkdir("sdmc:/DevHelper/", 0777);
   mkdir("sdmc:/DevHelper/dbs/", 0777);
   showProgressBar = true;
@@ -96,7 +92,7 @@ void DBLoader::LoadDB(std::string link) {
   showProgressBar = false;
   INI::INIFile file("sdmc:/DevHelper/dbs/" + GetFileName<std::string>(link));
   INI::INIStructure ini;
-  file.read(ini); 
+  file.read(ini);
   this->db.reponame = ini["info"]["repository"];
   this->db.repo_host = ini["info"]["user"];
   DB_Entry dbe;
@@ -121,7 +117,7 @@ void DBLoader::LoadEntry(int index) {
                     GetFileName<std::string>(this->db.e_list[index].dl_link));
   INI::INIStructure ini;
   file.read(ini);
-  APPH dbe; 
+  APPH dbe;
   this->appsecs.clear();
   this->versions.clear();
   for (auto const &it : ini) {
