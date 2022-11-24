@@ -9,11 +9,11 @@ Log flog;
 std::unique_ptr<RenderD7::StealConsole> st_stdout;
 
 int main() {
-  //st_stdout = std::make_unique<RenderD7::StealConsole>();
+  // st_stdout = std::make_unique<RenderD7::StealConsole>();
   std::cout << "hello\n";
   flog.Init("DevHelper");
   RenderD7::Init::Main("Dev-Helper");
-  
+
   RenderD7::Scene::Load(std::make_unique<DBSel>());
   flog.Write("Loading Scene");
   while (RenderD7::MainLoop()) {

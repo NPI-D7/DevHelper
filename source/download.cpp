@@ -298,32 +298,27 @@ std::string formatSBytes(int bytes) {
   return out;
 }
 
-//Stolen from tvx
-std::string TimeFormat(int seconds)
-{
-    std::stringstream ss;
-    if (seconds > 3599)
-    {
-        ss << std::to_string(seconds/60/60);
-        ss << "h ";
-    }
-    if (seconds > 59)
-    {
-        ss << std::to_string(seconds/60 % 60);
-        ss << "m ";
-    }
-    
-    ss << std::to_string(seconds % 60);
-    ss << "s ";
+// Stolen from tvx
+std::string TimeFormat(int seconds) {
+  std::stringstream ss;
+  if (seconds > 3599) {
+    ss << std::to_string(seconds / 60 / 60);
+    ss << "h ";
+  }
+  if (seconds > 59) {
+    ss << std::to_string(seconds / 60 % 60);
+    ss << "m ";
+  }
 
-    return ss.str();
+  ss << std::to_string(seconds % 60);
+  ss << "s ";
+
+  return ss.str();
 }
 
-std::string GetTimeNeed(float current, float total, float speed)
-{
-  float timez = ((total-current)/speed);
-  if(timez >= 0 && speed > 0)
-  {
+std::string GetTimeNeed(float current, float total, float speed) {
+  float timez = ((total - current) / speed);
+  if (timez >= 0 && speed > 0) {
     return TimeFormat(timez);
   }
   return "Calculating...";

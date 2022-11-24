@@ -1,8 +1,9 @@
 #include "scenes.hpp"
+#include <Tasks.hpp>
+#include <cia.hpp>
+#include <download.hpp>
 #include <renderd7/log.hpp>
 #include <stringextra.hpp>
-#include <download.hpp>
-#include <Tasks.hpp>
 
 extern bool showProgressBar;
 extern int progressBarType;
@@ -66,8 +67,9 @@ void DBSel::Draw(void) const {
         dirs += dbld.db.e_list[i].name + "\n";
       }
     }
-    for (int i = 0;
-         i < (((int)dbld.db.e_list.size() < 10) ? 10 - (int)dbld.db.e_list.size() : 0);
+    for (int i = 0; i < (((int)dbld.db.e_list.size() < 10)
+                             ? 10 - (int)dbld.db.e_list.size()
+                             : 0);
          i++) {
       dirs += "\n\n";
     }
@@ -83,7 +85,7 @@ void DBSel::Draw(void) const {
     RenderD7::Draw::Rect(0, 0, 320, 240, RenderD7::Color::Hex("#EEEEEE"));
     // std::cout << "FPS: " << RenderD7::GetFramerate()
     //           << " Time: " << RenderD7::GetDeltaTime() << std::endl;
-    //RenderD7::Draw::Text(0, 0, 0.6f, RenderD7::Color::Hex("#ff0000"),
+    // RenderD7::Draw::Text(0, 0, 0.6f, RenderD7::Color::Hex("#ff0000"),
     //                     last_lines(st_stdout->GetStdout(), 12));
   }
   if (state == APPV) {
@@ -108,7 +110,8 @@ void DBSel::Draw(void) const {
       }
     }
     for (int i = 0;
-         i < (((int)dbld.versions.size() < 10) ? 10 - (int)dbld.versions.size() : 0);
+         i < (((int)dbld.versions.size() < 10) ? 10 - (int)dbld.versions.size()
+                                               : 0);
          i++) {
       dirs += "\n\n";
     }
@@ -131,8 +134,8 @@ void DBSel::Draw(void) const {
                          "Desc: " + dbld.versions[dirsel].desc);
     RenderD7::Draw::Text(2, 84, 0.7f, RenderD7::Color::Hex("#111111"),
                          "Version: " + dbld.versions[dirsel].ver);
-    //RenderD7::Draw::Text(0, 0, 0.4f, RenderD7::Color::Hex("#ff0000"),
-    //                     last_lines(st_stdout->GetStdout(), 18));
+    // RenderD7::Draw::Text(0, 0, 0.4f, RenderD7::Color::Hex("#ff0000"),
+    //                      last_lines(st_stdout->GetStdout(), 18));
   }
 }
 

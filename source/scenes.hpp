@@ -1,7 +1,6 @@
 #include "nightlyreader.hpp"
 #include "rd7.hpp"
 
-
 enum MState { DB, APPV };
 class DBSel : public RenderD7::Scene {
 public:

@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 
-
 #define D_P()                                                                  \
   std::cout << "\u001b[33;1mBreakpoint reached: \n"                            \
             << (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1            \

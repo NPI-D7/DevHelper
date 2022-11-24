@@ -3,7 +3,6 @@
 #include <iostream>
 #include <string>
 
-
 #define APP_TITLE "DevHelper"
 #define VERSION_STRING "1.0.0"
 
@@ -17,6 +16,7 @@ enum DownloadError {
 };
 
 Result downloadToFile(const std::string &url, const std::string &path);
-//Result downloadFromRelease(std::string url, std::string asset, std::string path, bool includePrereleases);
+// Result downloadFromRelease(std::string url, std::string asset, std::string
+// path, bool includePrereleases);
 void displayProgressBar();
 bool checkWifiStatus(void);

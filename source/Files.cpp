@@ -64,7 +64,7 @@ Result openFile(Handle *fileHandle, const char *path, bool write) {
   if (write)
     ret = FSFILE_SetSize(
         *fileHandle,
-        0); // truncate the file to remove previous contents before writing. 
+        0); // truncate the file to remove previous contents before writing.
 
   return ret;
 }
