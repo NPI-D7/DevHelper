@@ -60,7 +60,7 @@ void DBLoader::InstallCia(int index) {
   if (this->versions[index].Name == "DevHelper") {
     ___is___ = true;
     RenderD7::AddOvl(std::make_unique<Warnings>(
-        "Menu->Info", "Normally the app should Update it Self..."));
+        "Menu->Info", "Press start to apply changes..."));
   }
   showProgressBar = true;
   Tasks::create((ThreadFunc)displayProgressBar);
