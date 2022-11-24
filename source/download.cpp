@@ -29,6 +29,8 @@ float DLTotal = 1; // Dont initialize with 0 to avoid division by zero later.
 float DLNow = 0;
 float DLSpeed = 0;
 
+float bldl = false;
+
 static FILE *downfile = nullptr;
 static size_t file_buffer_pos = 0;
 static size_t file_toCommit_size = 0;
@@ -130,9 +132,10 @@ Result downloadToFile(const std::string &url, const std::string &path) {
 
   downloadTotal = 1;
   downloadNow = 0;
+  downloadSpeed = 0;
 
   CURLcode curlResult;
-  
+
   Result retcode = 0;
   int res;
 
@@ -178,14 +181,19 @@ Result downloadToFile(const std::string &url, const std::string &path) {
   curl_easy_setopt(CURL_HND, CURLOPT_ACCEPT_ENCODING, "gzip");
   curl_easy_setopt(CURL_HND, CURLOPT_MAXREDIRS, 50L);
   curl_easy_setopt(CURL_HND, CURLOPT_XFERINFOFUNCTION, curlProgress);
-  curl_easy_setopt(CURL_HND, CURLOPT_HTTP_VERSION, (long)CURL_HTTP_VERSION_2TLS);
+  curl_easy_setopt(CURL_HND, CURLOPT_HTTP_VERSION,
+                   (long)CURL_HTTP_VERSION_2TLS);
   curl_easy_setopt(CURL_HND, CURLOPT_WRITEFUNCTION, file_handle_data);
   curl_easy_setopt(CURL_HND, CURLOPT_SSL_VERIFYPEER, 0L);
   curl_easy_setopt(CURL_HND, CURLOPT_VERBOSE, 1L);
   curl_easy_setopt(CURL_HND, CURLOPT_STDERR, stdout);
 
+  bldl = 1;
+
   curlResult = curl_easy_perform(CURL_HND);
   curl_easy_cleanup(CURL_HND);
+
+  bldl = 0;
 
   if (curlResult != CURLE_OK) {
     retcode = -curlResult;
@@ -248,111 +256,151 @@ exit:
 
 /* adapted from GM9i's byte parsing. */
 std::string formatBytes(int bytes) {
-	char out[32];
-	
-	if (bytes == 1)
-		snprintf(out, sizeof(out), "%d Byte", bytes);
+  char out[32];
 
-	else if (bytes < 1024)
-		snprintf(out, sizeof(out), "%d Bytes", bytes);
+  if (bytes == 1)
+    snprintf(out, sizeof(out), "%d Byte", bytes);
 
-	else if (bytes < 1024 * 1024)
-		snprintf(out, sizeof(out), "%.1f KB", (float)bytes / 1024);
+  else if (bytes < 1024)
+    snprintf(out, sizeof(out), "%d Bytes", bytes);
 
-	else if (bytes < 1024 * 1024 * 1024)
-		snprintf(out, sizeof(out), "%.1f MB", (float)bytes / 1024 / 1024);
+  else if (bytes < 1024 * 1024)
+    snprintf(out, sizeof(out), "%.1f KB", (float)bytes / 1024);
 
-	else
-		snprintf(out, sizeof(out), "%.1f GB", (float)bytes / 1024 / 1024 / 1024);
+  else if (bytes < 1024 * 1024 * 1024)
+    snprintf(out, sizeof(out), "%.1f MB", (float)bytes / 1024 / 1024);
 
-	return out;
+  else
+    snprintf(out, sizeof(out), "%.1f GB", (float)bytes / 1024 / 1024 / 1024);
+
+  return out;
 }
 
 /* adapted from GM9i's byte parsing. */
 std::string formatSBytes(int bytes) {
-	char out[32];
-	
-	if (bytes == 1)
-		snprintf(out, sizeof(out), "%d Byte/s", bytes);
+  char out[32];
 
-	else if (bytes < 1024)
-		snprintf(out, sizeof(out), "%d Bytes/s", bytes);
+  if (bytes == 1)
+    snprintf(out, sizeof(out), "%d Byte/s", bytes);
 
-	else if (bytes < 1024 * 1024)
-		snprintf(out, sizeof(out), "%.1f kb/s", (float)bytes / 1024);
+  else if (bytes < 1024)
+    snprintf(out, sizeof(out), "%d Bytes/s", bytes);
 
-	else if (bytes < 1024 * 1024 * 1024)
-		snprintf(out, sizeof(out), "%.1f mb/s", (float)bytes / 1024 / 1024);
+  else if (bytes < 1024 * 1024)
+    snprintf(out, sizeof(out), "%.1f kb/s", (float)bytes / 1024);
 
-	else
-		snprintf(out, sizeof(out), "%.1f gb/s", (float)bytes / 1024 / 1024 / 1024);
+  else if (bytes < 1024 * 1024 * 1024)
+    snprintf(out, sizeof(out), "%.1f mb/s", (float)bytes / 1024 / 1024);
 
-	return out;
+  else
+    snprintf(out, sizeof(out), "%.1f gb/s", (float)bytes / 1024 / 1024 / 1024);
+
+  return out;
+}
+
+//Stolen from tvx
+std::string TimeFormat(int seconds)
+{
+    std::stringstream ss;
+    if (seconds > 3599)
+    {
+        ss << std::to_string(seconds/60/60);
+        ss << "h ";
+    }
+    if (seconds > 59)
+    {
+        ss << std::to_string(seconds/60 % 60);
+        ss << "m ";
+    }
+    
+    ss << std::to_string(seconds % 60);
+    ss << "s ";
+
+    return ss.str();
+}
+
+std::string GetTimeNeed(float current, float total, float speed)
+{
+  float timez = ((total-current)/speed);
+  if(timez >= 0 && speed > 0)
+  {
+    return TimeFormat(timez);
+  }
+  return "Calculating...";
 }
 
 void displayProgressBar() {
-	char str[256];
-	while(showProgressBar) {
-    if(CURL_HND)curl_easy_getinfo(CURL_HND, CURLINFO_SPEED_DOWNLOAD_T, &downloadSpeed);
+  char str[256];
+  while (showProgressBar) {
+    if (bldl) {
+      curl_easy_getinfo(CURL_HND, CURLINFO_SPEED_DOWNLOAD_T, &downloadSpeed);
+    } else {
+      downloadSpeed = 0;
+    }
     DLSpeed = downloadSpeed;
-		if (DLTotal < 1.0f) DLTotal = 1.0f;
+    if (DLTotal < 1.0f)
+      DLTotal = 1.0f;
 
-		if (DLTotal < DLNow) DLTotal = DLNow;
+    if (DLTotal < DLNow)
+      DLTotal = DLNow;
 
-		if (progressBarType == 0) {
-			snprintf(str, sizeof(str), "%s / %s (%.2f%%)\nSpeed: %s",
-					formatBytes(DLNow).c_str(),
-					formatBytes(DLTotal).c_str(),
-					((float)DLNow/(float)DLTotal) * 100.0f,
-          formatSBytes(DLSpeed).c_str()
-			);
+    if (progressBarType == 0) {
+      snprintf(str, sizeof(str), "%s / %s (%.2f%%)\nSpeed: %s\nETA: %s",
+               formatBytes(DLNow).c_str(), formatBytes(DLTotal).c_str(),
+               ((float)DLNow / (float)DLTotal) * 100.0f,
+               formatSBytes(DLSpeed).c_str(),
+               GetTimeNeed(DLNow, DLTotal, DLSpeed).c_str());
 
-		} else {
-			snprintf(str, sizeof(str), "%s / %s (%.2f%%)",
-					formatBytes(installOffset).c_str(),
-					formatBytes(installSize).c_str(),
-					((float)installOffset/(float)installSize) * 100.0f);
-		};
+    } else {
+      snprintf(str, sizeof(str), "%s / %s (%.2f%%)",
+               formatBytes(installOffset).c_str(),
+               formatBytes(installSize).c_str(),
+               ((float)installOffset / (float)installSize) * 100.0f);
+    };
 
-		RenderD7::ClearTextBufs();
-		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-		C2D_TargetClear(Top, RenderD7::Color::Hex("#000000"));
-		C2D_TargetClear(Bottom, RenderD7::Color::Hex("#000000"));
-		RenderD7::OnScreen(Top);
+    RenderD7::ClearTextBufs();
+    C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+    C2D_TargetClear(Top, RenderD7::Color::Hex("#000000"));
+    C2D_TargetClear(Bottom, RenderD7::Color::Hex("#000000"));
+    RenderD7::OnScreen(Top);
 
     RenderD7::OnScreen(Top);
     RenderD7::Draw::Rect(0, 0, 400, 240, RenderD7::Color::Hex("#111111"));
     RenderD7::Draw::Rect(0, 0, 400, 26, RenderD7::Color::Hex("#333333", 200));
-    RenderD7::Draw::Text(5, 2, 0.7f, RenderD7::Color::Hex("#ffffff"), APP_TITLE);
-    RenderD7::Draw::Text(5, 30, 0.6f, RenderD7::Color::Hex("#ffffff"), progressBarMsg);
+    RenderD7::Draw::Text(5, 2, 0.7f, RenderD7::Color::Hex("#ffffff"),
+                         APP_TITLE);
+    RenderD7::Draw::Text(5, 30, 0.6f, RenderD7::Color::Hex("#ffffff"),
+                         progressBarMsg);
     RenderD7::Draw::Rect(30, 120, 342, 30, RenderD7::Color::Hex("#333333"));
 
-		/* Download. */
-		if (progressBarType == 0) {
-      RenderD7::Draw::Rect(31, 121, (int)(((float)DLNow / (float)DLTotal) * 338.0f),
-                         28, RenderD7::Color::Hex("#00ff11"));
+    /* Download. */
+    if (progressBarType == 0) {
+      RenderD7::Draw::Rect(31, 121,
+                           (int)(((float)DLNow / (float)DLTotal) * 338.0f), 28,
+                           RenderD7::Color::Hex("#00ff11"));
 
-		/* Install. */
-		} else {
-      RenderD7::Draw::Rect(31, 121, (int)(((float)installOffset / (float)installSize) * 338.0f),
-                         28, RenderD7::Color::Hex("#00ff11"));
-		}
-    RenderD7::Draw::TextCentered(5, 70, 0.7f, RenderD7::Color::Hex("#ffffff"),
-                               str, 390);
+      /* Install. */
+    } else {
+      RenderD7::Draw::Rect(
+          31, 121, (int)(((float)installOffset / (float)installSize) * 338.0f),
+          28, RenderD7::Color::Hex("#00ff11"));
+    }
+    RenderD7::Draw::TextCentered(5, 50, 0.7f, RenderD7::Color::Hex("#ffffff"),
+                                 str, 390);
 
-		RenderD7::OnScreen(Bottom);
+    RenderD7::OnScreen(Bottom);
     RenderD7::Draw::Rect(0, 0, 320, 240, RenderD7::Color::Hex("#111111"));
-		C3D_FrameEnd(0);
-		gspWaitForVBlank();
-	}
+    C3D_FrameEnd(0);
+    gspWaitForVBlank();
+  }
 }
 
-bool checkWifiStatus(void)
-{
-	u32 wifiStatus;
-	bool res = false;
+bool checkWifiStatus(void) {
+  u32 wifiStatus;
+  bool res = false;
 
-	if (R_SUCCEEDED(ACU_GetWifiStatus(&wifiStatus)) && wifiStatus) res = true;
+  if (R_SUCCEEDED(ACU_GetWifiStatus(&wifiStatus)) && wifiStatus)
+    res = true;
 
-	return res;
+  return res;
 }
