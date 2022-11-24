@@ -71,7 +71,7 @@ void DBLoader::InstallCia(int index) {
   progressBarType = 1;
   flog.Write(pathof);
   Result res = installCia(pathof.c_str(), ___is___);
-  if (res != R_OK) {
+  if (!R_SUCCEEDED(res)) {
     RenderD7::AddOvl(std::make_unique<Errors>(res));
     RenderD7::AddOvl(std::make_unique<Warnings>(
         "Installer->Error", "Error when installing Cia file!\n"));
@@ -79,7 +79,7 @@ void DBLoader::InstallCia(int index) {
   progressBarType = 0;
   showProgressBar = false;
   RenderD7::Msg::Display("DevHelper->Download-Cia", "Deleting Cia ...", Top);
-  // remove(pathof.c_str());
+  remove(pathof.c_str());
 }
 
 void DBLoader::LoadDB(std::string link) {
