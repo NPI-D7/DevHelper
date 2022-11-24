@@ -13,6 +13,8 @@ int main() {
   std::cout << "hello\n";
   flog.Init("DevHelper");
   RenderD7::Init::Main("Dev-Helper");
+  amInit();
+  RenderD7::Msg::Display("DevHelper", "Initializing...", Top);
 
   RenderD7::Scene::Load(std::make_unique<DBSel>());
   flog.Write("Loading Scene");
@@ -22,6 +24,7 @@ int main() {
 
     RenderD7::FrameEnd();
   }
+  amExit();
   flog.Write("Call RD7::Exit::Main");
   RenderD7::Exit::Main();
 }
