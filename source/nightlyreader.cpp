@@ -5,7 +5,7 @@
 #include <rd7.hpp>
 #include <renderd7/log.hpp>
 
-#include <Tasks.hpp>
+#include <renderd7/Tasks.hpp>
 
 #include <curl/curl.h>
 
@@ -131,7 +131,8 @@ void DBLoader::LoadEntry(int index) {
     dbe = {ini[section]["name"],       ini[section]["author"],
            ini[section]["commit_tag"], ini[section]["desc"],
            ini[section]["version"],    ini[section]["3dsx"],
-           ini[section]["cia"]};
+           ini[section]["cia"],        ini[section].has("3dsx"),
+           ini[section].has("cia")};
     this->versions.push_back(dbe);
     dtmm++;
   }

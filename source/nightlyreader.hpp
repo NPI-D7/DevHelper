@@ -28,6 +28,8 @@ struct APPH {
   std::string ver;
   std::string dl_3dsx;
   std::string dl_cia;
+  bool dll_3dsx = true;
+  bool dll_cia = true;
 };
 
 class DBLoader {
