@@ -11,8 +11,6 @@ extern int progressBarType;
 std::string standard =
     "https://github.com/NPI-D7/nightlys/raw/master/nightlys-Database.ini";
 
-extern Log flog;
-
 extern std::unique_ptr<RenderD7::StealConsole> st_stdout;
 
 extern float DLTotal;
@@ -37,9 +35,7 @@ void DrawFMBG() {
 }
 
 DBSel::DBSel() {
-  flog.Write("Loaded SetState");
   state = DB;
-  flog.Write("Loading DB");
   dbld.LoadDB(standard);
 }
 
@@ -57,14 +53,12 @@ void DBSel::Draw(void) const {
     DrawFMBG();
     std::string dirs;
     dirs.clear();
-    for (int i = this->dirsel < 9 ? 0 : this->dirsel - 9;
-         (int)dbld.db.e_list.size() &&
-         i < ((this->dirsel < 9) ? 10 : this->dirsel + 1);
-         i++) {
-      if (i == dirsel) {
-        dirs += "> " + dbld.db.e_list[i].name + "\n";
+    for (size_t i = 0; i < ((dbld.db.e_list.size() < 9) ? dbld.db.e_list.size() : 10);
+       i++) {
+    if (dirsel == (dirsel < 9 ? (int)i : (int)i + (dirsel - 9))) {
+        dirs += "> " + dbld.db.e_list[(dirsel < 9 ? i : i + (dirsel - 9))].name + "\n";
       } else {
-        dirs += dbld.db.e_list[i].name + "\n";
+        dirs += dbld.db.e_list[(dirsel < 9 ? i : i + (dirsel - 9))].name + "\n";
       }
     }
     for (int i = 0; i < (((int)dbld.db.e_list.size() < 10)
@@ -99,14 +93,12 @@ void DBSel::Draw(void) const {
     DrawFMBG();
     std::string dirs;
     dirs.clear();
-    for (int i = this->dirsel < 9 ? 0 : this->dirsel - 9;
-         (int)dbld.versions.size() &&
-         i < ((this->dirsel < 9) ? 10 : this->dirsel + 1);
-         i++) {
-      if (i == dirsel) {
-        dirs += "> " + dbld.versions[i].ver + "\n";
+    for (size_t i = 0;
+         i < ((dbld.versions.size() < 9) ? dbld.versions.size() : 10); i++) {
+      if (dirsel == (dirsel < 9 ? (int)i : (int)i + (dirsel - 9))) {
+        dirs += "> " + dbld.versions[(dirsel < 9 ? i : i + (dirsel - 9))].ver + "\n";
       } else {
-        dirs += dbld.versions[i].ver + "\n";
+        dirs += dbld.versions[(dirsel < 9 ? i : i + (dirsel - 9))].ver + "\n";
       }
     }
     for (int i = 0;
@@ -173,7 +165,7 @@ void DBSel::Logic(u32 hDown, u32 hHeld, u32 hUp, touchPosition touch) {
     }
     if (hDown & KEY_X) {
       showProgressBar = true;
-      Tasks::create((ThreadFunc)displayProgressBar);
+      RenderD7::Tasks::create((ThreadFunc)displayProgressBar);
       downloadToFile("https://speed.hetzner.de/100MB.bin", "100mb.bin");
       showProgressBar = false;
     }
