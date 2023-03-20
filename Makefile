@@ -81,7 +81,7 @@ BNR_AUDIO	:=	app/BannerAudio.wav
 RSF_FILE	:=	app/build-cia.rsf
 
 #---------------------------------------------------------------------------------
-IP			:=  192.168.2.130
+IP			:=  0.0.0.0
 #---------------------------------------------------------------------------------
 # options for code generation
 #---------------------------------------------------------------------------------
@@ -105,7 +105,7 @@ LIBS	:= -lcurl -lmbedtls -lmbedx509 -lmbedcrypto -lbz2 -llzma -lz -lstdc++ -lm -
 # list of directories containing libraries, this must be the top level containing
 # include and lib
 #---------------------------------------------------------------------------------
-LIBDIRS	:= $(PORTLIBS) $(CTRULIB) $(LIBTWEEN)
+LIBDIRS	:= $(PORTLIBS) $(CTRULIB) ../libs
 
 
 #---------------------------------------------------------------------------------

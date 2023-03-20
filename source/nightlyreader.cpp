@@ -12,8 +12,6 @@
 extern float DLTotal;
 extern float DLNow;
 
-extern Log flog;
-
 extern bool showProgressBar;
 extern int progressBarType;
 
@@ -26,7 +24,7 @@ void DBLoader::DownloadEntry(int index) {
 
   if (index <= (int)this->db.e_list.size() + 1) {
     showProgressBar = true;
-    Tasks::create((ThreadFunc)displayProgressBar);
+    RenderD7::Tasks::create((ThreadFunc)displayProgressBar);
     downloadToFile(
         this->db.e_list[index].dl_link,
         "sdmc:/DevHelper/dbs/" + DBLoader::GetRepoName() + "/" +
@@ -42,7 +40,7 @@ void DBLoader::Download3dsx(int index) {
   std::string s = "sdmc:/3ds/";
   mkdir(s.c_str(), 0777);
   showProgressBar = true;
-  Tasks::create((ThreadFunc)displayProgressBar);
+  RenderD7::Tasks::create((ThreadFunc)displayProgressBar);
   downloadToFile(this->versions[index].dl_3dsx,
                  s + GetFileName<std::string>(this->versions[index].dl_3dsx));
   showProgressBar = false;
@@ -63,13 +61,12 @@ void DBLoader::InstallCia(int index) {
         "Menu->Info", "Press start to apply changes..."));
   }
   showProgressBar = true;
-  Tasks::create((ThreadFunc)displayProgressBar);
+  RenderD7::Tasks::create((ThreadFunc)displayProgressBar);
   downloadToFile(this->versions[index].dl_cia,
                  s + GetFileName<std::string>(this->versions[index].dl_cia));
   std::string pathof =
       s + GetFileName<std::string>(this->versions[index].dl_cia);
   progressBarType = 1;
-  flog.Write(pathof);
   Result res = installCia(pathof.c_str(), ___is___);
   if (!R_SUCCEEDED(res)) {
     RenderD7::AddOvl(std::make_unique<Errors>(res));
@@ -87,7 +84,7 @@ void DBLoader::LoadDB(std::string link) {
   mkdir("sdmc:/DevHelper/", 0777);
   mkdir("sdmc:/DevHelper/dbs/", 0777);
   showProgressBar = true;
-  Tasks::create((ThreadFunc)displayProgressBar);
+  RenderD7::Tasks::create((ThreadFunc)displayProgressBar);
   downloadToFile(link, "sdmc:/DevHelper/dbs/" + GetFileName<std::string>(link));
   showProgressBar = false;
   INI::INIFile file("sdmc:/DevHelper/dbs/" + GetFileName<std::string>(link));

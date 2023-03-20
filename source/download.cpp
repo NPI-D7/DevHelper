@@ -388,6 +388,7 @@ void displayProgressBar() {
     C3D_FrameEnd(0);
     gspWaitForVBlank();
   }
+  C3D_FrameBegin(C3D_FRAME_NONBLOCK);
 }
 
 bool checkWifiStatus(void) {

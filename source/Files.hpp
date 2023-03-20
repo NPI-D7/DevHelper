@@ -6,7 +6,6 @@
 #include <cstdlib>
 #include <cstring>
 
-
 #define WORKING_DIR "/"
 
 Result makeDirs(const char *path);

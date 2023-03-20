@@ -1,8 +1,6 @@
 #include "cia.hpp"
 #include <renderd7/log.hpp>
 
-extern Log flog;
-
 Result CIA_LaunchTitle(u64 titleId, FS_MediaType mediaType) {
   aptSetChainloaderToSelf();
 
@@ -15,7 +13,6 @@ Result deletePrevious(u64 titleid, FS_MediaType media) {
   u32 titles_amount = 0;
   ret = AM_GetTitleCount(media, &titles_amount);
   if (R_FAILED(ret)) {
-    flog.Write("Error in:\nAM_GetTitleCount\n");
     return ret;
   }
 
@@ -25,7 +22,6 @@ Result deletePrevious(u64 titleid, FS_MediaType media) {
 
   if (R_FAILED(ret)) {
     free(titleIDs);
-    flog.Write("Error in:\nAM_GetTitleList\n");
     return ret;
   }
 
@@ -38,7 +34,6 @@ Result deletePrevious(u64 titleid, FS_MediaType media) {
 
   free(titleIDs);
   if (R_FAILED(ret)) {
-    flog.Write("Error in:\nAM_DeleteAppTitle\n");
     return ret;
   }
 
@@ -74,14 +69,12 @@ Result installCia(const char *ciaPath, bool updatingSelf) {
   ret = openFile(&fileHandle, ciaPath, false);
 
   if (R_FAILED(ret)) {
-    flog.Write("Error in:\nopenFile\n");
     return ret;
   }
 
   ret = AM_GetCiaFileInfo(media, &info, fileHandle);
 
   if (R_FAILED(ret)) {
-    flog.Write("Error in:\nAM_GetCiaFileInfo\n");
     return ret;
   }
 
@@ -96,14 +89,12 @@ Result installCia(const char *ciaPath, bool updatingSelf) {
   ret = FSFILE_GetSize(fileHandle, &size);
 
   if (R_FAILED(ret)) {
-    flog.Write("Error in:\nFSFILE_GetSize\n");
     return ret;
   }
 
   ret = AM_StartCiaInstall(media, &ciaHandle);
 
   if (R_FAILED(ret)) {
-    flog.Write("Error in:\nAM_StartCiaInstall\n");
     return ret;
   }
 
@@ -127,14 +118,12 @@ Result installCia(const char *ciaPath, bool updatingSelf) {
   ret = AM_FinishCiaInstall(ciaHandle);
 
   if (R_FAILED(ret)) {
-    flog.Write("Error in:\nAM_FinishCiaInstall\n");
     return ret;
   }
 
   ret = FSFILE_Close(fileHandle);
 
   if (R_FAILED(ret)) {
-    flog.Write("Error in:\nFSFILE_Close\n");
     return ret;
   }
 

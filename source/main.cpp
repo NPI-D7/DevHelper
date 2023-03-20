@@ -4,27 +4,24 @@
 #include <rd7.hpp>
 #include <renderd7/log.hpp>
 
-Log flog;
-
 std::unique_ptr<RenderD7::StealConsole> st_stdout;
 
 int main() {
   // st_stdout = std::make_unique<RenderD7::StealConsole>();
-  std::cout << "hello\n";
-  flog.Init("DevHelper");
+  rd7_do_splash = true;
   RenderD7::Init::Main("Dev-Helper");
   amInit();
   RenderD7::Msg::Display("DevHelper", "Initializing...", Top);
 
   RenderD7::Scene::Load(std::make_unique<DBSel>());
-  flog.Write("Loading Scene");
   while (RenderD7::MainLoop()) {
     if (d7_hDown & KEY_START)
       RenderD7::ExitApp();
-
+    /// Push a Nonblock FrameBegin to Prevent crash...
+    /// Fixed in RenderD7 0.9.4 but 0.9.4 isn't publc yet
+    C3D_FrameBegin(2);
     RenderD7::FrameEnd();
   }
   amExit();
-  flog.Write("Call RD7::Exit::Main");
   RenderD7::Exit::Main();
 }

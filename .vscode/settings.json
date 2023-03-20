@@ -87,6 +87,8 @@
         "xutility": "cpp",
         "*.tcc": "cpp",
         "memory_resource": "cpp",
-        "string_view": "cpp"
+        "string_view": "cpp",
+        "typeindex": "cpp",
+        "hash_map": "cpp"
     }
 }
