@@ -14,9 +14,9 @@ private:
   DBLoader dbld;
   MState state = DB;
   std::vector<RenderD7::TObject> buttons = {
-      {20, 35, 120, 35, "Cia", -11, 10},
-      {20, 85, 120, 35, "3dsx", 0, 12},
-      {20, 135, 120, 35, "firm", -8, 12},
-      {20, 185, 120, 35, "cfwfirm", 8, 10},
+      {20, 35, 120, 35, "Cia"},
+      {20, 85, 120, 35, "3dsx"},
+      {20, 135, 120, 35, "firm"},
+      {20, 185, 120, 35, "cfwfirm"},
   };
 };

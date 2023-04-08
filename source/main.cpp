@@ -10,7 +10,7 @@ int main() {
   // st_stdout = std::make_unique<RenderD7::StealConsole>();
   rd7_do_splash = true;
   RenderD7::Init::Main("Dev-Helper");
-  amInit();
+  rd7_security->SafeInit(amInit, amExit);
   RenderD7::Msg::Display("DevHelper", "Initializing...", Top);
 
   RenderD7::Scene::Load(std::make_unique<DBSel>());
@@ -22,6 +22,4 @@ int main() {
     C3D_FrameBegin(2);
     RenderD7::FrameEnd();
   }
-  amExit();
-  RenderD7::Exit::Main();
 }
