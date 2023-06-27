@@ -361,24 +361,24 @@ void displayProgressBar() {
 
     RenderD7::OnScreen(Top);
     RenderD7::Draw::Rect(0, 0, 400, 240, RenderD7::Color::Hex("#111111"));
-    RenderD7::Draw::Rect(0, 0, 400, 26, RenderD7::Color::Hex("#333333", 200));
-    RenderD7::Draw::Text(5, 2, 0.7f, RenderD7::Color::Hex("#ffffff"),
+    RenderD7::Draw::Rect(0, 0, 400, 21, RenderD7::Color::Hex("#333333", 200));
+    RenderD7::Draw::Text(5, 0, 0.7f, RenderD7::Color::Hex("#ffffff"),
                          APP_TITLE);
-    RenderD7::Draw::Text(5, 30, 0.6f, RenderD7::Color::Hex("#ffffff"),
+    RenderD7::Draw::Text(5, 160, 0.6f, RenderD7::Color::Hex("#ffffff"),
                          progressBarMsg);
-    RenderD7::Draw::Rect(30, 120, 342, 30, RenderD7::Color::Hex("#333333"));
+    RenderD7::Draw::Rect(30, 200, 342, 16, RenderD7::Color::Hex("#333333"));
 
     /* Download. */
     if (progressBarType == 0) {
-      RenderD7::Draw::Rect(31, 121,
-                           (int)(((float)DLNow / (float)DLTotal) * 338.0f), 28,
+      RenderD7::Draw::Rect(31, 201,
+                           (int)(((float)DLNow / (float)DLTotal) * 338.0f), 14,
                            RenderD7::Color::Hex("#00ff11"));
 
       /* Install. */
     } else {
       RenderD7::Draw::Rect(
-          31, 121, (int)(((float)installOffset / (float)installSize) * 338.0f),
-          28, RenderD7::Color::Hex("#00ff11"));
+          31, 201, (int)(((float)installOffset / (float)installSize) * 338.0f),
+          14, RenderD7::Color::Hex("#00ff11"));
     }
     RenderD7::Draw::TextCentered(5, 50, 0.7f, RenderD7::Color::Hex("#ffffff"),
                                  str, 390);

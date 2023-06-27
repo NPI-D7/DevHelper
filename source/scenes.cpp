@@ -11,8 +11,6 @@ extern int progressBarType;
 std::string standard =
     "https://github.com/NPI-D7/nightlys/raw/master/nightlys-Database.ini";
 
-extern std::unique_ptr<RenderD7::StealConsole> st_stdout;
-
 extern float DLTotal;
 extern float DLNow;
 
@@ -27,16 +25,18 @@ bool CheckWifiStatus(void) {
 }
 
 void DrawFMBG() {
-  RenderD7::Draw::Rect(0, 49, 400, 18, RenderD7::Color::Hex("#CCCCCC"));
-  RenderD7::Draw::Rect(0, 85, 400, 18, RenderD7::Color::Hex("#CCCCCC"));
-  RenderD7::Draw::Rect(0, 121, 400, 18, RenderD7::Color::Hex("#CCCCCC"));
-  RenderD7::Draw::Rect(0, 157, 400, 18, RenderD7::Color::Hex("#CCCCCC"));
-  RenderD7::Draw::Rect(0, 193, 400, 18, RenderD7::Color::Hex("#CCCCCC"));
+  RenderD7::Draw::Rect(0, 45, 400, 18, RenderD7::Color::Hex("#CCCCCC"));
+  RenderD7::Draw::Rect(0, 81, 400, 18, RenderD7::Color::Hex("#CCCCCC"));
+  RenderD7::Draw::Rect(0, 117, 400, 18, RenderD7::Color::Hex("#CCCCCC"));
+  RenderD7::Draw::Rect(0, 153, 400, 18, RenderD7::Color::Hex("#CCCCCC"));
+  RenderD7::Draw::Rect(0, 189, 400, 18, RenderD7::Color::Hex("#CCCCCC"));
 }
 
 DBSel::DBSel() {
+  RenderD7::Ftrace::Beg("DevHelper", "Downloading Database");
   state = DB;
   dbld.LoadDB(standard);
+  RenderD7::Ftrace::End("DevHelper", "Downloading Database");
 }
 
 int timer = 0;
@@ -48,28 +48,17 @@ void DBSel::Draw(void) const {
     RenderD7::Draw::Rect(0, 0, 400, 240, RenderD7::Color::Hex("#EEEEEE"));
     RenderD7::Draw::Rect(0, 0, 400, 26, RenderD7::Color::Hex("#111111"));
     RenderD7::Draw::Rect(0, 214, 400, 26, RenderD7::Color::Hex("#111111"));
-    RenderD7::Draw::Text(2, 2, 0.7f, RenderD7::Color::Hex("#eeeeee"),
+    RenderD7::Draw::Text(2, 4, 0.7f, RenderD7::Color::Hex("#eeeeee"),
                          "DevHelper->DB Browser");
     DrawFMBG();
-    std::string dirs;
-    dirs.clear();
-    for (size_t i = 0; i < ((dbld.db.e_list.size() < 9) ? dbld.db.e_list.size() : 10);
-       i++) {
-    if (dirsel == (dirsel < 9 ? (int)i : (int)i + (dirsel - 9))) {
-        dirs += "> " + dbld.db.e_list[(dirsel < 9 ? i : i + (dirsel - 9))].name + "\n";
-      } else {
-        dirs += dbld.db.e_list[(dirsel < 9 ? i : i + (dirsel - 9))].name + "\n";
+
+    for(size_t i = 0; i < ((dbld.db.e_list.size() < 9) ? dbld.db.e_list.size() : 10); i++) {
+      if(dirsel == (dirsel < 9 ? (int)i : (int) i + (dirsel - 9))) {
+        RenderD7::Draw::Rect(0, 26 + (i*18), 400, 18, RenderD7::Color::Hex("#444444"));
       }
-    }
-    for (int i = 0; i < (((int)dbld.db.e_list.size() < 10)
-                             ? 10 - (int)dbld.db.e_list.size()
-                             : 0);
-         i++) {
-      dirs += "\n\n";
+      RenderD7::Draw::Text(10, 26 + i * 18, 0.6f, RenderD7::Color::Hex("#000000"), RenderD7::ShortString(dbld.db.e_list[(dirsel < 9 ? i : i + (dirsel -9))].name, 0.6f, 400));
     }
 
-    RenderD7::Draw::Text(10, 30, 0.6f, RenderD7::Color::Hex("#111111"),
-                         dirs.c_str());
     RenderD7::Draw::TextCentered(0, 216, 0.7f, RenderD7::Color::Hex("#ffffff"),
                                  "Entry: " + std::to_string((dirsel + 1)) +
                                      "/" +
@@ -91,24 +80,14 @@ void DBSel::Draw(void) const {
     RenderD7::Draw::Text(2, 2, 0.7f, RenderD7::Color::Hex("#eeeeee"),
                          "DevHelper->App-Ver Browser");
     DrawFMBG();
-    std::string dirs;
-    dirs.clear();
-    for (size_t i = 0;
-         i < ((dbld.versions.size() < 9) ? dbld.versions.size() : 10); i++) {
-      if (dirsel == (dirsel < 9 ? (int)i : (int)i + (dirsel - 9))) {
-        dirs += "> " + dbld.versions[(dirsel < 9 ? i : i + (dirsel - 9))].ver + "\n";
-      } else {
-        dirs += dbld.versions[(dirsel < 9 ? i : i + (dirsel - 9))].ver + "\n";
+
+    for(size_t i = 0; i < ((dbld.versions.size() < 9) ? dbld.versions.size() : 10); i++) {
+      if(dirsel == (dirsel < 9 ? (int)i : (int) i + (dirsel - 9))) {
+        RenderD7::Draw::Rect(0, 26 + (i*18), 400, 18, RenderD7::Color::Hex("#444444"));
       }
+      RenderD7::Draw::Text(10, 26 + i * 18, 0.6f, RenderD7::Color::Hex("#000000"), RenderD7::ShortString(dbld.versions[(dirsel < 9 ? i : i + (dirsel -9))].ver, 0.6f, 400));
     }
-    for (int i = 0;
-         i < (((int)dbld.versions.size() < 10) ? 10 - (int)dbld.versions.size()
-                                               : 0);
-         i++) {
-      dirs += "\n\n";
-    }
-    RenderD7::Draw::Text(10, 30, 0.6f, RenderD7::Color::Hex("#111111"),
-                         dirs.c_str());
+
     RenderD7::Draw::TextCentered(
         0, 216, 0.7f, RenderD7::Color::Hex("#ffffff"),
         "Version: " + std::to_string((dbld.versions.size() - dirsel)) + "/" +
@@ -126,8 +105,6 @@ void DBSel::Draw(void) const {
                          "Desc: " + dbld.versions[dirsel].desc);
     RenderD7::Draw::Text(2, 84, 0.7f, RenderD7::Color::Hex("#111111"),
                          "Version: " + dbld.versions[dirsel].ver);
-    // RenderD7::Draw::Text(0, 0, 0.4f, RenderD7::Color::Hex("#ff0000"),
-    //                      last_lines(st_stdout->GetStdout(), 18));
   }
 }
 

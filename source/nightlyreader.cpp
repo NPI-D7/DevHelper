@@ -93,19 +93,21 @@ void DBLoader::LoadDB(std::string link) {
   this->db.reponame = ini["info"]["repository"];
   this->db.repo_host = ini["info"]["user"];
   DB_Entry dbe;
+
+  showProgressBar = true;
+  RenderD7::Tasks::create((ThreadFunc)displayProgressBar);
+
   for (auto const &it : ini) {
     auto const &section = it.first;
     std::cout << "[" << section << "]" << std::endl;
     this->secs.push_back(section);
-    RenderD7::Msg::DisplayWithProgress("DevHelper", "Reading Database Sections",
-                                       dtmm, (int)ini.size(),
-                                       RenderD7::Color::Hex("#00ff00"));
     if (ini[section]["name"] != "") {
       dbe = {ini[section]["name"], ini[section]["data"]};
       this->db.e_list.push_back(dbe);
     }
     dtmm++;
   }
+  showProgressBar = false;
 }
 
 void DBLoader::LoadEntry(int index) {
@@ -117,14 +119,15 @@ void DBLoader::LoadEntry(int index) {
   APPH dbe;
   this->appsecs.clear();
   this->versions.clear();
+  
+  showProgressBar = true;
+  RenderD7::Tasks::create((ThreadFunc)displayProgressBar);
+
   for (auto const &it : ini) {
 
     auto const &section = it.first;
     std::cout << "[" << section << "]" << std::endl;
     this->appsecs.push_back(section);
-    RenderD7::Msg::DisplayWithProgress("DevHelper", "Reading APPV Sections",
-                                       dtmm, (int)ini.size(),
-                                       RenderD7::Color::Hex("#00ff00"));
     dbe = {ini[section]["name"],       ini[section]["author"],
            ini[section]["commit_tag"], ini[section]["desc"],
            ini[section]["version"],    ini[section]["3dsx"],
@@ -134,4 +137,5 @@ void DBLoader::LoadEntry(int index) {
     dtmm++;
   }
   std::reverse(this->versions.begin(), this->versions.end());
+  showProgressBar = false;
 }
