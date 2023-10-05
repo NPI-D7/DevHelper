@@ -36,11 +36,11 @@ jobs:
           sudo chmod +x bannertool
           mv bannertool /usr/local/bin
           rm bannertool.zip
-          curl -L https://github.com/3DSGuy/Project_CTR/releases/download/makerom-v0.18.4/makerom-v0.18.4-ubuntu_x86_64.zip -o makerom-v0.18.4-ubuntu_x86_64.zip
-          sudo 7z e makerom-v0.18.4-ubuntu_x86_64.zip
+          curl -L https://github.com/3DSGuy/Project_CTR/releases/download/makerom-v0.17/makerom-v0.17-ubuntu_x86_64.zip -o makerom-v0.17-ubuntu_x86_64.zip
+          sudo 7z e makerom-v0.17-ubuntu_x86_64.zip
           sudo chmod +x makerom
           mv makerom /usr/local/bin
-          rm makerom-v0.18.4-ubuntu_x86_64.zip
+          rm makerom-v0.17-ubuntu_x86_64.zip
       - name: Build
         id: build
         run: |
