@@ -36,11 +36,11 @@ jobs:
           sudo chmod +x bannertool
           mv bannertool /usr/local/bin
           rm bannertool.zip
-          curl -L https://github.com/3DSGuy/Project_CTR/releases/download/makerom-v0.17/makerom-v0.17-ubuntu_x86_64.zip -o makerom-v0.17-ubuntu_x86_64.zip
-          sudo 7z e makerom-v0.17-ubuntu_x86_64.zip
+          curl -L https://github.com/3DSGuy/Project_CTR/releases/download/makerom-v0.18.4/makerom-v0.18.4-ubuntu_x86_64.zip -o makerom-v0.18.4-ubuntu_x86_64.zip
+          sudo 7z e makerom-v0.18.4-ubuntu_x86_64.zip
           sudo chmod +x makerom
           mv makerom /usr/local/bin
-          rm makerom-v0.17-ubuntu_x86_64.zip
+          rm makerom-v0.18.4-ubuntu_x86_64.zip
       - name: Build
         id: build
         run: |
@@ -107,7 +107,8 @@ jobs:
           cd nightlys
           sudo chmod +x nightlytool
           echo running
-          ./nightlytool management/DevHelper.ini DevHelper NPI-D7 nightlys v$CURRENT_DATE $COMMIT_HASH "\\$COMMIT_SUBJECT\\$COMMIT_MESSAGE\\\\" 0 "$AUTHOR_NAME"
+          ./nightlytool DevHelper NPI-D7 nightlys v$CURRENT_DATE $COMMIT_HASH "$AUTHOR_NAME" "\\$COMMIT_SUBJECT\\$COMMIT_MESSAGE\\\\"
+          git stage ./*
           echo creating dirs
           ls -R
           mkdir -p builds/DevHelper/

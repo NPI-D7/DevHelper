@@ -9,7 +9,7 @@ extern bool showProgressBar;
 extern int progressBarType;
 
 std::string standard =
-    "https://github.com/NPI-D7/nightlys/raw/master/nightlys-Database.ini";
+    "https://github.com/NPI-D7/nightlys/raw/master/db.ini";
 
 extern float DLTotal;
 extern float DLNow;
